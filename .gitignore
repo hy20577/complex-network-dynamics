@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# MkDocs build output
+mkdoc_material/site/
+
+# Editors and OS
+.DS_Store
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# R
+.Rhistory

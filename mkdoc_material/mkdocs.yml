@@ -1,0 +1,63 @@
+site_name: Complex Network Dynamics
+site_description: Simulation and stability analysis of nonlinear dynamical systems and complex networks
+
+theme:
+  font:
+    text: Merriweather Sans
+    code: Red Hat Mono
+  name: material
+  features:
+    - navigation.tabs # Creates a nice top navigation bar
+    - navigation.sections
+    - navigation.top
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+  palette:
+    scheme: slate
+    primary: green
+    accent: deep purple
+
+nav:
+  - Home: index.md
+  - API Reference:
+      - Datasets: api/datasets.md
+      - Discrete Models: api/discrete_models.md
+      - Continuous Models: api/continuous_models.md
+      - Integrators: api/integrators.md
+      - Network Inference: api/network_inference.md
+      - Network Metrics: api/network_metrics.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [..] # Project root, so the package is found without installing it
+          options:
+            docstring_style: numpy
+            show_root_heading: true
+            show_root_full_path: false
+            show_source: true
+            show_signature_annotations: true
+            separate_signature: true
+            heading_level: 3
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.details
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js
