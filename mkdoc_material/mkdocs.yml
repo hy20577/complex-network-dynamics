@@ -1,5 +1,7 @@
 site_name: Complex Network Dynamics
 site_description: Simulation and stability analysis of nonlinear dynamical systems and complex networks
+repo_url: https://github.com/hy20577/complex-network-dynamics
+repo_name: hy20577/complex-network-dynamics
 
 theme:
   font:
