@@ -25,3 +25,6 @@ mkdoc_material/site/
 
 # R
 .Rhistory
+
+# mkdocs-jupyter build cache
+.cache/
