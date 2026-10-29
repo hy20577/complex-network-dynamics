@@ -120,6 +120,16 @@ API documentation is built with MkDocs Material and mkdocstrings from `mkdoc_mat
 cd mkdoc_material && ./venv/bin/python -m mkdocs serve
 ```
 
+The live site is at **https://hy20577.github.io/complex-network-dynamics/**. After changing the docs, publish the new version with:
+
+```bash
+cd mkdoc_material && ./venv/bin/python -m mkdocs gh-deploy
+```
+
+This builds the site and pushes it to the `gh-pages` branch, which GitHub Pages serves.
+
+Tutorials are Jupyter notebooks in `mkdoc_material/docs/tutorials/`, shown with their saved outputs (they are not re-run). To add one, put the `.ipynb` there and list it under `Tutorials` in `mkdocs.yml`.
+
 The `venv` folder is not kept in Git. To create it on a new machine:
 
 ```bash
