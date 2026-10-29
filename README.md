@@ -135,3 +135,11 @@ The `venv` folder is not kept in Git. To create it on a new machine:
 ```bash
 cd mkdoc_material && python3 -m venv venv && ./venv/bin/python -m pip install -r requirements.txt
 ```
+
+## Citing
+
+If you use this library, please cite:
+
+> Hüseyin Yıldırım and Chris G. Antonopoulos, "Network inference using mutual information rate, statistical tests and amplitude-phase modulated surrogate data", *Chaos, Solitons & Fractals* 188, 115554 (2024). https://doi.org/10.1016/j.chaos.2024.115554
+
+The full method is described in the PhD thesis (University of Essex, 2024), available on the [Publications page](https://hy20577.github.io/complex-network-dynamics/publications/).

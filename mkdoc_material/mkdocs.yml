@@ -43,6 +43,7 @@ nav:
       - Integrators: api/integrators.md
       - Network Inference: api/network_inference.md
       - Network Metrics: api/network_metrics.md
+  - Publications: publications.md
 
 plugins:
   - search
@@ -76,6 +77,9 @@ markdown_extensions:
       anchor_linenums: true
   - pymdownx.superfences
   - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
 extra_javascript:
   - javascripts/mathjax.js

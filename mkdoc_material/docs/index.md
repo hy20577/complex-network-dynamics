@@ -71,3 +71,7 @@ plot_similarity_gap_bars(mir, A)
 | [`integrators`](api/integrators.md) | `euler_with_lyapunov`, `rk4_with_lyapunov`, `solve_ivp_with_lyapunov`, `rk4_lyapunov_fast`, `build_rk4_lyapunov`, `_apply_qr_update` |
 | [`network_inference`](api/network_inference.md) | `MIR`, `plot_similarity_gap_bars`, `Grid`, `corr_decay`, `compute_single_pair_mi`, `location_jit` |
 | [`network_metrics`](api/network_metrics.md) | `calculate_distance_metrics` |
+
+## Citing
+
+This library implements the methods from Yıldırım & Antonopoulos, *Chaos, Solitons & Fractals* 188, 115554 (2024) and the accompanying PhD thesis. See [Publications](publications.md) for the article link, the thesis PDF and BibTeX entries.
