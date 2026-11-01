@@ -32,6 +32,10 @@ def main():
     save("in_logistic_adjacency.txt", load_network("12nodes"))
     save("in_logistic_x0.txt", rng.random(12))
 
+    # Coupled logistic map with an isolated node (node 3 has no links)
+    save("in_logistic_isolated_adjacency.txt", np.array([[0, 1, 0], [1, 0, 0], [0, 0, 0]], dtype=float))
+    save("in_logistic_isolated_x0.txt", np.array([0.2, 0.4, 0.7]))
+
     # Lorenz initial state
     save("in_lorenz_x0.txt", np.array([1.0, 1.0, 1.0]))
 

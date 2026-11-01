@@ -59,6 +59,13 @@ wr('ref_logistic_lyapunov_final.txt', lya(end, :));
 [~, lya] = Log_generator(A, 0.1, x0, 4, 15, 10, Inf, 10, 0);
 wr('ref_logistic_lyapunov_25_steps.txt', lya(end, :));
 
+% Isolated node: one transient step, then 10 recorded steps (11 Jacobians in all)
+A_iso = rd('in_logistic_isolated_adjacency.txt');
+x0_iso = rd('in_logistic_isolated_x0.txt');
+[orbits, lya] = Log_generator(A_iso, 0.3, x0_iso, 4, 10, 1, Inf, 1, 0);
+wr('ref_logistic_isolated_orbits.txt', orbits);
+wr('ref_logistic_isolated_lyapunov.txt', lya(end, :));
+
 %% Single Lorenz system with RK4 and Euler (no coupling: Adj = 0)
 % RK4.m / Euler.m add the ODE output to a row state, so the column output of
 % lorenz_ext is transposed here.

@@ -50,14 +50,7 @@ def test_location_random_points(N):
     np.testing.assert_array_equal(ppb[:, 1], ref_ppb[:, 1])
 
 
-KNOWN_CEIL_DIFFERENCE = pytest.mark.xfail(
-    strict=True,
-    reason="Known difference: MATLAB location.m uses ceil(), Python uses floor() + 1, "
-    "so a point exactly on an inner grid line lands one cell further in Python",
-)
-
-
-@pytest.mark.parametrize("N", [pytest.param(4, marks=KNOWN_CEIL_DIFFERENCE), 7])
+@pytest.mark.parametrize("N", [4, 7])
 def test_location_points_on_grid_lines(N):
     X = load("in_location_gridlines.txt")
     coords, _ = location_jit(X, N)
@@ -100,11 +93,6 @@ def test_mir_off_diagonal(series, case, N_range):
     np.testing.assert_allclose(mir[upper], ref[upper], rtol=1e-10, atol=1e-12)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="Known difference: MATLAB MIR.m divides a node's self-information by the decay "
-    "time of the pair (node, node); Python uses 1 because corr_decay leaves the diagonal at 0",
-)
 @pytest.mark.parametrize("case, N_range", [("auto", None), ("3_6", (3, 6))])
 def test_mir_diagonal(series, case, N_range):
     mir, _ = MIR(series, N_range=N_range)
@@ -152,17 +140,27 @@ def test_logistic_lyapunov_long_run(logistic_run):
     np.testing.assert_allclose(lyap, ref, rtol=0, atol=0.04)
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="Known difference: for a node with no links, MATLAB Log_generator.m uses "
-    "(1 - alpha) * f(x_i); Python keeps the full f(x_i)",
-)
-def test_logistic_isolated_node_matches_matlab_rule():
-    A = np.array([[0, 1, 0], [1, 0, 0], [0, 0, 0]], dtype=float)  # node 3 has no links
-    x0 = np.array([0.2, 0.4, 0.7])
-    traj, _ = simulate_discrete_models(x0, logistic, df_logistic, A, t=2, alpha=0.3, n_transient=0, r=4.0)
-    expected = (1 - 0.3) * logistic(x0[2], r=4.0)
-    np.testing.assert_allclose(traj[1, 2], expected, rtol=1e-12)
+def test_logistic_isolated_node():
+    # Node 3 has no links: MATLAB evolves it as (1 - alpha) * f(x_3)
+    A = load("in_logistic_isolated_adjacency.txt")
+    x0 = load("in_logistic_isolated_x0.txt").ravel()
+    # 12 states = 11 Jacobians, as in Log_generator.m (1 transient + 10 recorded steps)
+    traj, lyap = simulate_discrete_models(x0, logistic, df_logistic, A, t=12, alpha=0.3, n_transient=0, r=4.0)
+    ref_orbits = load("ref_logistic_isolated_orbits.txt")
+    # Log_generator.m with time_window = 1 starts recording after one step
+    np.testing.assert_allclose(traj[1:11], ref_orbits, rtol=1e-10, atol=1e-12)
+
+    # The exponents are checked against the math, not against Log_generator.m:
+    # its Gram-Schmidt skips a projection whenever a vector has a zero entry
+    # (`if a ~= 0` on a vector), which happens for disconnected networks.
+    # See tests/reference/README.md.
+    states = traj[:11]
+    isolated = np.mean(np.log(np.abs((1 - 0.3) * df_logistic(states[:, 2], r=4.0))))
+    pair = np.array([[0.7, 0.3], [0.3, 0.7]])
+    pair_sum = np.mean([np.log(abs(np.linalg.det(pair * df_logistic(x[:2], r=4.0)))) for x in states])
+    assert np.isclose(lyap, isolated, rtol=1e-10).sum() == 1
+    others = lyap[~np.isclose(lyap, isolated, rtol=1e-10)]
+    np.testing.assert_allclose(others.sum(), pair_sum, rtol=1e-10)
 
 
 # --------------------------------------------------------------------------- Lorenz: RK4 and Euler

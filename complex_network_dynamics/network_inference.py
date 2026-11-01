@@ -141,8 +141,10 @@ def location_jit(Dat, grid):
   scaled_0 = ((Dat[:, 0] - min_v1) / range_v1) * grid
   scaled_1 = ((Dat[:, 1] - min_v2) / range_v2) * grid
 
-  rows = np.floor(scaled_0).astype(np.int64)
-  cols = np.floor(scaled_1).astype(np.int64)
+  # Cells (a, b] like MATLAB's ceil(): a point exactly on a grid line belongs
+  # to the lower cell, and the minimum (0) to the first cell
+  rows = np.ceil(scaled_0).astype(np.int64) - 1
+  cols = np.ceil(scaled_1).astype(np.int64) - 1
 
   # Robustly clamp integer indices to [0, grid - 1]
   rows = np.clip(rows, 0, grid - 1)
@@ -243,7 +245,8 @@ def corr_decay(Dat, gridsize):
   Returns
   -------
   np.ndarray
-      Symmetric (M, M) matrix of decay times (diagonal is 0).
+      Symmetric (M, M) matrix of decay times. The diagonal holds the decay
+      time of each node paired with itself, which `MIR` uses as MATLAB does.
   """
   Dat = np.asarray(Dat)
   M = Dat.shape[1]
@@ -252,7 +255,7 @@ def corr_decay(Dat, gridsize):
   decay_matrix = np.zeros((M, M))
 
   for i in range(M):
-    for j in range(i + 1, M):
+    for j in range(i, M):
       node12 = np.column_stack([Dat[:, i], Dat[:, j]])
       coordinates, _ = location_jit(node12, gridsize)
 

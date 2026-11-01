@@ -111,11 +111,8 @@ def simulate_discrete_models(x0, f, df, A, t, alpha=0.1, n_transient=1000, **par
     degree_safe = np.where(degree == 0, 1.0, degree)
     W = A / degree_safe[:, np.newaxis]
 
-    # Preserve state for isolated nodes
-    isolated_mask = (degree == 0)
-    if np.any(isolated_mask):
-        W[isolated_mask, :] = 0.0
-        W[isolated_mask, isolated_mask] = 1.0
+    # Isolated nodes keep a zero row in W, so they evolve as (1 - alpha) * f(x_i),
+    # matching the thesis MATLAB code (Log_generator.m)
 
     # Effective linear coupling operator: M_net = (1 - alpha) * I + alpha * W
     M_net = (1.0 - alpha) * np.eye(M) + alpha * W

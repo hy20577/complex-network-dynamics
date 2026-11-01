@@ -25,7 +25,7 @@ With \(k_i\) the degree of node \(i\) and coupling strength \(\alpha\):
 x_i(n+1) = (1-\alpha)\, f\big(x_i(n)\big) + \frac{\alpha}{k_i}\sum_{j} A_{ij}\, f\big(x_j(n)\big)
 \]
 
-Isolated nodes keep their own dynamics. The full Lyapunov spectrum comes from the Jacobian
+A node with no links evolves as \((1-\alpha) f(x_i)\), as in the thesis MATLAB code. The full Lyapunov spectrum comes from the Jacobian
 \(J = \big[(1-\alpha) I + \alpha W\big]\,\mathrm{diag}\big(f'(x)\big)\) with QR re-orthonormalization at every step.
 
 ```python
