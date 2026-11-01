@@ -8,6 +8,7 @@ import numpy as np
 
 from complex_network_dynamics import (
     amplitude_phase_surrogates,
+    kuramoto,
     df_logistic,
     load_network,
     logistic,
@@ -73,6 +74,21 @@ def main():
     save("in_best_case_true.txt", A16[:6, :6])
     sim = rng.random((6, 6))
     save("in_best_case_similarity.txt", sim + sim.T)
+
+    # Synchronisation: phases of coupled Kuramoto oscillators (simple Euler steps)
+    A6 = A16[:6, :6]
+    w = rng.uniform(-1, 1, 6)
+    theta = rng.random(6) * 2 * np.pi
+    phases = np.empty((600, 6))
+    for k in range(600):
+        phases[k] = theta
+        theta = theta + 0.05 * kuramoto(0.0, theta, A6, w, K=3.0)
+    save("in_sync_phases.txt", phases)
+
+    # Model vector fields and Jacobians: random states on the 12-node network
+    save("in_model_state_kuramoto.txt", rng.random(12) * 2 * np.pi)
+    save("in_model_w.txt", rng.uniform(0.5, 1.5, 12))
+    save("in_model_state_3M.txt", rng.standard_normal(36) * 2)
 
 
 if __name__ == "__main__":

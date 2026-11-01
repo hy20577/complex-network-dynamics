@@ -9,7 +9,7 @@ commit `d0e88a9`).
 
 | Path | Contents |
 |------|----------|
-| `matlab/original/` | Unmodified thesis functions: `MIR`, `Grid`, `location`, `corr_decay`, `Log_generator`, `RK4`, `Euler`, `lorenz_ext`, `Mir_surrogate_data`, `double_normalised_MIR`, `lagged_double_MIR`, `best_case_TPR_FPR`; `fdr_bh` and `TPR_FPR` are extracted unchanged from `Mir_surrogate_data.m` to test them on their own |
+| `matlab/original/` | Unmodified thesis functions: `MIR`, `Grid`, `location`, `corr_decay`, `Log_generator`, `RK4`, `Euler`, `lorenz_ext`, `Mir_surrogate_data`, `double_normalised_MIR`, `lagged_double_MIR`, `best_case_TPR_FPR`, `HR_ext`, `Composite_log_generator`, and the sync functions `global_sync`, `pairwise_sync_of_phases`, `globalorder_map`, `deviation_from_sync`; `fdr_bh` and `TPR_FPR` (from `Mir_surrogate_data.m`), `Kuramoto_extended` (from `Kuramoto_generator.m`) and `rossler_ext` (from `rossler_generator.m`) are extracted unchanged to test them on their own |
 | `matlab/shims/` | Small stand-ins for what Octave lacks: `graph`, `distances` (breadth-first search), `waitbar` (does nothing) `MatlabString` (makes `==` compare whole strings, like MATLAB string objects), and `array2table`/`SimpleTable` (just enough of MATLAB's table type) |
 | `matlab/shims_fixed_surrogates/` | Used only while running `Mir_surrogate_data`: an `HT_mix_A_theta` that returns stored surrogates in order, so the Python test can use exactly the same ones, and MATLAB's `round(x, n)` |
 | `matlab/generate_reference.m` | Runs the original functions on the inputs and writes the outputs |

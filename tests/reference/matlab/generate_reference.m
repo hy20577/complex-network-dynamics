@@ -123,4 +123,27 @@ for c = 1:2
     wr(sprintf('ref_best_case_best_case%d.txt', c), best.data);
 end
 
+%% Synchronisation measures
+ph = rd('in_sync_phases.txt');
+wr('ref_global_sync.txt', global_sync(ph));
+wr('ref_pairwise_sync.txt', pairwise_sync_of_phases(ph));
+wr('ref_globalorder_map.txt', globalorder_map(S));
+wr('ref_deviation_from_sync.txt', deviation_from_sync(S(:, 1), S(:, 2), 0.1 * (1:size(S, 1))'));
+
+%% Model vector fields and Jacobians: with the tangent vectors set to the
+% identity, an extended system returns [f; J(:)] (J column by column)
+A12 = rd('in_logistic_adjacency.txt');
+w12 = rd('in_model_w.txt');
+th = rd('in_model_state_kuramoto.txt');
+s3 = rd('in_model_state_3M.txt');
+I12 = eye(12); I36 = eye(36);
+wr('ref_kuramoto_ext.txt', Kuramoto_extended(0, [th(:); I12(:)], 2.0, A12, w12));
+wr('ref_rossler_ext.txt', rossler_ext(0, [s3(:); I36(:)], A12, w12, 0.15, 0.2, 10, 0.3));
+wr('ref_hr_ext.txt', HR_ext(0, [s3(:); I36(:)], A12, 0.2));
+
+%% Coupled composite logistic maps (order 3): 5 transient + 5 recorded steps
+[orbits, lya] = Composite_log_generator(A12, 0.1, x0, 4, 3, 5, 5, Inf, 5, 0);
+wr('ref_composite_orbits.txt', orbits);
+wr('ref_composite_lyapunov.txt', lya(end, :));
+
 disp('Reference outputs written.');

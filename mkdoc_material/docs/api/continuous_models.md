@@ -46,6 +46,42 @@ t, traj, spectrum = rk4_with_lyapunov(
 
 with \(x\) the prey and \(p\) the predator population.
 
+## Kuramoto oscillators
+
+\[
+\dot\theta_i = \omega_i + \frac{K}{M}\sum_j A_{ij}\sin(\theta_j - \theta_i)
+\]
+
+`stochastic_kuramoto` adds independent noise of strength \(D\), \(d\theta_i = [\dots]\,dt + D\,dW_i\), and integrates it with Euler–Maruyama, as in the thesis (defaults \(K = D = 10\)).
+
+```python
+from complex_network_dynamics import load_network, stochastic_kuramoto
+
+# theta0: initial phases, w: natural frequencies, both shape (16,)
+t, phases = stochastic_kuramoto(theta0, load_network("16nodes"), w, K=10, D=10, dt=0.1, n_steps=50_000, rng=0)
+```
+
+## Rössler oscillators
+
+Coupled through \(x\), with a frequency \(\omega_i\) per node:
+
+\[
+\dot x_i = -\omega_i y_i - z_i + K\sum_j A_{ij}(x_j - x_i), \qquad \dot y_i = \omega_i x_i + a y_i, \qquad \dot z_i = f + z_i(x_i - c)
+\]
+
+## Hindmarsh–Rose neurons
+
+Coupled through the membrane potential \(p\) with the graph Laplacian \(C = D - A\):
+
+\[
+\dot p_i = q_i - p_i^3 + 3p_i^2 - n_i + 3.25 - g\sum_l C_{il}\,p_l, \qquad \dot q_i = 1 - 5p_i^2 - q_i, \qquad \dot n_i = 0.02(p_i + 1.6) - 0.005\,n_i
+\]
+
+!!! note "Difference from the thesis code"
+    The vector field is the same as in `HR_ext.m`. Its Jacobian there has \(-3p^2 + 3p\) for \(\partial \dot p_i/\partial p_i\), but the derivative of the vector field is \(-3p^2 + 6p\), which `hindmarsh_rose_jacobian` uses. Trajectories are unaffected; Lyapunov exponents computed with the MATLAB Jacobian are slightly off.
+
+All Jacobians are checked against finite differences, and the vector fields against the MATLAB code.
+
 ## API
 
 ### NumPy versions
@@ -61,6 +97,20 @@ with \(x\) the prey and \(p\) the predator population.
 ::: complex_network_dynamics.continuous_models.lotka_volterra
 
 ::: complex_network_dynamics.continuous_models.lotka_volterra_jacobian
+
+::: complex_network_dynamics.continuous_models.kuramoto
+
+::: complex_network_dynamics.continuous_models.kuramoto_jacobian
+
+::: complex_network_dynamics.continuous_models.stochastic_kuramoto
+
+::: complex_network_dynamics.continuous_models.rossler
+
+::: complex_network_dynamics.continuous_models.rossler_jacobian
+
+::: complex_network_dynamics.continuous_models.hindmarsh_rose
+
+::: complex_network_dynamics.continuous_models.hindmarsh_rose_jacobian
 
 ### Numba versions
 

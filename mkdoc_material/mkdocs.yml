@@ -43,6 +43,7 @@ nav:
       - Integrators: api/integrators.md
       - Network Inference: api/network_inference.md
       - Surrogate Data: api/surrogates.md
+      - Synchronisation: api/synchronisation.md
       - Network Metrics: api/network_metrics.md
   - Publications: publications.md
 

@@ -422,3 +422,209 @@ def coupled_lorenz_jacobian(
     J[2 * N : 3 * N, 2 * N : 3 * N] = -beta * np.eye(N)
 
     return J
+
+#### ## # ## # ## # # KURAMOTO  # # # # # # # # # # ## ## ## ##
+
+def kuramoto(t, y, A, w, K=1.0):
+    """Kuramoto oscillators on a network, MATLAB `Kuramoto_extended`.
+
+    dtheta_i/dt = w_i + (K / M) * sum_j A_ij sin(theta_j - theta_i)
+
+    Parameters
+    ----------
+    t : float
+        Time (unused).
+    y : array_like
+        Phases theta_1..theta_M.
+    A : array_like
+        Adjacency matrix, shape (M, M).
+    w : array_like
+        Natural frequencies, shape (M,).
+    K : float, optional
+        Coupling strength. Default is 1.0.
+
+    Returns
+    -------
+    np.ndarray
+        dtheta/dt, shape (M,).
+    """
+    theta = np.asarray(y, dtype=float).ravel()
+    A = np.asarray(A, dtype=float)
+    diff = theta[None, :] - theta[:, None]  # theta_j - theta_i
+    return np.asarray(w, dtype=float) + (K / len(theta)) * np.sum(A * np.sin(diff), axis=1)
+
+
+def kuramoto_jacobian(t, y, A, w, K=1.0):
+    """Jacobian of `kuramoto`, shape (M, M)."""
+    theta = np.asarray(y, dtype=float).ravel()
+    A = np.asarray(A, dtype=float)
+    M = len(theta)
+    J = (K / M) * A * np.cos(theta[None, :] - theta[:, None])
+    np.fill_diagonal(J, 0.0)  # a self-loop adds sin(0), which has zero derivative
+    J -= np.diag(J.sum(axis=1))
+    return J
+
+
+def stochastic_kuramoto(theta0, A, w, K=10.0, D=10.0, dt=0.1, n_steps=1000, rng=None):
+    """Stochastic Kuramoto oscillators, integrated with Euler-Maruyama.
+
+    dtheta_i = [w_i + (K / M) sum_j A_ij sin(theta_j - theta_i)] dt + D dW_i,
+
+    with independent Wiener processes W_i. This is the model of the thesis
+    (drift and diffusion in Part3_CoupledModels.m, simulated with MATLAB's
+    `sde`, whose default scheme is Euler-Maruyama).
+
+    Parameters
+    ----------
+    theta0 : array_like
+        Initial phases, shape (M,).
+    A : array_like
+        Adjacency matrix, shape (M, M).
+    w : array_like
+        Natural frequencies, shape (M,).
+    K : float, optional
+        Coupling strength. Default is 10, as in the thesis.
+    D : float, optional
+        Noise strength. Default is 10, as in the thesis.
+    dt : float, optional
+        Time step. Default is 0.1.
+    n_steps : int, optional
+        Number of steps. Default is 1000.
+    rng : numpy.random.Generator or int, optional
+        Random generator or seed.
+
+    Returns
+    -------
+    t : np.ndarray
+        Times, shape (n_steps + 1,).
+    phases : np.ndarray
+        Phases (not wrapped), shape (n_steps + 1, M); the first row is theta0.
+    """
+    rng = np.random.default_rng(rng)
+    theta = np.asarray(theta0, dtype=float).copy()
+    phases = np.empty((n_steps + 1, len(theta)))
+    phases[0] = theta
+    noise = D * np.sqrt(dt) * rng.standard_normal((n_steps, len(theta)))
+    for k in range(n_steps):
+        theta = theta + kuramoto(0.0, theta, A, w, K) * dt + noise[k]
+        phases[k + 1] = theta
+    return dt * np.arange(n_steps + 1), phases
+
+
+#### ## # ## # ## # # ROSSLER  # # # # # # # # # # ## ## ## ##
+
+def rossler(t, y, A, K=0.1, w=1.0, a=0.2, f=0.2, c=5.7):
+    """Rossler oscillators coupled through x, MATLAB `rossler_ext`.
+
+    dx_i/dt = -w_i y_i - z_i + K * sum_j A_ij (x_j - x_i)
+    dy_i/dt =  w_i x_i + a y_i
+    dz_i/dt =  f + z_i (x_i - c)
+
+    Parameters
+    ----------
+    t : float
+        Time (unused).
+    y : array_like
+        Blocked state vector of length 3M: [x_1..x_M, y_1..y_M, z_1..z_M].
+    A : array_like
+        Adjacency matrix, shape (M, M).
+    K : float, optional
+        Coupling strength. Default is 0.1.
+    w : float or array_like, optional
+        Frequency of each oscillator. Default is 1.0.
+    a, f, c : float, optional
+        Rossler parameters. Defaults are 0.2, 0.2 and 5.7.
+
+    Returns
+    -------
+    np.ndarray
+        Blocked derivative vector of length 3M.
+    """
+    s = np.asarray(y, dtype=float).ravel()
+    A = np.asarray(A, dtype=float)
+    M = A.shape[0]
+    x, yy, z = s[:M], s[M:2 * M], s[2 * M:]
+    w = np.broadcast_to(np.asarray(w, dtype=float), (M,))
+    coupling = K * (A @ x - A.sum(axis=1) * x)
+    return np.concatenate([-w * yy - z + coupling, w * x + a * yy, f + z * (x - c)])
+
+
+def rossler_jacobian(t, y, A, K=0.1, w=1.0, a=0.2, f=0.2, c=5.7):
+    """Jacobian of `rossler`, shape (3M, 3M)."""
+    s = np.asarray(y, dtype=float).ravel()
+    A = np.asarray(A, dtype=float)
+    M = A.shape[0]
+    x, z = s[:M], s[2 * M:]
+    w = np.broadcast_to(np.asarray(w, dtype=float), (M,))
+    I = np.eye(M)
+    J = np.zeros((3 * M, 3 * M))
+    J[:M, :M] = K * A - np.diag(K * A.sum(axis=1))
+    J[:M, M:2 * M] = -np.diag(w)
+    J[:M, 2 * M:] = -I
+    J[M:2 * M, :M] = np.diag(w)
+    J[M:2 * M, M:2 * M] = a * I
+    J[2 * M:, :M] = np.diag(z)
+    J[2 * M:, 2 * M:] = np.diag(x - c)
+    return J
+
+
+#### ## # ## # ## # # HINDMARSH - ROSE  # # # # # # # # # # ## ## ## ##
+
+def hindmarsh_rose(t, y, A, g=0.1):
+    """Hindmarsh-Rose neurons coupled through the membrane potential, MATLAB `HR_ext`.
+
+    dp_i/dt = q_i - p_i^3 + 3 p_i^2 - n_i + 3.25 - g * sum_l C_il p_l
+    dq_i/dt = 1 - 5 p_i^2 - q_i
+    dn_i/dt = 0.005 * (4 (p_i + 1.6) - n_i)
+
+    where C = D - A is the graph Laplacian (D the diagonal degree matrix).
+
+    Parameters
+    ----------
+    t : float
+        Time (unused).
+    y : array_like
+        Blocked state vector of length 3M: [p_1..p_M, q_1..q_M, n_1..n_M].
+    A : array_like
+        Adjacency matrix, shape (M, M).
+    g : float, optional
+        Coupling strength. Default is 0.1.
+
+    Returns
+    -------
+    np.ndarray
+        Blocked derivative vector of length 3M.
+    """
+    s = np.asarray(y, dtype=float).ravel()
+    A = np.asarray(A, dtype=float)
+    M = A.shape[0]
+    p, q, n = s[:M], s[M:2 * M], s[2 * M:]
+    C = np.diag(A.sum(axis=1)) - A
+    return np.concatenate([
+        q - p**3 + 3 * p**2 - n + 3.25 - g * (C @ p),
+        1 - 5 * p**2 - q,
+        0.02 * (p + 1.6) - 0.005 * n,
+    ])
+
+
+def hindmarsh_rose_jacobian(t, y, A, g=0.1):
+    """Jacobian of `hindmarsh_rose`, shape (3M, 3M).
+
+    The MATLAB `HR_ext` uses -3 p^2 + 3 p for dp/dp; the derivative of the
+    vector field above is -3 p^2 + 6 p, which is used here.
+    """
+    s = np.asarray(y, dtype=float).ravel()
+    A = np.asarray(A, dtype=float)
+    M = A.shape[0]
+    p = s[:M]
+    C = np.diag(A.sum(axis=1)) - A
+    I = np.eye(M)
+    J = np.zeros((3 * M, 3 * M))
+    J[:M, :M] = np.diag(-3 * p**2 + 6 * p) - g * C
+    J[:M, M:2 * M] = I
+    J[:M, 2 * M:] = -I
+    J[M:2 * M, :M] = np.diag(-10 * p)
+    J[M:2 * M, M:2 * M] = -I
+    J[2 * M:, :M] = 0.02 * I
+    J[2 * M:, 2 * M:] = -0.005 * I
+    return J

@@ -16,6 +16,8 @@ f(x) = r\,x\,(1 - x), \qquad f'(x) = r\,(1 - 2x)
 f(x) = x + r - \frac{K}{2\pi}\sin(2\pi x) \pmod 1, \qquad f'(x) = 1 - K\cos(2\pi x)
 \]
 
+**Composite logistic map**: the logistic map applied \(n\) times, \(f^n = f \circ \dots \circ f\), with derivative \(\prod_{k=0}^{n-1} f'(f^k(x))\). The thesis uses \(n = 3\).
+
 ## Coupled map network
 
 `simulate_discrete_models` couples \(M\) maps on a network with adjacency matrix \(A\).
@@ -51,5 +53,9 @@ Extra keyword arguments (here `r=4.0`) go to both `f` and `df`.
 ::: complex_network_dynamics.discrete_models.circle
 
 ::: complex_network_dynamics.discrete_models.df_circle
+
+::: complex_network_dynamics.discrete_models.composite_logistic
+
+::: complex_network_dynamics.discrete_models.df_composite_logistic
 
 ::: complex_network_dynamics.discrete_models.simulate_discrete_models

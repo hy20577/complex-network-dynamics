@@ -82,6 +82,60 @@ def circle(x0, r=0.35, K=6.9115):
     y = y%1
     return y
 
+def composite_logistic(x0, r=4.0, n=3):
+    """Logistic map applied n times: f^n(x) = f(f(...f(x))).
+
+    MATLAB `comp_logis` (used by `Composite_log_generator.m`).
+
+    Parameters
+    ----------
+    x0 : float or array_like
+        Current state(s), usually in [0, 1].
+    r : float, optional
+        Growth parameter. Default is 4.0.
+    n : int, optional
+        Number of compositions. Default is 3, the order used in the thesis.
+
+    Returns
+    -------
+    np.ndarray
+        Next state(s), with the same shape as `x0`.
+    """
+    x = np.asarray(x0, dtype=float)
+    for _ in range(n):
+        x = r * x * (1 - x)
+    return x
+
+
+def df_composite_logistic(x, r=4.0, n=3):
+    """Derivative of `composite_logistic` by the chain rule:
+    prod_{k=0}^{n-1} f'(f^k(x)), with f'(x) = r (1 - 2x).
+
+    MATLAB `Composite_log_generator.m` uses this derivative with the order n
+    it is given, but always iterates the map with order 3; here both use n.
+
+    Parameters
+    ----------
+    x : float or array_like
+        State(s) at which to evaluate the derivative.
+    r : float, optional
+        Growth parameter. Default is 4.0.
+    n : int, optional
+        Number of compositions. Default is 3.
+
+    Returns
+    -------
+    float or np.ndarray
+        Derivative, with the same shape as `x`.
+    """
+    x = np.asarray(x, dtype=float)
+    product = np.ones_like(x)
+    for _ in range(n):
+        product = product * r * (1 - 2 * x)
+        x = r * x * (1 - x)
+    return product
+
+
 def simulate_discrete_models(x0, f, df, A, t, alpha=0.1, n_transient=1000, **params):
     """
     Simulates coupled map trajectories and calculates the full Lyapunov spectrum.

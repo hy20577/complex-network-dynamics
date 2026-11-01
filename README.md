@@ -4,8 +4,9 @@ Simulation and stability analysis of nonlinear dynamical systems and complex net
 
 The package provides:
 
-- **Discrete-time models**: logistic and circle maps, plus coupled-map networks with the full Lyapunov spectrum.
-- **Continuous-time models**: Lorenz, coupled Lorenz networks and Lotka–Volterra, with their Jacobians (plain NumPy and Numba-compiled versions).
+- **Discrete-time models**: logistic, circle and composite logistic maps, plus coupled-map networks with the full Lyapunov spectrum.
+- **Continuous-time models**: Lorenz, Rössler, Hindmarsh–Rose and Kuramoto oscillators on networks (plus stochastic Kuramoto) and Lotka–Volterra, with their Jacobians.
+- **Synchronisation**: Hilbert phases, the Kuramoto order parameter, pairwise phase locking and Rubido's global order.
 - **Integrators with Lyapunov exponents**: Euler, RK4, SciPy `solve_ivp`, and a fast Numba RK4.
 - **Network inference**: Mutual Information Rate (MIR) to reconstruct a network from node time series, plus a plot to judge how well the inferred edges separate from non-edges.
 - **Surrogate data test**: amplitude-phase modulated surrogate data (APMSD) and a false-discovery-rate test that decides which inferred links are real.
@@ -39,6 +40,7 @@ complex_network_dynamics/
 │   ├── network_inference.py   # MIR, mutual information, inference plots
 │   ├── network_metrics.py     # diameter and average path length
 │   ├── surrogates.py          # APMSD, phase-randomised and random surrogates
+│   ├── synchronisation.py     # Hilbert phases, order parameters, phase locking
 │   └── Data/
 │       ├── 12nodes.txt
 │       └── 16nodes.txt
