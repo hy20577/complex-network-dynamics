@@ -68,6 +68,12 @@ def main():
     surrogates = amplitude_phase_surrogates(series, n_surrogates=20, rng=rng)
     save("in_surrogate_fixed.txt", surrogates.reshape(-1, 5))  # stacked: 20 blocks of 1000 rows
 
+    # best_case_TPR_FPR: a full symmetric similarity matrix and the true network
+    # (the upper-triangular MATLAB MIR output is also used, from ref_mir_auto_Mir.txt)
+    save("in_best_case_true.txt", A16[:6, :6])
+    sim = rng.random((6, 6))
+    save("in_best_case_similarity.txt", sim + sim.T)
+
 
 if __name__ == "__main__":
     main()

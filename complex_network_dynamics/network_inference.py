@@ -222,9 +222,11 @@ def Grid(Dat):
   return N_min, N_max
 
 @njit(parallel=True, cache=True)
-def _grid_sizes_per_pair(Dat, pi, pj):
+def _grid_sizes_per_pair(Dat, pi, pj, inclusive=False):
   """For each pair, the largest grid size N whose average points per cell,
-  npts / N^2, is not more than its number of occupied cells (eq. 17)."""
+  npts / N^2, is not more than its number of occupied cells (eq. 17).
+  With inclusive=True the search continues while they are equal, as in the
+  Grid copy inside lagged_double_MIR.m."""
   npts = Dat.shape[0]
   N_final = np.empty(len(pi), dtype=np.int64)
   for k in prange(len(pi)):
@@ -235,7 +237,7 @@ def _grid_sizes_per_pair(Dat, pi, pj):
     N = 1
     N_c = 0
     mean_points = 1.0
-    while mean_points > N_c:
+    while mean_points > N_c or (inclusive and mean_points == N_c):
       N += 1
       rows, cols = _cell_rows_cols(node12, N)
       occupied = np.zeros(N * N, dtype=np.bool_)
@@ -731,3 +733,265 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
       tp_fp_rate[it, 1:] = tpr_fpr(true_network, adjacency[it])
 
   return mir_overall, adjacency, tp_fp_rate
+
+
+def mutual_information(Dat, grid_size):
+  """Mutual information and a chi-square independence measure, MATLAB `Mutual_info`.
+
+  Each pair is binned on an Nx x Ny grid of equal-width intervals between the
+  minimum and maximum of each node. As in the MATLAB code, intervals include
+  their left edge only, so points at a node's maximum fall outside every cell
+  (they still count in the total n used for the probabilities).
+
+  Parameters
+  ----------
+  Dat : array_like
+      Time series, shape (npts, M).
+  grid_size : int or (int, int)
+      Number of intervals, the same for both nodes or (Nx, Ny).
+
+  Returns
+  -------
+  MI : np.ndarray
+      Symmetric (M, M) matrix of mutual information (natural log); diagonal 0.
+  P_null : np.ndarray
+      Symmetric (M, M) matrix of `scipy.special.gammainc(chi2 / 2, v / 2)`,
+      which is MATLAB's `gammainc(v/2, chi2/2)` as written in `Mutual_info.m`
+      (MATLAB lists the upper limit first). Here chi2 is Pearson's statistic
+      for independence and v = (Nx - 1)(Ny - 1). Note that the standard
+      chi-square p-value would be `scipy.stats.chi2.sf(chi2, v)`.
+  """
+  from scipy.special import gammainc
+
+  Dat = np.asarray(Dat, dtype=np.float64)
+  n, M = Dat.shape
+  Nx, Ny = (grid_size, grid_size) if np.ndim(grid_size) == 0 else (int(grid_size[0]), int(grid_size[1]))
+  MI = np.zeros((M, M))
+  P_null = np.zeros((M, M))
+
+  for a in range(M):
+    for b in range(a + 1, M):
+      x, y = Dat[:, a], Dat[:, b]
+      edges_x = np.linspace(x.min(), x.max(), Nx + 1)
+      edges_y = np.linspace(y.min(), y.max(), Ny + 1)
+      # Interval i holds edges[i] <= value < edges[i + 1]
+      ix = np.searchsorted(edges_x, x, side="right") - 1
+      iy = np.searchsorted(edges_y, y, side="right") - 1
+      inside = (ix >= 0) & (ix < Nx) & (iy >= 0) & (iy < Ny)
+      o_xy = np.zeros((Nx, Ny))
+      np.add.at(o_xy, (ix[inside], iy[inside]), 1)
+
+      p_xy = o_xy / n
+      p_x = o_xy.sum(axis=1) / n
+      p_y = o_xy.sum(axis=0) / n
+      E_xy = n * np.outer(p_x, p_y)  # expected counts if independent
+
+      with np.errstate(divide="ignore", invalid="ignore"):
+        terms = p_xy * np.log(p_xy / np.outer(p_x, p_y))
+        chi_square = np.sum((o_xy - E_xy) ** 2 / E_xy)
+      MI[a, b] = MI[b, a] = np.sum(terms[p_xy != 0])
+      v = (Nx - 1) * (Ny - 1)
+      P_null[a, b] = P_null[b, a] = gammainc(chi_square / 2, v / 2)
+
+  return MI, P_null
+
+
+def _rescale_upper(I_c, guard_equal):
+  """Min-max scale the upper triangle of I_c, as in the MATLAB double-normalised
+  MIR: the minimum is taken over the nonzero entries of the whole matrix."""
+  M = len(I_c)
+  hat = np.zeros((M, M))
+  nonzero = I_c[I_c != 0]
+  if nonzero.size == 0:
+    return hat
+  hi, lo = I_c.max(), nonzero.min()
+  if guard_equal and hi == lo:
+    return hat
+  upper = np.triu_indices(M, k=1)
+  with np.errstate(divide="ignore", invalid="ignore"):
+    hat[upper] = (I_c[upper] - lo) / (hi - lo)
+  return hat
+
+
+def double_normalised_mir(Dat, true_network=None):
+  """Double-normalised MIR, MATLAB `double_normalised_MIR`.
+
+  The data are scaled to [0, 1]. For each grid size from `Grid`, the MIR of
+  all pairs is min-max scaled; the scaled matrices are summed over grid sizes
+  and divided by their largest entry.
+
+  Parameters
+  ----------
+  Dat : array_like
+      Time series, shape (npts, M).
+  true_network : array_like, optional
+      Ground-truth adjacency matrix. If given, the best reconstruction rate
+      over thresholds 0.01, 0.02, ..., 1 is returned.
+
+  Returns
+  -------
+  normalised_MIR : np.ndarray
+      Symmetric (M, M) matrix with values up to 1; diagonal 0.
+  max_rate : float or None
+      Largest reconstruction percentage, 100 - 100 * (mismatched entries) /
+      (number of links counted in both directions), floored at 0.
+      None if `true_network` is not given.
+  """
+  Dat = np.asarray(Dat, dtype=np.float64)
+  Dat = (Dat - Dat.min(axis=0)) / (Dat.max(axis=0) - Dat.min(axis=0))
+  Dat = np.ascontiguousarray(Dat)
+  M = Dat.shape[1]
+  pi, pj = np.triu_indices(M, k=1)
+  N_min, N_max = Grid(Dat)
+
+  total = np.zeros((M, M))
+  for N in range(N_min, N_max + 1):
+    mi, t = _pairs_mi_and_decay(Dat, pi, pj, N)
+    I_c = np.zeros((M, M))
+    I_c[pi, pj] = mi / t
+    total += _rescale_upper(I_c, guard_equal=True)
+
+  normalised = total / total.max()
+  normalised = normalised + normalised.T
+
+  if true_network is None:
+    return normalised, None
+  A = np.asarray(true_network, dtype=float)
+  rates = np.empty(100)
+  for k in range(1, 101):
+    adj = normalised.copy()
+    adj[pi, pj] = adj[pj, pi] = normalised[pi, pj] >= k / 100
+    rates[k - 1] = 100 - np.sum(np.abs(adj - A) == 1) * (100 / A.sum())
+  return normalised, max(rates.max(), 0.0)
+
+
+@njit(parallel=True, cache=True)
+def _pairs_lagged_mi_and_decay(Dat, pi, pj, N, max_lag):
+  """Largest MI over lags -max_lag..max_lag and the zero-lag decay time, per pair."""
+  n = Dat.shape[0]
+  best = np.empty(len(pi))
+  decay = np.empty(len(pi))
+  for k in prange(len(pi)):
+    x = Dat[:, pi[k]]
+    y = Dat[:, pj[k]]
+    node12 = np.empty((n, 2))
+    node12[:, 0] = x
+    node12[:, 1] = y
+    largest, coordinates, _ = compute_single_pair_mi(node12, N)
+    decay[k] = _decay_from_cells(coordinates[:, 3].astype(np.int64), N * N)
+    for tau in range(1, max_lag + 1):
+      shifted = np.empty((n - tau, 2))
+      # Negative lag: node i leads
+      shifted[:, 0] = x[: n - tau]
+      shifted[:, 1] = y[tau:]
+      value, _, _ = compute_single_pair_mi(shifted, N)
+      largest = max(largest, value)
+      # Positive lag: node j leads
+      shifted[:, 0] = x[tau:]
+      shifted[:, 1] = y[: n - tau]
+      value, _, _ = compute_single_pair_mi(shifted, N)
+      largest = max(largest, value)
+    best[k] = largest
+  return best, decay
+
+
+def lagged_double_mir(Dat, max_lag):
+  """Lagged, double-normalised MIR, MATLAB `lagged_double_MIR`.
+
+  For each pair, the MI is the largest MI over time lags -max_lag..max_lag,
+  divided by the zero-lag correlation decay time, then min-max scaled and
+  summed over grid sizes as in `double_normalised_mir`.
+
+  The grid sizes follow the copy of Grid inside `lagged_double_MIR.m`, which
+  differs from `Grid`: its search continues while the average points per cell
+  equals the number of occupied cells, and N_max is not capped at 30.
+
+  Parameters
+  ----------
+  Dat : array_like
+      Time series, shape (npts, M).
+  max_lag : int
+      Largest lag, in time steps.
+
+  Returns
+  -------
+  lagged_MI : np.ndarray
+      Symmetric (M, M) matrix of the largest lagged MI, summed (not averaged)
+      over grid sizes, as in the MATLAB code.
+  lagged_MIR : np.ndarray
+      Symmetric (M, M) double-normalised MIR, values up to 1.
+  """
+  Dat = np.ascontiguousarray(Dat, dtype=np.float64)
+  M = Dat.shape[1]
+  pi, pj = np.triu_indices(M, k=1)
+
+  N_final = _grid_sizes_per_pair(Dat, pi, pj, True)
+  mean_N = np.mean(N_final)
+  N_min = int(np.floor(0.1 * mean_N + 0.5)) + 1
+  N_max = int(np.floor(mean_N + 0.5))
+  if N_max <= 2:
+    N_max *= 2
+  if N_min <= 2:
+    N_min *= 2
+
+  total_mir = np.zeros((M, M))
+  total_mi = np.zeros((M, M))
+  for N in range(N_min, N_max + 1):
+    mi, t = _pairs_lagged_mi_and_decay(Dat, pi, pj, N, int(max_lag))
+    I_s = np.zeros((M, M))
+    I_c = np.zeros((M, M))
+    I_s[pi, pj] = mi
+    I_c[pi, pj] = mi / t
+    total_mir += _rescale_upper(I_c, guard_equal=False)
+    total_mi += I_s
+
+  lagged_MIR = total_mir / total_mir.max()
+  return total_mi + total_mi.T, lagged_MIR + lagged_MIR.T
+
+
+def best_case_tpr_fpr(similarity_matrix, true_adjacency):
+  """ROC sweep over thresholds and the best threshold, MATLAB `best_case_TPR_FPR`.
+
+  Every pairwise similarity (minus 1e-12) is tried as a threshold; entries
+  above it count as links. The best threshold is the one closest to the
+  perfect point (FPR, TPR) = (0, 1). As in the MATLAB code the whole matrix is
+  counted, diagonal included, and an upper-triangular input is made symmetric.
+
+  Parameters
+  ----------
+  similarity_matrix : array_like
+      (M, M) similarity matrix, e.g. MIR. Its diagonal is ignored.
+  true_adjacency : array_like
+      (M, M) ground-truth binary adjacency matrix.
+
+  Returns
+  -------
+  roc : np.ndarray
+      Shape (M(M-1)/2, 4), one row per threshold from high to low: TPR, FPR,
+      distance to (0, 1), threshold.
+  best : np.ndarray
+      The rows of `roc` with the smallest distance.
+  inferred : np.ndarray
+      Inferred adjacency matrix at the best threshold (the smallest one if
+      several are equally good): pairs with similarity at least the threshold.
+  """
+  S = np.array(similarity_matrix, dtype=float)
+  A = np.asarray(true_adjacency)
+  M = len(S)
+  np.fill_diagonal(S, 0)
+  if np.array_equal(S, np.triu(S)):
+    S = S + S.T
+  upper = np.triu_indices(M, k=1)
+  thresholds = np.sort(S[upper])[::-1] - 1e-12
+
+  roc = np.empty((len(thresholds), 4))
+  for k, th in enumerate(thresholds):
+    tpr, fpr = tpr_fpr(A, S > th)
+    roc[k] = tpr, fpr, np.sqrt((tpr - 1) ** 2 + fpr ** 2), th
+  best = roc[roc[:, 2] == roc[:, 2].min()]
+
+  th = best[:, 3].min()
+  inferred = S.copy()
+  inferred[upper] = S[upper] >= th
+  inferred[(upper[1], upper[0])] = inferred[upper]
+  return roc, best, inferred

@@ -106,4 +106,28 @@ for it = 1:2
 end
 wr('ref_surrogate_tp_fp.txt', tp_fp);
 
+%% Mutual_info, double_normalised_MIR, lagged_double_MIR, best_case_TPR_FPR
+for g = {5, [4 6]}
+    [mi, p_null] = Mutual_info(S, g{1});
+    tag = sprintf('%d', g{1});
+    wr(sprintf('ref_mutual_info_%s_MI.txt', tag), mi);
+    wr(sprintf('ref_mutual_info_%s_Pnull.txt', tag), p_null);
+end
+
+A6 = rd('in_best_case_true.txt');
+[nmir, max_rate] = double_normalised_MIR(S, A6);
+wr('ref_double_normalised_mir.txt', nmir);
+wr('ref_double_normalised_max_rate.txt', max_rate);
+
+[lagged_mi, lagged_mir] = lagged_double_MIR(S(1:500, :), 2);
+wr('ref_lagged_mi.txt', lagged_mi);
+wr('ref_lagged_mir.txt', lagged_mir);
+
+sims = {rd('in_best_case_similarity.txt'), rd('ref_mir_auto_Mir.txt')};
+for c = 1:2
+    [roc, best] = best_case_TPR_FPR(sims{c}, A6);
+    wr(sprintf('ref_best_case_roc_case%d.txt', c), roc.data);
+    wr(sprintf('ref_best_case_best_case%d.txt', c), best.data);
+end
+
 disp('Reference outputs written.');
