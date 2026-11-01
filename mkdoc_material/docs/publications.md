@@ -28,14 +28,15 @@ Hüseyin Yıldırım and Chris G. Antonopoulos<br>
 Hüseyin Yıldırım<br>
 PhD thesis, University of Essex (2024)
 
-[:material-file-pdf-box: Download thesis (PDF, 16 MB)](files/Yildirim_2024_PhD_Thesis.pdf){ .md-button .md-button--primary }
+[:material-open-in-new: Read in the Essex Research Repository](https://repository.essex.ac.uk/39296/){ .md-button .md-button--primary }
 
 ```bibtex
 @phdthesis{yildirim2024thesis,
   title  = {Network Inference Using Information-theoretical Approaches, Statistical Hypothesis Tests, and The Amplitude-Phase Modulated Surrogate Data Method},
   author = {Y{\i}ld{\i}r{\i}m, H{\"u}seyin},
   school = {University of Essex},
-  year   = {2024}
+  year   = {2024},
+  url    = {https://repository.essex.ac.uk/39296/}
 }
 ```
 

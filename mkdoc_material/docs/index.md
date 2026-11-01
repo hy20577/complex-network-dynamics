@@ -74,4 +74,4 @@ plot_similarity_gap_bars(mir, A)
 
 ## Citing
 
-This library implements the methods from Yıldırım & Antonopoulos, *Chaos, Solitons & Fractals* 188, 115554 (2024) and the accompanying PhD thesis. See [Publications](publications.md) for the article link, the thesis PDF and BibTeX entries.
+This library implements the methods from Yıldırım & Antonopoulos, *Chaos, Solitons & Fractals* 188, 115554 (2024) and the accompanying PhD thesis. See [Publications](publications.md) for links to the article and the thesis, and BibTeX entries.

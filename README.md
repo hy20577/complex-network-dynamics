@@ -142,4 +142,4 @@ If you use this library, please cite:
 
 > Hüseyin Yıldırım and Chris G. Antonopoulos, "Network inference using mutual information rate, statistical tests and amplitude-phase modulated surrogate data", *Chaos, Solitons & Fractals* 188, 115554 (2024). https://doi.org/10.1016/j.chaos.2024.115554
 
-The full method is described in the PhD thesis (University of Essex, 2024), available on the [Publications page](https://hy20577.github.io/complex-network-dynamics/publications/).
+The full method is described in the PhD thesis: Hüseyin Yıldırım, University of Essex (2024), https://repository.essex.ac.uk/39296/
