@@ -78,7 +78,7 @@ def test_corr_decay_off_diagonal(series, which):
 
 
 @pytest.mark.parametrize("case, N_range", [("auto", None), ("3_6", (3, 6))])
-def test_mutual_information(series, case, N_range):
+def test_mir_mutual_information(series, case, N_range):
     _, mi = MIR(series, N_range=N_range)
     ref = load(f"ref_mir_{case}_Mi.txt")
     upper = np.triu_indices(len(ref))  # MATLAB fills only j >= i

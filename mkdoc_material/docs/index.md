@@ -73,7 +73,7 @@ plot_similarity_gap_bars(mir, A)
 | [`discrete_models`](api/discrete_models.md) | `logistic`, `df_logistic`, `circle`, `df_circle`, `simulate_discrete_models` |
 | [`continuous_models`](api/continuous_models.md) | `lorenz`, `lorenz_jacobian`, `coupled_lorenz`, `coupled_lorenz_jacobian`, `lotka_volterra`, `lotka_volterra_jacobian`, `lorenz_njit`, `lorenz_jacobian_njit`, `coupled_lorenz_njit`, `coupled_lorenz_jacobian_njit` |
 | [`integrators`](api/integrators.md) | `euler_with_lyapunov`, `rk4_with_lyapunov`, `solve_ivp_with_lyapunov`, `rk4_lyapunov_fast`, `build_rk4_lyapunov`, `_apply_qr_update` |
-| [`network_inference`](api/network_inference.md) | `MIR`, `mir_surrogate_test`, `fdr_bh`, `tpr_fpr`, `double_normalised_mir`, `lagged_double_mir`, `mutual_information`, `best_case_tpr_fpr`, `plot_similarity_gap_bars`, `Grid`, `corr_decay`, `compute_single_pair_mi`, `location_jit` |
+| [`network_inference`](api/network_inference.md) | `MIR`, `mir_surrogate_test`, `fdr_bh`, `tpr_fpr`, `double_normalised_mir`, `lagged_double_mir`, `best_case_tpr_fpr`, `plot_similarity_gap_bars`, `Grid`, `corr_decay`, `compute_single_pair_mi`, `location_jit` |
 | [`surrogates`](api/surrogates.md) | `amplitude_phase_surrogates`, `phaseran`, `random_surrogates`, `correlated_random_surrogates` |
 | [`network_metrics`](api/network_metrics.md) | `calculate_distance_metrics` |
 

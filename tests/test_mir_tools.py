@@ -1,5 +1,5 @@
-"""Compare mutual_information, double_normalised_mir, lagged_double_mir and
-best_case_tpr_fpr with the original MATLAB functions (run in Octave)."""
+"""Compare double_normalised_mir, lagged_double_mir and best_case_tpr_fpr with
+the original MATLAB functions (run in Octave)."""
 from pathlib import Path
 
 import numpy as np
@@ -9,7 +9,6 @@ from complex_network_dynamics import (
     best_case_tpr_fpr,
     double_normalised_mir,
     lagged_double_mir,
-    mutual_information,
 )
 
 DATA = Path(__file__).parent / "reference" / "data"
@@ -22,15 +21,6 @@ def load(name):
 @pytest.fixture(scope="module")
 def series():
     return load("in_mir_series.txt")
-
-
-@pytest.mark.parametrize("grid, tag", [(5, "5"), ((4, 6), "46")])
-def test_mutual_information(series, grid, tag):
-    mi, p_null = mutual_information(series, grid)
-    upper = np.triu_indices(series.shape[1], k=1)  # MATLAB fills only the upper triangle
-    np.testing.assert_allclose(mi[upper], load(f"ref_mutual_info_{tag}_MI.txt")[upper], rtol=1e-10, atol=1e-14)
-    np.testing.assert_allclose(p_null[upper], load(f"ref_mutual_info_{tag}_Pnull.txt")[upper], rtol=1e-8, atol=1e-14)
-    np.testing.assert_array_equal(mi, mi.T)
 
 
 def test_double_normalised_mir(series):

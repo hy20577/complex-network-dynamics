@@ -106,14 +106,7 @@ for it = 1:2
 end
 wr('ref_surrogate_tp_fp.txt', tp_fp);
 
-%% Mutual_info, double_normalised_MIR, lagged_double_MIR, best_case_TPR_FPR
-for g = {5, [4 6]}
-    [mi, p_null] = Mutual_info(S, g{1});
-    tag = sprintf('%d', g{1});
-    wr(sprintf('ref_mutual_info_%s_MI.txt', tag), mi);
-    wr(sprintf('ref_mutual_info_%s_Pnull.txt', tag), p_null);
-end
-
+%% double_normalised_MIR, lagged_double_MIR, best_case_TPR_FPR
 A6 = rd('in_best_case_true.txt');
 [nmir, max_rate] = double_normalised_MIR(S, A6);
 wr('ref_double_normalised_mir.txt', nmir);

@@ -735,67 +735,6 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
   return mir_overall, adjacency, tp_fp_rate
 
 
-def mutual_information(Dat, grid_size):
-  """Mutual information and a chi-square independence measure, MATLAB `Mutual_info`.
-
-  Each pair is binned on an Nx x Ny grid of equal-width intervals between the
-  minimum and maximum of each node. As in the MATLAB code, intervals include
-  their left edge only, so points at a node's maximum fall outside every cell
-  (they still count in the total n used for the probabilities).
-
-  Parameters
-  ----------
-  Dat : array_like
-      Time series, shape (npts, M).
-  grid_size : int or (int, int)
-      Number of intervals, the same for both nodes or (Nx, Ny).
-
-  Returns
-  -------
-  MI : np.ndarray
-      Symmetric (M, M) matrix of mutual information (natural log); diagonal 0.
-  P_null : np.ndarray
-      Symmetric (M, M) matrix of `scipy.special.gammainc(chi2 / 2, v / 2)`,
-      which is MATLAB's `gammainc(v/2, chi2/2)` as written in `Mutual_info.m`
-      (MATLAB lists the upper limit first). Here chi2 is Pearson's statistic
-      for independence and v = (Nx - 1)(Ny - 1). Note that the standard
-      chi-square p-value would be `scipy.stats.chi2.sf(chi2, v)`.
-  """
-  from scipy.special import gammainc
-
-  Dat = np.asarray(Dat, dtype=np.float64)
-  n, M = Dat.shape
-  Nx, Ny = (grid_size, grid_size) if np.ndim(grid_size) == 0 else (int(grid_size[0]), int(grid_size[1]))
-  MI = np.zeros((M, M))
-  P_null = np.zeros((M, M))
-
-  for a in range(M):
-    for b in range(a + 1, M):
-      x, y = Dat[:, a], Dat[:, b]
-      edges_x = np.linspace(x.min(), x.max(), Nx + 1)
-      edges_y = np.linspace(y.min(), y.max(), Ny + 1)
-      # Interval i holds edges[i] <= value < edges[i + 1]
-      ix = np.searchsorted(edges_x, x, side="right") - 1
-      iy = np.searchsorted(edges_y, y, side="right") - 1
-      inside = (ix >= 0) & (ix < Nx) & (iy >= 0) & (iy < Ny)
-      o_xy = np.zeros((Nx, Ny))
-      np.add.at(o_xy, (ix[inside], iy[inside]), 1)
-
-      p_xy = o_xy / n
-      p_x = o_xy.sum(axis=1) / n
-      p_y = o_xy.sum(axis=0) / n
-      E_xy = n * np.outer(p_x, p_y)  # expected counts if independent
-
-      with np.errstate(divide="ignore", invalid="ignore"):
-        terms = p_xy * np.log(p_xy / np.outer(p_x, p_y))
-        chi_square = np.sum((o_xy - E_xy) ** 2 / E_xy)
-      MI[a, b] = MI[b, a] = np.sum(terms[p_xy != 0])
-      v = (Nx - 1) * (Ny - 1)
-      P_null[a, b] = P_null[b, a] = gammainc(chi_square / 2, v / 2)
-
-  return MI, P_null
-
-
 def _rescale_upper(I_c, guard_equal):
   """Min-max scale the upper triangle of I_c, as in the MATLAB double-normalised
   MIR: the minimum is taken over the nonzero entries of the whole matrix."""

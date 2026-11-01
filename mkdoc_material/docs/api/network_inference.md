@@ -32,7 +32,6 @@ The test can be repeated for growing data lengths (`time_range`) to see how much
 |----------|-------------|--------------|
 | `double_normalised_mir` | `double_normalised_MIR` | MIR min-max scaled per grid size, summed over grid sizes and scaled to a maximum of 1; with the true network, the best reconstruction rate over thresholds |
 | `lagged_double_mir` | `lagged_double_MIR` | As above, but each pair uses its largest MI over time lags \(-L,\dots,L\), for links with a delay |
-| `mutual_information` | `Mutual_info` | Plain MI on a fixed \(N_x \times N_y\) grid, with Pearson's chi-square measure of independence |
 | `best_case_tpr_fpr` | `best_case_TPR_FPR` | ROC sweep over all thresholds of a similarity matrix, and the threshold closest to perfect inference |
 
 ```python
@@ -47,9 +46,7 @@ best   # TPR, FPR, distance to (0, 1), threshold
 !!! note "Matching the thesis code"
     These functions reproduce the MATLAB code exactly, including its details:
     `lagged_double_mir` uses the slightly different grid-size rule written inside
-    `lagged_double_MIR.m`, and `mutual_information` drops points at each node's
-    maximum and returns MATLAB's `gammainc(v/2, chi2/2)` as `P_null`. The standard
-    chi-square p-value would be `scipy.stats.chi2.sf(chi2, v)`.
+    `lagged_double_MIR.m`.
 `plot_similarity_gap_bars` compares the MIR values with the true network and shows whether a threshold can separate true edges from non-edges.
 
 ## Example
@@ -82,8 +79,6 @@ Pass `nodes=(i, j)` to `MIR` to plot how MI and MIR for one pair change with the
 ::: complex_network_dynamics.network_inference.double_normalised_mir
 
 ::: complex_network_dynamics.network_inference.lagged_double_mir
-
-::: complex_network_dynamics.network_inference.mutual_information
 
 ::: complex_network_dynamics.network_inference.best_case_tpr_fpr
 
