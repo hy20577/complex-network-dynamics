@@ -211,8 +211,9 @@ def Grid(Dat):
       r += 1
 
   mean_N = np.mean(N_final)
-  N_min = int(np.round(0.1 * mean_N)) + 1
-  N_max = int(np.round(mean_N))
+  # Round halves up like MATLAB's round(); np.round would send 0.5 to 0
+  N_min = int(np.floor(0.1 * mean_N + 0.5)) + 1
+  N_max = int(np.floor(mean_N + 0.5))
 
   if N_max <= 2:
     N_max *= 2

@@ -17,9 +17,15 @@ dependencies = [
     "networkx"
 ]
 
+[project.optional-dependencies]
+dev = ["pytest"]
+
 [tool.setuptools.packages.find]
 where = ["."]
 
 [tool.setuptools.package-data]
 # Tells setuptools to bundle all files in the Data folder and subfolders
 "complex_network_dynamics" = ["Data/*", "Data/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

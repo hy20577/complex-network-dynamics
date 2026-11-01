@@ -28,3 +28,6 @@ mkdoc_material/site/
 
 # mkdocs-jupyter build cache
 .cache/
+
+# pytest
+.pytest_cache/
