@@ -786,6 +786,8 @@
       
         
       
+        
+      
     
     
     
@@ -1006,6 +1008,34 @@
   
   
     <li class="md-nav__item">
+      <a href="api/synchronisation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Synchronisation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="api/network_metrics/" class="md-nav__link">
         
   
@@ -1175,7 +1205,7 @@
 </li>
 <li>
 <p><strong><a href="api/continuous_models/">Continuous Models</a></strong></p>
-<p>Lorenz, coupled Lorenz networks and Lotka–Volterra, with Jacobians in NumPy and Numba.</p>
+<p>Lorenz, Rössler, Hindmarsh–Rose, Kuramoto (also stochastic) and Lotka–Volterra on networks, with Jacobians.</p>
 </li>
 <li>
 <p><strong><a href="api/integrators/">Integrators</a></strong></p>
@@ -1188,6 +1218,10 @@
 <li>
 <p><strong><a href="api/surrogates/">Surrogate Data</a></strong></p>
 <p>Amplitude-phase modulated surrogates (APMSD) and a statistical test that decides which links are real.</p>
+</li>
+<li>
+<p><strong><a href="api/synchronisation/">Synchronisation</a></strong></p>
+<p>Hilbert phases, the Kuramoto order parameter and pairwise phase locking.</p>
 </li>
 <li>
 <p><strong><a href="api/network_metrics/">Network Metrics</a></strong></p>
@@ -1235,11 +1269,11 @@
 </tr>
 <tr>
 <td><a href="api/discrete_models/"><code>discrete_models</code></a></td>
-<td><code>logistic</code>, <code>df_logistic</code>, <code>circle</code>, <code>df_circle</code>, <code>simulate_discrete_models</code></td>
+<td><code>logistic</code>, <code>df_logistic</code>, <code>circle</code>, <code>df_circle</code>, <code>composite_logistic</code>, <code>df_composite_logistic</code>, <code>simulate_discrete_models</code></td>
 </tr>
 <tr>
 <td><a href="api/continuous_models/"><code>continuous_models</code></a></td>
-<td><code>lorenz</code>, <code>lorenz_jacobian</code>, <code>coupled_lorenz</code>, <code>coupled_lorenz_jacobian</code>, <code>lotka_volterra</code>, <code>lotka_volterra_jacobian</code>, <code>lorenz_njit</code>, <code>lorenz_jacobian_njit</code>, <code>coupled_lorenz_njit</code>, <code>coupled_lorenz_jacobian_njit</code></td>
+<td><code>lorenz</code>, <code>lorenz_jacobian</code>, <code>coupled_lorenz</code>, <code>coupled_lorenz_jacobian</code>, <code>lotka_volterra</code>, <code>lotka_volterra_jacobian</code>, <code>kuramoto</code>, <code>kuramoto_jacobian</code>, <code>stochastic_kuramoto</code>, <code>rossler</code>, <code>rossler_jacobian</code>, <code>hindmarsh_rose</code>, <code>hindmarsh_rose_jacobian</code>, <code>lorenz_njit</code>, <code>lorenz_jacobian_njit</code>, <code>coupled_lorenz_njit</code>, <code>coupled_lorenz_jacobian_njit</code></td>
 </tr>
 <tr>
 <td><a href="api/integrators/"><code>integrators</code></a></td>
@@ -1248,6 +1282,10 @@
 <tr>
 <td><a href="api/network_inference/"><code>network_inference</code></a></td>
 <td><code>MIR</code>, <code>mir_surrogate_test</code>, <code>fdr_bh</code>, <code>tpr_fpr</code>, <code>double_normalised_mir</code>, <code>lagged_double_mir</code>, <code>best_case_tpr_fpr</code>, <code>plot_similarity_gap_bars</code>, <code>Grid</code>, <code>corr_decay</code>, <code>compute_single_pair_mi</code>, <code>location_jit</code></td>
+</tr>
+<tr>
+<td><a href="api/synchronisation/"><code>synchronisation</code></a></td>
+<td><code>hilbert_phases</code>, <code>global_sync</code>, <code>pairwise_sync</code>, <code>global_order</code>, <code>deviation_from_sync</code></td>
 </tr>
 <tr>
 <td><a href="api/surrogates/"><code>surrogates</code></a></td>
