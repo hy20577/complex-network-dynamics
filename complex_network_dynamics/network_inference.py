@@ -1,9 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Patch
-from scipy.sparse import csr_matrix
-from scipy.sparse.csgraph import shortest_path
-from numba import njit
+from numba import njit, prange
 from matplotlib.ticker import MaxNLocator
 
 from .surrogates import (
@@ -114,6 +112,31 @@ def plot_similarity_gap_bars(similarity_matrix, true_adjacency, sort_bars=True, 
         return None
         
 
+@njit(fastmath=True, cache=True)
+def _cell_rows_cols(Dat, grid):
+  """0-based row and column of each point of an (npts, 2) array on a grid x grid
+  partition of its min-max normalised range. Shared by location_jit and Grid
+  so both assign cells identically."""
+  min_v1, max_v1 = Dat[:, 0].min(), Dat[:, 0].max()
+  min_v2, max_v2 = Dat[:, 1].min(), Dat[:, 1].max()
+
+  range_v1 = (max_v1 - min_v1) if max_v1 != min_v1 else 1.0
+  range_v2 = (max_v2 - min_v2) if max_v2 != min_v2 else 1.0
+
+  scaled_0 = ((Dat[:, 0] - min_v1) / range_v1) * grid
+  scaled_1 = ((Dat[:, 1] - min_v2) / range_v2) * grid
+
+  # Cells (a, b] like MATLAB's ceil(): a point exactly on a grid line belongs
+  # to the lower cell, and the minimum (0) to the first cell
+  rows = np.ceil(scaled_0).astype(np.int64) - 1
+  cols = np.ceil(scaled_1).astype(np.int64) - 1
+
+  # Robustly clamp integer indices to [0, grid - 1]
+  rows = np.clip(rows, 0, grid - 1)
+  cols = np.clip(cols, 0, grid - 1)
+  return rows, cols
+
+
 @njit(fastmath=True)
 def location_jit(Dat, grid):
   """JIT-compiled spatial grid binning.
@@ -137,25 +160,7 @@ def location_jit(Dat, grid):
       Points per box, shape (grid**2, 2): cell index and point count.
   """
   npts = Dat.shape[0]
-
-  # Min-Max Normalization
-  min_v1, max_v1 = Dat[:, 0].min(), Dat[:, 0].max()
-  min_v2, max_v2 = Dat[:, 1].min(), Dat[:, 1].max()
-
-  range_v1 = (max_v1 - min_v1) if max_v1 != min_v1 else 1.0
-  range_v2 = (max_v2 - min_v2) if max_v2 != min_v2 else 1.0
-
-  scaled_0 = ((Dat[:, 0] - min_v1) / range_v1) * grid
-  scaled_1 = ((Dat[:, 1] - min_v2) / range_v2) * grid
-
-  # Cells (a, b] like MATLAB's ceil(): a point exactly on a grid line belongs
-  # to the lower cell, and the minimum (0) to the first cell
-  rows = np.ceil(scaled_0).astype(np.int64) - 1
-  cols = np.ceil(scaled_1).astype(np.int64) - 1
-
-  # Robustly clamp integer indices to [0, grid - 1]
-  rows = np.clip(rows, 0, grid - 1)
-  cols = np.clip(cols, 0, grid - 1)
+  rows, cols = _cell_rows_cols(Dat, grid)
 
   # Flat cell index: guaranteed 0 to (grid^2 - 1)
   flat_indices = cols + rows * grid
@@ -195,29 +200,10 @@ def Grid(Dat):
   N_min, N_max : int
       Smallest and largest grid size to use in `MIR` (N_max is capped at 30).
   """
-  Dat = np.asarray(Dat)
-  npts, M = Dat.shape
-
-  num_pairs = M * (M - 1) // 2
-  N_final = np.zeros(num_pairs, dtype=int)
-
-  r = 0
-  for k in range(M - 1):
-    for m in range(k + 1, M):
-      node12 = np.column_stack([Dat[:, k], Dat[:, m]])
-
-      N = 1
-      N_c = 0
-      mean_points = 1.0
-
-      while mean_points > N_c:
-        N += 1
-        _, ppb = location_jit(node12, N)
-        N_c = np.count_nonzero(ppb[:, 1])
-        mean_points = npts / (N**2)
-
-      N_final[r] = N - 1
-      r += 1
+  Dat = np.ascontiguousarray(Dat, dtype=np.float64)
+  M = Dat.shape[1]
+  pi, pj = np.triu_indices(M, k=1)
+  N_final = _grid_sizes_per_pair(Dat, pi, pj)
 
   mean_N = np.mean(N_final)
   # Round halves up like MATLAB's round(); np.round would send 0.5 to 0
@@ -234,6 +220,32 @@ def Grid(Dat):
     N_min = N_max
 
   return N_min, N_max
+
+@njit(parallel=True, cache=True)
+def _grid_sizes_per_pair(Dat, pi, pj):
+  """For each pair, the largest grid size N whose average points per cell,
+  npts / N^2, is not more than its number of occupied cells (eq. 17)."""
+  npts = Dat.shape[0]
+  N_final = np.empty(len(pi), dtype=np.int64)
+  for k in prange(len(pi)):
+    node12 = np.empty((npts, 2))
+    node12[:, 0] = Dat[:, pi[k]]
+    node12[:, 1] = Dat[:, pj[k]]
+
+    N = 1
+    N_c = 0
+    mean_points = 1.0
+    while mean_points > N_c:
+      N += 1
+      rows, cols = _cell_rows_cols(node12, N)
+      occupied = np.zeros(N * N, dtype=np.bool_)
+      for i in range(npts):
+        occupied[cols[i] + rows[i] * N] = True
+      N_c = np.count_nonzero(occupied)
+      mean_points = npts / (N**2)
+    N_final[k] = N - 1
+  return N_final
+
 
 def corr_decay(Dat, gridsize):
   """Correlation decay time for every pair of nodes.
@@ -255,48 +267,126 @@ def corr_decay(Dat, gridsize):
       Symmetric (M, M) matrix of decay times. The diagonal holds the decay
       time of each node paired with itself, which `MIR` uses as MATLAB does.
   """
-  Dat = np.asarray(Dat)
+  Dat = np.ascontiguousarray(Dat, dtype=np.float64)
   M = Dat.shape[1]
-  nob = gridsize**2
+  pi, pj = np.triu_indices(M)
+  _, decay = _pairs_mi_and_decay(Dat, pi, pj, int(gridsize))
 
   decay_matrix = np.zeros((M, M))
-
-  for i in range(M):
-    for j in range(i, M):
-      node12 = np.column_stack([Dat[:, i], Dat[:, j]])
-      coordinates, _ = location_jit(node12, gridsize)
-
-      cell_seq = coordinates[:, 3].astype(np.int64)
-      u = cell_seq[:-1]
-      v = cell_seq[1:]
-
-      # Remove self-transitions
-      mask = u != v
-      u_filtered = u[mask]
-      v_filtered = v[mask]
-
-      if len(u_filtered) == 0:
-        decay_matrix[i, j] = 1.0
-        decay_matrix[j, i] = 1.0
-        continue
-
-      data = np.ones(len(u_filtered), dtype=bool)
-      adj_sparse = csr_matrix(
-          (data, (u_filtered, v_filtered)), shape=(nob, nob)
-      )
-      adj_sparse = adj_sparse + adj_sparse.T
-
-      dist_matrix = shortest_path(
-          csgraph=adj_sparse, directed=False, unweighted=True
-      )
-      dist_matrix[np.isinf(dist_matrix)] = 0.0
-
-      max_dist = dist_matrix.max()
-      d_val = max_dist if max_dist > 0 else 1.0
-      decay_matrix[i, j] = d_val
-      decay_matrix[j, i] = d_val  # Symmetrize
-
+  decay_matrix[pi, pj] = decay
+  decay_matrix[pj, pi] = decay
   return decay_matrix
+
+
+# Neighbour lists of the transition graph in compressed form: the neighbours of
+# cell u are neighbours[start[u]:start[u + 1]], in increasing order. A dense
+# table is fastest for small grids (N <= 16), a sorted edge list for large ones.
+
+
+@njit(cache=True)
+def _neighbours_from_table(cells, nob):
+  adjacent = np.zeros((nob, nob), dtype=np.bool_)
+  for k in range(len(cells) - 1):
+    u = cells[k]
+    v = cells[k + 1]
+    if u != v:
+      adjacent[u, v] = True
+      adjacent[v, u] = True
+  start = np.zeros(nob + 1, dtype=np.int64)
+  for u in range(nob):
+    start[u + 1] = start[u] + np.count_nonzero(adjacent[u])
+  neighbours = np.empty(start[nob], dtype=np.int64)
+  k = 0
+  for u in range(nob):
+    for v in range(nob):
+      if adjacent[u, v]:
+        neighbours[k] = v
+        k += 1
+  return start, neighbours
+
+
+@njit(cache=True)
+def _neighbours_from_edge_list(cells, nob):
+  # Each transition u -> v as two directed edges coded u * nob + v; the sorted
+  # unique codes are the neighbour lists grouped by u
+  codes = np.empty(2 * max(len(cells) - 1, 0), dtype=np.int64)
+  m = 0
+  for k in range(len(cells) - 1):
+    u = cells[k]
+    v = cells[k + 1]
+    if u != v:
+      codes[m] = u * nob + v
+      codes[m + 1] = v * nob + u
+      m += 2
+  codes = np.unique(codes[:m])
+  start = np.zeros(nob + 1, dtype=np.int64)
+  for c in codes:
+    start[c // nob + 1] += 1
+  for u in range(nob):
+    start[u + 1] += start[u]
+  return start, codes % nob
+
+
+@njit(cache=True)
+def _decay_from_cells(cells, nob):
+  """Largest shortest-path length in the graph of cell-to-cell transitions.
+
+  Undirected and unweighted, self-transitions ignored; unreachable pairs do
+  not count. Returns 1 when there are no transitions or all distances are 0.
+  """
+  if nob <= 256:
+    start, neighbours = _neighbours_from_table(cells, nob)
+  else:
+    start, neighbours = _neighbours_from_edge_list(cells, nob)
+  if start[nob] == 0:
+    return 1.0
+
+  # Breadth-first search from every cell that has a neighbour
+  distance = np.full(nob, -1, dtype=np.int64)
+  queue = np.empty(nob, dtype=np.int64)
+  longest = 0
+  for source in range(nob):
+    if start[source + 1] == start[source]:
+      continue
+    distance[source] = 0
+    queue[0] = source
+    head = 0
+    tail = 1
+    while head < tail:
+      u = queue[head]
+      head += 1
+      for k in range(start[u], start[u + 1]):
+        v = neighbours[k]
+        if distance[v] < 0:
+          distance[v] = distance[u] + 1
+          if distance[v] > longest:
+            longest = distance[v]
+          queue[tail] = v
+          tail += 1
+    for k in range(tail):  # reset only the cells this search reached
+      distance[queue[k]] = -1
+
+  return float(longest) if longest > 0 else 1.0
+
+
+@njit(parallel=True, cache=True)
+def _pairs_mi_and_decay(Dat, pi, pj, N):
+  """MI and correlation decay time for the node pairs (pi[k], pj[k]) at grid size N.
+
+  Each pair is binned once and the pairs run in parallel.
+  """
+  n_pairs = len(pi)
+  npts = Dat.shape[0]
+  mi = np.empty(n_pairs)
+  decay = np.empty(n_pairs)
+  for k in prange(n_pairs):
+    node12 = np.empty((npts, 2))
+    node12[:, 0] = Dat[:, pi[k]]
+    node12[:, 1] = Dat[:, pj[k]]
+    pair_mi, coordinates, _ = compute_single_pair_mi(node12, N)
+    mi[k] = pair_mi
+    decay[k] = _decay_from_cells(coordinates[:, 3].astype(np.int64), N * N)
+  return mi, decay
 
 
 @njit(fastmath=True)
@@ -375,8 +465,9 @@ def MIR(Dat, N_range=None, nodes=None):
   Mi : np.ndarray
       Mutual information matrix, shape (M, M).
   """
-  Dat = np.asarray(Dat, dtype=np.float64)
+  Dat = np.ascontiguousarray(Dat, dtype=np.float64)
   M = Dat.shape[1]
+  pi, pj = np.triu_indices(M)  # pairs with i <= j, diagonal included
 
   if N_range is None:
     N_min, N_max = Grid(Dat)
@@ -394,23 +485,15 @@ def MIR(Dat, N_range=None, nodes=None):
     I_s = np.zeros((M, M))
     I_c = np.zeros((M, M))
 
-    decay_mat = corr_decay(Dat, N)
+    mi, t = _pairs_mi_and_decay(Dat, pi, pj, int(N))
+    I_s[pi, pj] = mi
+    I_s[pj, pi] = mi
+    I_c[pi, pj] = mi / t
+    I_c[pj, pi] = mi / t
 
-    for i in range(M):
-      for j in range(i, M):
-        node12 = np.column_stack([Dat[:, i], Dat[:, j]])
-        MI, _, _ = compute_single_pair_mi(node12, N)
-
-        t = decay_mat[i, j] if decay_mat[i, j] > 0 else 1.0
-
-        I_s[i, j] = MI
-        I_s[j, i] = MI
-        I_c[i, j] = MI / t
-        I_c[j, i] = MI / t
-
-        if nodes is not None and nodes[0] == i and nodes[1] == j:
-          Mi_MIR_over_partitions[0, idx] = MI
-          Mi_MIR_over_partitions[1, idx] = MI / t
+    if nodes is not None:
+      Mi_MIR_over_partitions[0, idx] = I_s[nodes[0], nodes[1]]
+      Mi_MIR_over_partitions[1, idx] = I_c[nodes[0], nodes[1]]
 
     Is += I_s
     Ic += I_c

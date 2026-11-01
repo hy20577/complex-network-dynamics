@@ -23,6 +23,7 @@ from complex_network_dynamics import (
     lorenz_jacobian,
     lorenz_jacobian_njit,
     lorenz_njit,
+    mir_surrogate_test,
     rk4_with_lyapunov,
     simulate_discrete_models,
     solve_ivp_with_lyapunov,
@@ -43,6 +44,9 @@ def main():
     A16 = load_network("16nodes")
     A12 = load_network("12nodes")
     traj16, _ = simulate_discrete_models(rng.random(16), logistic, df_logistic, A16, t=5000, alpha=0.1, r=4.0)
+    noisy8 = rng.standard_normal((4000, 8))
+    MIR(noisy8[:200, :3], N_range=(3, 4))  # compile
+    mir_surrogate_test(traj16[:300, :4], p_sl=0.5, rng=0)  # compile
     x0_lorenz = np.ones(3)
     solver = build_rk4_lyapunov(lorenz_njit, lorenz_jacobian_njit)
     solver(x0_lorenz, 0.0, 0.01, 100, 10, (10.0, 28.0, 8 / 3))  # compile
@@ -53,6 +57,9 @@ def main():
         ("Grid: 16 nodes, 5k points", lambda: Grid(traj16), 3),
         ("corr_decay: 16 nodes, 5k points, N=10", lambda: corr_decay(traj16, 10), 3),
         ("MIR: 16 nodes, 5k points, N=3..10", lambda: MIR(traj16, N_range=(3, 10)), 1),
+        ("MIR: 8 nodes, 4k points, N=20..30", lambda: MIR(noisy8, N_range=(20, 30)), 1),
+        ("mir_surrogate_test: 16 nodes, 5k points, 100 surrogates",
+         lambda: mir_surrogate_test(traj16, p_sl=0.01, rng=0), 1),
         ("rk4_with_lyapunov: Lorenz, 50k steps",
          lambda: rk4_with_lyapunov(lorenz, x0_lorenz, 0.0, 0.01, 50_000, df=lorenz_jacobian), 1),
         ("rk4_with_lyapunov: coupled Lorenz 12 nodes, 5k steps",
