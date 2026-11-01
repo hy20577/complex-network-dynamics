@@ -15,6 +15,16 @@ For every pair of nodes \((i, j)\):
 4. MIR is \(I_{ij} / T_{ij}\), averaged over a range of grid sizes \(N\) chosen by `Grid`.
 
 Pairs with high MIR are likely to be directly connected.
+
+## Deciding which links are real: surrogate test
+
+A high MIR alone does not say where to draw the line between links and non-links. `mir_surrogate_test` compares the MIR of each pair with its MIR on \(1/p_{sl}\) [surrogate datasets](surrogates.md):
+
+1. The p-value of a pair is the fraction of surrogates whose MIR is at least the MIR of the data.
+2. The Benjamini–Hochberg procedure (`fdr_bh`) controls the false discovery rate, with \(q = p_{sl}/100\) by default, as in the thesis code.
+3. If the true network is known, `tpr_fpr` gives the true and false positive rates.
+
+The test can be repeated for growing data lengths (`time_range`) to see how much data the inference needs.
 `plot_similarity_gap_bars` compares the MIR values with the true network and shows whether a threshold can separate true edges from non-edges.
 
 ## Example
@@ -37,6 +47,12 @@ Pass `nodes=(i, j)` to `MIR` to plot how MI and MIR for one pair change with the
 ## API
 
 ::: complex_network_dynamics.network_inference.MIR
+
+::: complex_network_dynamics.network_inference.mir_surrogate_test
+
+::: complex_network_dynamics.network_inference.fdr_bh
+
+::: complex_network_dynamics.network_inference.tpr_fpr
 
 ::: complex_network_dynamics.network_inference.plot_similarity_gap_bars
 

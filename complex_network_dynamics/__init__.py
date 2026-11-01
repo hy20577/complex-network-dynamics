@@ -3,7 +3,8 @@ from .integrators import euler_with_lyapunov, rk4_with_lyapunov, solve_ivp_with_
 from .continuous_models import lotka_volterra, lotka_volterra_jacobian, lorenz, lorenz_jacobian, coupled_lorenz, coupled_lorenz_jacobian,  lorenz_njit, lorenz_jacobian_njit, coupled_lorenz_njit, coupled_lorenz_jacobian_njit
 from .network_metrics import calculate_distance_metrics
 from .datasets import load_network
-from .network_inference import plot_similarity_gap_bars, location_jit, Grid, corr_decay, compute_single_pair_mi, MIR
+from .network_inference import plot_similarity_gap_bars, location_jit, Grid, corr_decay, compute_single_pair_mi, MIR, fdr_bh, tpr_fpr, mir_surrogate_test
+from .surrogates import phaseran, amplitude_phase_surrogates, random_surrogates, correlated_random_surrogates
 
 __all__ = [
     "df_logistic",
@@ -15,5 +16,7 @@ __all__ = [
        "coupled_lorenz", "coupled_lorenz_jacobian",
        "lorenz_njit", "lorenz_jacobian_njit", "coupled_lorenz_njit", "coupled_lorenz_jacobian_njit", 
       "calculate_distance_metrics", "load_network", 
-      "plot_similarity_gap_bars", "location_jit", "Grid", "corr_decay", "compute_single_pair_mi", "MIR"
+      "plot_similarity_gap_bars", "location_jit", "Grid", "corr_decay", "compute_single_pair_mi", "MIR",
+      "fdr_bh", "tpr_fpr", "mir_surrogate_test",
+      "phaseran", "amplitude_phase_surrogates", "random_surrogates", "correlated_random_surrogates"
       ]

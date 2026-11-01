@@ -8,6 +8,7 @@ The package provides:
 - **Continuous-time models**: Lorenz, coupled Lorenz networks and Lotka–Volterra, with their Jacobians (plain NumPy and Numba-compiled versions).
 - **Integrators with Lyapunov exponents**: Euler, RK4, SciPy `solve_ivp`, and a fast Numba RK4.
 - **Network inference**: Mutual Information Rate (MIR) to reconstruct a network from node time series, plus a plot to judge how well the inferred edges separate from non-edges.
+- **Surrogate data test**: amplitude-phase modulated surrogate data (APMSD) and a false-discovery-rate test that decides which inferred links are real.
 - **Network metrics**: diameter and average shortest path length, for connected and disconnected graphs.
 - **Built-in datasets**: example adjacency matrices in the `Data` folder.
 
@@ -37,6 +38,7 @@ complex_network_dynamics/
 │   ├── integrators.py         # Euler / RK4 / solve_ivp with Lyapunov spectrum
 │   ├── network_inference.py   # MIR, mutual information, inference plots
 │   ├── network_metrics.py     # diameter and average path length
+│   ├── surrogates.py          # APMSD, phase-randomised and random surrogates
 │   └── Data/
 │       ├── 12nodes.txt
 │       └── 16nodes.txt

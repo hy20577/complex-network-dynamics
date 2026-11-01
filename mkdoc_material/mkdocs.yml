@@ -42,6 +42,7 @@ nav:
       - Continuous Models: api/continuous_models.md
       - Integrators: api/integrators.md
       - Network Inference: api/network_inference.md
+      - Surrogate Data: api/surrogates.md
       - Network Metrics: api/network_metrics.md
   - Publications: publications.md
 

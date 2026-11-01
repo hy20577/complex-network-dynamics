@@ -9,8 +9,9 @@ commit `d0e88a9`).
 
 | Path | Contents |
 |------|----------|
-| `matlab/original/` | Unmodified thesis functions: `MIR`, `Grid`, `location`, `corr_decay`, `Log_generator`, `RK4`, `Euler`, `lorenz_ext` |
-| `matlab/shims/` | Small stand-ins for MATLAB-only functions Octave lacks: `graph`, `distances` (breadth-first search) and `waitbar` (does nothing) |
+| `matlab/original/` | Unmodified thesis functions: `MIR`, `Grid`, `location`, `corr_decay`, `Log_generator`, `RK4`, `Euler`, `lorenz_ext`, `Mir_surrogate_data`; `fdr_bh` and `TPR_FPR` are extracted unchanged from `Mir_surrogate_data.m` to test them on their own |
+| `matlab/shims/` | Small stand-ins for what Octave lacks: `graph`, `distances` (breadth-first search), `waitbar` (does nothing) and `MatlabString` (makes `==` compare whole strings, like MATLAB string objects) |
+| `matlab/shims_fixed_surrogates/` | Used only while running `Mir_surrogate_data`: an `HT_mix_A_theta` that returns stored surrogates in order, so the Python test can use exactly the same ones, and MATLAB's `round(x, n)` |
 | `matlab/generate_reference.m` | Runs the original functions on the inputs and writes the outputs |
 | `make_inputs.py` | Writes the fixed input data (`data/in_*.txt`) |
 | `data/` | Inputs (`in_*.txt`) and MATLAB outputs (`ref_*.txt`), comma-separated, 17 significant digits |

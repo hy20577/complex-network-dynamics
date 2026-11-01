@@ -79,4 +79,31 @@ wr('ref_rk4_lorenz_lyapunov.txt', lya(end, :));
 wr('ref_euler_lorenz_orbits.txt', orbits);
 wr('ref_euler_lorenz_lyapunov.txt', lya(end, :));
 
+%% fdr_bh and TPR_FPR (extracted unchanged from Mir_surrogate_data.m)
+P = rd('in_fdr_pvals.txt');
+for c = 1:size(P, 1)
+    [h, crit_p, adj_ci_cvrg, adj_p] = fdr_bh(P(c, :), 0.05, 'pdep', 'no');
+    wr(sprintf('ref_fdr_pdep_case%d.txt', c), [double(h); adj_p; crit_p * ones(1, 20); adj_ci_cvrg * ones(1, 20)]);
+    [h, crit_p, adj_ci_cvrg, adj_p] = fdr_bh(P(c, :), 0.05, 'dep', 'no');
+    wr(sprintf('ref_fdr_dep_case%d.txt', c), [double(h); adj_p; crit_p * ones(1, 20); adj_ci_cvrg * ones(1, 20)]);
+end
+[tpr, fpr] = TPR_FPR(rd('in_tpr_true.txt'), rd('in_tpr_inferred.txt'));
+wr('ref_tpr_fpr.txt', [tpr, fpr]);
+
+%% Mir_surrogate_data with stored surrogates (see shims_fixed_surrogates)
+global FIXED_SURROGATES FIXED_SURROGATE_COUNTER
+S5 = S(:, 1:5);
+stacked = rd('in_surrogate_fixed.txt');
+FIXED_SURROGATES = permute(reshape(stacked', 5, 1000, 20), [2 1 3]);
+FIXED_SURROGATE_COUNTER = 0;
+addpath(fullfile(here, 'shims_fixed_surrogates'));
+[mir_all, adj_fdr, tp_fp] = Mir_surrogate_data(S5, 0.1, [500 1000], MatlabString("HT_mix_A_theta"), ...
+                                               rd('in_surrogate_true_network.txt'), '', 1, 0.5);
+rmpath(fullfile(here, 'shims_fixed_surrogates'));
+for it = 1:2
+    wr(sprintf('ref_surrogate_mir_overall_len%d.txt', it), mir_all(:, :, it));
+    wr(sprintf('ref_surrogate_adjacency_len%d.txt', it), adj_fdr(:, :, it));
+end
+wr('ref_surrogate_tp_fp.txt', tp_fp);
+
 disp('Reference outputs written.');

@@ -6,7 +6,13 @@ from pathlib import Path
 
 import numpy as np
 
-from complex_network_dynamics import df_logistic, load_network, logistic, simulate_discrete_models
+from complex_network_dynamics import (
+    amplitude_phase_surrogates,
+    df_logistic,
+    load_network,
+    logistic,
+    simulate_discrete_models,
+)
 
 DATA = Path(__file__).parent / "data"
 
@@ -38,6 +44,29 @@ def main():
 
     # Lorenz initial state
     save("in_lorenz_x0.txt", np.array([1.0, 1.0, 1.0]))
+
+    # fdr_bh: plain, with ties and zeros, and with nothing significant
+    save("in_fdr_pvals.txt", np.vstack([
+        rng.random(20) ** 3,
+        np.array([0, 0, 0.1, 0.1, 0.1, 0.2, 0.5, 0.5, 0.9, 1.0, 0, 0.3, 0.3, 0.05, 0.01, 0.01, 0.7, 0.8, 0.2, 0.4]),
+        0.5 + 0.5 * rng.random(20),
+    ]))
+
+    # TPR_FPR: true network and an inferred network with some errors
+    true_net = load_network("12nodes")
+    inferred = true_net.copy()
+    inferred[0, 1] = inferred[1, 0] = 0
+    inferred[2, 7] = inferred[7, 2] = 1
+    inferred[4, 9] = inferred[9, 4] = 1
+    save("in_tpr_true.txt", true_net)
+    save("in_tpr_inferred.txt", inferred)
+
+    # Mir_surrogate_data: 5 nodes of the MIR series, their true links, and fixed
+    # surrogates (10 per data length, lengths 500 and 1000) in call order
+    series = np.loadtxt(DATA / "in_mir_series.txt", delimiter=",")[:, :5]
+    save("in_surrogate_true_network.txt", A16[:5, :5])
+    surrogates = amplitude_phase_surrogates(series, n_surrogates=20, rng=rng)
+    save("in_surrogate_fixed.txt", surrogates.reshape(-1, 5))  # stacked: 20 blocks of 1000 rows
 
 
 if __name__ == "__main__":
