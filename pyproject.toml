@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,6 +7,26 @@ name = "complex-network-dynamics"
 version = "0.1.0"
 description = "Simulation and stability analysis of nonlinear dynamical systems and Complex Networks"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Hüseyin Yıldırım" }]
+keywords = [
+    "complex networks",
+    "network inference",
+    "mutual information rate",
+    "surrogate data",
+    "chaos",
+    "Lyapunov exponents",
+    "synchronisation",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics",
+]
 # Safe bound if you want to ensure Numba compatibility:
 requires-python = ">=3.10, <3.14"
 dependencies = [
@@ -17,11 +37,18 @@ dependencies = [
     "networkx"
 ]
 
+[project.urls]
+Homepage = "https://hy20577.github.io/complex-network-dynamics/"
+Documentation = "https://hy20577.github.io/complex-network-dynamics/"
+Source = "https://github.com/hy20577/complex-network-dynamics"
+Paper = "https://doi.org/10.1016/j.chaos.2024.115554"
+
 [project.optional-dependencies]
 dev = ["pytest"]
 
 [tool.setuptools.packages.find]
 where = ["."]
+include = ["complex_network_dynamics*"]
 
 [tool.setuptools.package-data]
 # Tells setuptools to bundle all files in the Data folder and subfolders

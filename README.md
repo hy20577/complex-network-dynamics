@@ -17,7 +17,13 @@ The package provides:
 
 Requires Python 3.10–3.13 (the upper bound keeps Numba compatible).
 
-From the project root:
+Install the latest version from GitHub:
+
+```bash
+pip install git+https://github.com/hy20577/complex-network-dynamics.git
+```
+
+Or, for development, from the project root of a clone:
 
 ```bash
 pip install -e .
@@ -147,3 +153,7 @@ If you use this library, please cite:
 > Hüseyin Yıldırım and Chris G. Antonopoulos, "Network inference using mutual information rate, statistical tests and amplitude-phase modulated surrogate data", *Chaos, Solitons & Fractals* 188, 115554 (2024). https://doi.org/10.1016/j.chaos.2024.115554
 
 The full method is described in the PhD thesis: Hüseyin Yıldırım, University of Essex (2024), https://repository.essex.ac.uk/39296/
+
+## License
+
+Released under the [MIT License](LICENSE).
