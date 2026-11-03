@@ -22,3 +22,4 @@ Each page shows the notebook with its saved results, and you can download it wit
 ## Information theory
 
 8. **[Correlation and Mutual Information](08_correlation_and_mutual_information.ipynb)**: Pearson correlation versus mutual information for detecting links.
+9. **[Network Inference with MIR and APMSD](09_apmsd_network_inference.ipynb)**: the full method of the paper on its 4-node example, compared with the published results.

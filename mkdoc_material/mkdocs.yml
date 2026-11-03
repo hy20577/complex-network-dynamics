@@ -36,6 +36,7 @@ nav:
       - Numerical Integration of ODEs: tutorials/06_numerical_integration_odes.ipynb
       - Lorenz System with the Library: tutorials/07_lorenz_with_the_library.ipynb
       - Correlation and Mutual Information: tutorials/08_correlation_and_mutual_information.ipynb
+      - Network Inference with MIR and APMSD: tutorials/09_apmsd_network_inference.ipynb
   - API Reference:
       - Datasets: api/datasets.md
       - Discrete Models: api/discrete_models.md
