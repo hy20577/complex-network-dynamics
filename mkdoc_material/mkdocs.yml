@@ -1,5 +1,5 @@
 site_name: Complex Network Dynamics
-site_description: Simulation and stability analysis of nonlinear dynamical systems and complex networks
+site_description: "Python toolkit for complex networks of nonlinear oscillators: simulate maps and ODE networks, compute Lyapunov spectra and synchronisation, and infer network structure from time series."
 repo_url: https://github.com/hy20577/complex-network-dynamics
 repo_name: hy20577/complex-network-dynamics
 site_url: https://hy20577.github.io/complex-network-dynamics/

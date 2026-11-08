@@ -1,6 +1,6 @@
 # Complex Network Dynamics
 
-Simulation and stability analysis of nonlinear dynamical systems and complex networks.
+Python toolkit for complex networks of nonlinear oscillators: simulate maps and ODE networks, compute Lyapunov spectra and synchronisation, and infer network structure from time series.
 
 ## Features
 
