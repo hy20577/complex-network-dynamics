@@ -85,8 +85,6 @@ def circle(x0, r=0.35, K=6.9115):
 def composite_logistic(x0, r=4.0, n=3):
     """Logistic map applied n times: f^n(x) = f(f(...f(x))).
 
-    MATLAB `comp_logis` (used by `Composite_log_generator.m`).
-
     Parameters
     ----------
     x0 : float or array_like
@@ -110,9 +108,6 @@ def composite_logistic(x0, r=4.0, n=3):
 def df_composite_logistic(x, r=4.0, n=3):
     """Derivative of `composite_logistic` by the chain rule:
     prod_{k=0}^{n-1} f'(f^k(x)), with f'(x) = r (1 - 2x).
-
-    MATLAB `Composite_log_generator.m` uses this derivative with the order n
-    it is given, but always iterates the map with order 3; here both use n.
 
     Parameters
     ----------
@@ -165,8 +160,7 @@ def simulate_discrete_models(x0, f, df, A, t, alpha=0.1, n_transient=1000, **par
     degree_safe = np.where(degree == 0, 1.0, degree)
     W = A / degree_safe[:, np.newaxis]
 
-    # Isolated nodes keep a zero row in W, so they evolve as (1 - alpha) * f(x_i),
-    # matching the thesis MATLAB code (Log_generator.m)
+    # Isolated nodes keep a zero row in W, so they evolve as (1 - alpha) * f(x_i)
 
     # Effective linear coupling operator: M_net = (1 - alpha) * I + alpha * W
     M_net = (1.0 - alpha) * np.eye(M) + alpha * W

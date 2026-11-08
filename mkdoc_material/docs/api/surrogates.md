@@ -4,12 +4,12 @@ Surrogate datasets keep some properties of the data and destroy others. Comparin
 
 All generators take time series as an `(n_points, n_nodes)` array and return `(n_surrogates, n_points, n_nodes)`. Pass `rng` (a seed or `numpy.random.Generator`) for reproducible results.
 
-| Function | MATLAB name | Keeps | Destroys |
-|----------|-------------|-------|----------|
-| `amplitude_phase_surrogates` | `HT_mix_A_theta` | Range of amplitudes and phases | Amplitude correlation and phase synchronisation (fractions `pc_amplitude`, `pc_phase` of time points) |
-| `phaseran` | `twnsd` | Power spectrum of each node and linear cross-correlations | Nonlinear structure |
-| `random_surrogates` | `randsd` | Shape only | Everything |
-| `correlated_random_surrogates` | `corr_randsd` | A fixed correlation between all pairs | Everything else |
+| Function | Keeps | Destroys |
+|----------|-------|----------|
+| `amplitude_phase_surrogates` | Range of amplitudes and phases | Amplitude correlation and phase synchronisation (fractions `pc_amplitude`, `pc_phase` of time points) |
+| `phaseran` | Power spectrum of each node and linear cross-correlations | Nonlinear structure |
+| `random_surrogates` | Shape only | Everything |
+| `correlated_random_surrogates` | A fixed correlation between all pairs | Everything else |
 
 ## Amplitude-phase modulated surrogate data (APMSD)
 
@@ -37,9 +37,6 @@ mir_overall, adjacency, tp_fp = mir_surrogate_test(
 adjacency[-1]   # inferred network from the longest data
 tp_fp           # data length, true positive rate, false positive rate
 ```
-
-!!! note "Not included"
-    The MATLAB option `IAAFT2` uses a third-party GPL-licensed file and is not part of this library.
 
 ## API
 

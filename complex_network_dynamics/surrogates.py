@@ -17,7 +17,7 @@ def phaseran(data, n_surrogates=1, rng=None):
     ----------
     data : array_like
         Time series, shape (n_points, n_nodes). If n_points is even, the last
-        sample is dropped, as in the MATLAB code.
+        sample is dropped.
     n_surrogates : int, optional
         Number of surrogate datasets. Default is 1.
     rng : numpy.random.Generator or int, optional
@@ -50,7 +50,7 @@ def phaseran(data, n_surrogates=1, rng=None):
 
 
 def amplitude_phase_surrogates(data, n_surrogates=1, pc_amplitude=1.0, pc_phase=0.5, rng=None):
-    """Amplitude-phase modulated surrogate data (APMSD), MATLAB `HT_mix_A_theta`.
+    """Amplitude-phase modulated surrogate data (APMSD).
 
     Each node's analytic signal A(t) exp(i theta(t)) is computed with the
     Hilbert transform. In every surrogate, a random fraction `pc_amplitude` of
@@ -110,8 +110,6 @@ def amplitude_phase_surrogates(data, n_surrogates=1, pc_amplitude=1.0, pc_phase=
 def random_surrogates(data, n_surrogates=1, rng=None):
     """Uniform random surrogates in [0, 1) with the same shape as the data.
 
-    MATLAB `Mir_surrogate_data` option "randsd".
-
     Parameters
     ----------
     data : array_like
@@ -134,9 +132,9 @@ def random_surrogates(data, n_surrogates=1, rng=None):
 def correlated_random_surrogates(data, n_surrogates=1, correlation=0.5, n_points=1000, rng=None):
     """Gaussian surrogates with the same correlation between every pair of nodes.
 
-    MATLAB `Mir_surrogate_data` option "corr_randsd": standard normal samples
+    Standard normal samples
     multiplied by the Cholesky factor of a matrix with ones on the diagonal and
-    `correlation` elsewhere. As in the MATLAB code, the length is fixed
+    `correlation` elsewhere. The length is fixed
     (`n_points`) rather than taken from the data.
 
     Parameters
@@ -161,5 +159,5 @@ def correlated_random_surrogates(data, n_surrogates=1, correlation=0.5, n_points
     n_nodes = np.shape(data)[1]
     R = np.full((n_nodes, n_nodes), correlation)
     np.fill_diagonal(R, 1.0)
-    upper = np.linalg.cholesky(R).T  # MATLAB chol() returns the upper factor
+    upper = np.linalg.cholesky(R).T  # Upper Cholesky factor
     return rng.standard_normal((n_surrogates, n_points, n_nodes)) @ upper

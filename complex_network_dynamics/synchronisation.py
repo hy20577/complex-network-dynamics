@@ -5,7 +5,7 @@ from scipy.signal import hilbert
 
 
 def hilbert_phases(data):
-    """Instantaneous phases from the Hilbert transform, MATLAB `hilbert_phases`.
+    """Instantaneous phases from the Hilbert transform.
 
     Parameters
     ----------
@@ -22,7 +22,7 @@ def hilbert_phases(data):
 
 
 def global_sync(phases):
-    """Running average of the Kuramoto order parameter, MATLAB `global_sync`.
+    """Running average of the Kuramoto order parameter.
 
     The order parameter at time t is
 
@@ -47,7 +47,7 @@ def global_sync(phases):
 
 
 def pairwise_sync(phases):
-    """Phase synchronisation between every pair of nodes, MATLAB `pairwise_sync_of_phases`.
+    """Phase synchronisation between every pair of nodes.
 
     r_ij = |mean_t exp(i (theta_i(t) - theta_j(t)))| (Gomez-Gardenes et al., 2010),
     1 for phase-locked nodes and near 0 for independent ones.
@@ -68,7 +68,7 @@ def pairwise_sync(phases):
 
 
 def global_order(data):
-    """Synchronisation measure R(t) of Rubido et al., MATLAB `globalorder_map`.
+    """Synchronisation measure R(t) of Rubido et al.
 
     R(t) is the variance over time of the network average, divided by the
     network average of each node's variance over time, both computed from
@@ -84,7 +84,7 @@ def global_order(data):
     -------
     np.ndarray
         Shape (n_points,). The first value is undefined (the variance of a
-        single point, 0/0) and returned as NaN; MATLAB's rounding can give 0 there.
+        single point, 0/0) and returned as NaN.
     """
     X = np.asarray(data, dtype=float)
     t = np.arange(1, len(X) + 1)
@@ -96,10 +96,10 @@ def global_order(data):
 
 
 def deviation_from_sync(x1, x2, tvalues):
-    """Average distance between two oscillators over time, MATLAB `deviation_from_sync`.
+    """Average distance between two oscillators over time.
 
     E(t_i) = (1 / t_i) * sum_{k <= i} |x2(t_k) - x1(t_k)|, for i = 2, ..., n - 2
-    (1-based, as in the MATLAB code).
+    (1-based).
 
     Parameters
     ----------
@@ -111,8 +111,7 @@ def deviation_from_sync(x1, x2, tvalues):
     Returns
     -------
     np.ndarray
-        Shape (len(tvalues) - 3,). The MATLAB function returns one more
-        element, a trailing 0 that is never filled in; it is left out here.
+        Shape (len(tvalues) - 3,).
     """
     x1 = np.asarray(x1, dtype=float)
     x2 = np.asarray(x2, dtype=float)

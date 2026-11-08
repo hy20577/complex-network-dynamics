@@ -26,13 +26,13 @@ A high MIR alone does not say where to draw the line between links and non-links
 
 The test can be repeated for growing data lengths (`time_range`) to see how much data the inference needs.
 
-## More tools from the thesis code
+## More MIR tools
 
-| Function | MATLAB name | What it does |
-|----------|-------------|--------------|
-| `double_normalised_mir` | `double_normalised_MIR` | MIR min-max scaled per grid size, summed over grid sizes and scaled to a maximum of 1; with the true network, the best reconstruction rate over thresholds |
-| `lagged_double_mir` | `lagged_double_MIR` | As above, but each pair uses its largest MI over time lags \(-L,\dots,L\), for links with a delay |
-| `best_case_tpr_fpr` | `best_case_TPR_FPR` | ROC sweep over all thresholds of a similarity matrix, and the threshold closest to perfect inference |
+| Function | What it does |
+|----------|--------------|
+| `double_normalised_mir` | MIR min-max scaled per grid size, summed over grid sizes and scaled to a maximum of 1; with the true network, the best reconstruction rate over thresholds |
+| `lagged_double_mir` | As above, but each pair uses its largest MI over time lags \(-L,\dots,L\), for links with a delay |
+| `best_case_tpr_fpr` | ROC sweep over all thresholds of a similarity matrix, and the threshold closest to perfect inference |
 
 ```python
 from complex_network_dynamics import double_normalised_mir, best_case_tpr_fpr, load_network
@@ -43,10 +43,10 @@ roc, best, inferred = best_case_tpr_fpr(normalised, A)
 best   # TPR, FPR, distance to (0, 1), threshold
 ```
 
-!!! note "Matching the thesis code"
-    These functions reproduce the MATLAB code exactly, including its details:
-    `lagged_double_mir` uses the slightly different grid-size rule written inside
-    `lagged_double_MIR.m`.
+!!! note "Grid sizes"
+    `lagged_double_mir` uses a slightly different grid-size rule from `Grid`:
+    its search continues while the average points per cell equals the number
+    of occupied cells, and the largest grid size is not capped at 30.
 `plot_similarity_gap_bars` compares the MIR values with the true network and shows whether a threshold can separate true edges from non-edges.
 
 ## Example

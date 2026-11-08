@@ -126,7 +126,7 @@ def _cell_rows_cols(Dat, grid):
   scaled_0 = ((Dat[:, 0] - min_v1) / range_v1) * grid
   scaled_1 = ((Dat[:, 1] - min_v2) / range_v2) * grid
 
-  # Cells (a, b] like MATLAB's ceil(): a point exactly on a grid line belongs
+  # Cells (a, b], from ceil(): a point exactly on a grid line belongs
   # to the lower cell, and the minimum (0) to the first cell
   rows = np.ceil(scaled_0).astype(np.int64) - 1
   cols = np.ceil(scaled_1).astype(np.int64) - 1
@@ -206,7 +206,7 @@ def Grid(Dat):
   N_final = _grid_sizes_per_pair(Dat, pi, pj)
 
   mean_N = np.mean(N_final)
-  # Round halves up like MATLAB's round(); np.round would send 0.5 to 0
+  # Round halves up; np.round would send 0.5 to 0
   N_min = int(np.floor(0.1 * mean_N + 0.5)) + 1
   N_max = int(np.floor(mean_N + 0.5))
 
@@ -225,8 +225,8 @@ def Grid(Dat):
 def _grid_sizes_per_pair(Dat, pi, pj, inclusive=False):
   """For each pair, the largest grid size N whose average points per cell,
   npts / N^2, is not more than its number of occupied cells (eq. 17).
-  With inclusive=True the search continues while they are equal, as in the
-  Grid copy inside lagged_double_MIR.m."""
+  With inclusive=True the search continues while they are equal, the rule
+  used by `lagged_double_mir`."""
   npts = Dat.shape[0]
   N_final = np.empty(len(pi), dtype=np.int64)
   for k in prange(len(pi)):
@@ -267,7 +267,7 @@ def corr_decay(Dat, gridsize):
   -------
   np.ndarray
       Symmetric (M, M) matrix of decay times. The diagonal holds the decay
-      time of each node paired with itself, which `MIR` uses as MATLAB does.
+      time of each node paired with itself, which `MIR` uses.
   """
   Dat = np.ascontiguousarray(Dat, dtype=np.float64)
   M = Dat.shape[1]
@@ -534,7 +534,7 @@ def MIR(Dat, N_range=None, nodes=None):
 
 
 def fdr_bh(pvals, q=0.05, method="pdep"):
-  """Benjamini-Hochberg false discovery rate procedure, MATLAB `fdr_bh`.
+  """Benjamini-Hochberg false discovery rate procedure.
 
   Parameters
   ----------
@@ -603,9 +603,9 @@ def fdr_bh(pvals, q=0.05, method="pdep"):
 
 
 def tpr_fpr(true_adjacency, inferred_adjacency):
-  """True and false positive rates of an inferred network, MATLAB `TPR_FPR`.
+  """True and false positive rates of an inferred network.
 
-  As in the MATLAB code, every entry of the matrices is counted, including
+  Every entry of the matrices is counted, including
   the diagonal (where both are 0, so the diagonal adds true negatives).
 
   Parameters
@@ -641,7 +641,7 @@ _SURROGATE_GENERATORS = {
     "random": lambda data, rng, pc_a, pc_p: random_surrogates(data, 1, rng)[0],
     "correlated_random": lambda data, rng, pc_a, pc_p: correlated_random_surrogates(data, 1, rng=rng)[0],
 }
-# Names used by the MATLAB code
+# Alternative names for the surrogate types
 _SURROGATE_GENERATORS["HT_mix_A_theta"] = _SURROGATE_GENERATORS["amplitude_phase"]
 _SURROGATE_GENERATORS["twnsd"] = _SURROGATE_GENERATORS["phaseran"]
 _SURROGATE_GENERATORS["randsd"] = _SURROGATE_GENERATORS["random"]
@@ -650,7 +650,7 @@ _SURROGATE_GENERATORS["corr_randsd"] = _SURROGATE_GENERATORS["correlated_random"
 
 def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_phase", true_network=None,
                        pc_amplitude=1.0, pc_phase=0.5, fdr_q=None, rng=None):
-  """Infer a network with MIR and a surrogate data test, MATLAB `Mir_surrogate_data`.
+  """Infer a network with MIR and a surrogate data test.
 
   For each data length in `time_range`, MIR is computed for every pair of
   nodes in the data and in 1/p_sl surrogate datasets. A pair's p-value is the
@@ -668,9 +668,8 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
       Data lengths to test, each using the first that many points.
       Default is the full length only.
   surrogate : str or callable, optional
-      "amplitude_phase" (APMSD, MATLAB "HT_mix_A_theta"), "phaseran"
-      ("twnsd"), "random" ("randsd") or "correlated_random" ("corr_randsd"),
-      or a function f(data, rng) returning one surrogate of shape
+      "amplitude_phase" (APMSD), "phaseran", "random" or
+      "correlated_random", or a function f(data, rng) returning one surrogate of shape
       (n_points, n_nodes). Default is "amplitude_phase".
   true_network : array_like, optional
       Ground-truth adjacency matrix. If given, TPR and FPR are computed.
@@ -678,8 +677,7 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
       Fractions of time points whose amplitudes and phases are randomised
       by the "amplitude_phase" surrogates. Defaults are 1 and 0.5.
   fdr_q : float, optional
-      False discovery rate for `fdr_bh`. Default is p_sl / 100, as in the
-      MATLAB code.
+      False discovery rate for `fdr_bh`. Default is p_sl / 100.
   rng : numpy.random.Generator or int, optional
       Random generator or seed for the surrogates.
 
@@ -736,7 +734,7 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
 
 
 def _rescale_upper(I_c, guard_equal):
-  """Min-max scale the upper triangle of I_c, as in the MATLAB double-normalised
+  """Min-max scale the upper triangle of I_c, as in the double-normalised
   MIR: the minimum is taken over the nonzero entries of the whole matrix."""
   M = len(I_c)
   hat = np.zeros((M, M))
@@ -753,7 +751,7 @@ def _rescale_upper(I_c, guard_equal):
 
 
 def double_normalised_mir(Dat, true_network=None):
-  """Double-normalised MIR, MATLAB `double_normalised_MIR`.
+  """Double-normalised MIR.
 
   The data are scaled to [0, 1]. For each grid size from `Grid`, the MIR of
   all pairs is min-max scaled; the scaled matrices are summed over grid sizes
@@ -835,14 +833,13 @@ def _pairs_lagged_mi_and_decay(Dat, pi, pj, N, max_lag):
 
 
 def lagged_double_mir(Dat, max_lag):
-  """Lagged, double-normalised MIR, MATLAB `lagged_double_MIR`.
+  """Lagged, double-normalised MIR.
 
   For each pair, the MI is the largest MI over time lags -max_lag..max_lag,
   divided by the zero-lag correlation decay time, then min-max scaled and
   summed over grid sizes as in `double_normalised_mir`.
 
-  The grid sizes follow the copy of Grid inside `lagged_double_MIR.m`, which
-  differs from `Grid`: its search continues while the average points per cell
+  The grid-size rule differs slightly from `Grid`: its search continues while the average points per cell
   equals the number of occupied cells, and N_max is not capped at 30.
 
   Parameters
@@ -856,7 +853,7 @@ def lagged_double_mir(Dat, max_lag):
   -------
   lagged_MI : np.ndarray
       Symmetric (M, M) matrix of the largest lagged MI, summed (not averaged)
-      over grid sizes, as in the MATLAB code.
+      over grid sizes.
   lagged_MIR : np.ndarray
       Symmetric (M, M) double-normalised MIR, values up to 1.
   """
@@ -889,11 +886,11 @@ def lagged_double_mir(Dat, max_lag):
 
 
 def best_case_tpr_fpr(similarity_matrix, true_adjacency):
-  """ROC sweep over thresholds and the best threshold, MATLAB `best_case_TPR_FPR`.
+  """ROC sweep over thresholds and the best threshold.
 
   Every pairwise similarity (minus 1e-12) is tried as a threshold; entries
   above it count as links. The best threshold is the one closest to the
-  perfect point (FPR, TPR) = (0, 1). As in the MATLAB code the whole matrix is
+  perfect point (FPR, TPR) = (0, 1). The whole matrix is
   counted, diagonal included, and an upper-triangular input is made symmetric.
 
   Parameters

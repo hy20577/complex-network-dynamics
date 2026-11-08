@@ -2,13 +2,13 @@
 
 Measures of how synchronised the nodes of a network are. Phases and time series are `(n_points, n_nodes)` arrays.
 
-| Function | MATLAB name | Measures |
-|----------|-------------|----------|
-| `hilbert_phases` | `hilbert_phases` | Instantaneous phases \(\theta_i(t)\) from the Hilbert transform |
-| `global_sync` | `global_sync` | Running average of the Kuramoto order parameter |
-| `pairwise_sync` | `pairwise_sync_of_phases` | Phase locking between every pair of nodes |
-| `global_order` | `globalorder_map` | Synchrony \(R(t)\) of Rubido et al. |
-| `deviation_from_sync` | `deviation_from_sync` | Average distance between two oscillators over time |
+| Function | Measures |
+|----------|----------|
+| `hilbert_phases` | Instantaneous phases \(\theta_i(t)\) from the Hilbert transform |
+| `global_sync` | Running average of the Kuramoto order parameter |
+| `pairwise_sync` | Phase locking between every pair of nodes |
+| `global_order` | Synchrony \(R(t)\) of Rubido et al. |
+| `deviation_from_sync` | Average distance between two oscillators over time |
 
 ## Definitions
 

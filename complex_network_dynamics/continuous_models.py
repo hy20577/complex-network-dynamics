@@ -426,7 +426,7 @@ def coupled_lorenz_jacobian(
 #### ## # ## # ## # # KURAMOTO  # # # # # # # # # # ## ## ## ##
 
 def kuramoto(t, y, A, w, K=1.0):
-    """Kuramoto oscillators on a network, MATLAB `Kuramoto_extended`.
+    """Kuramoto oscillators on a network.
 
     dtheta_i/dt = w_i + (K / M) * sum_j A_ij sin(theta_j - theta_i)
 
@@ -470,9 +470,8 @@ def stochastic_kuramoto(theta0, A, w, K=10.0, D=10.0, dt=0.1, n_steps=1000, rng=
 
     dtheta_i = [w_i + (K / M) sum_j A_ij sin(theta_j - theta_i)] dt + D dW_i,
 
-    with independent Wiener processes W_i. This is the model of the thesis
-    (drift and diffusion in Part3_CoupledModels.m, simulated with MATLAB's
-    `sde`, whose default scheme is Euler-Maruyama).
+    with independent Wiener processes W_i. This is the model of the thesis,
+    integrated with the Euler-Maruyama scheme.
 
     Parameters
     ----------
@@ -514,7 +513,7 @@ def stochastic_kuramoto(theta0, A, w, K=10.0, D=10.0, dt=0.1, n_steps=1000, rng=
 #### ## # ## # ## # # ROSSLER  # # # # # # # # # # ## ## ## ##
 
 def rossler(t, y, A, K=0.1, w=1.0, a=0.2, f=0.2, c=5.7):
-    """Rossler oscillators coupled through x, MATLAB `rossler_ext`.
+    """Rossler oscillators coupled through x.
 
     dx_i/dt = -w_i y_i - z_i + K * sum_j A_ij (x_j - x_i)
     dy_i/dt =  w_i x_i + a y_i
@@ -571,7 +570,7 @@ def rossler_jacobian(t, y, A, K=0.1, w=1.0, a=0.2, f=0.2, c=5.7):
 #### ## # ## # ## # # HINDMARSH - ROSE  # # # # # # # # # # ## ## ## ##
 
 def hindmarsh_rose(t, y, A, g=0.1):
-    """Hindmarsh-Rose neurons coupled through the membrane potential, MATLAB `HR_ext`.
+    """Hindmarsh-Rose neurons coupled through the membrane potential.
 
     dp_i/dt = q_i - p_i^3 + 3 p_i^2 - n_i + 3.25 - g * sum_l C_il p_l
     dq_i/dt = 1 - 5 p_i^2 - q_i
@@ -610,8 +609,7 @@ def hindmarsh_rose(t, y, A, g=0.1):
 def hindmarsh_rose_jacobian(t, y, A, g=0.1):
     """Jacobian of `hindmarsh_rose`, shape (3M, 3M).
 
-    The MATLAB `HR_ext` uses -3 p^2 + 3 p for dp/dp; the derivative of the
-    vector field above is -3 p^2 + 6 p, which is used here.
+    The entry dp/dp is the derivative of the vector field, -3 p^2 + 6 p.
     """
     s = np.asarray(y, dtype=float).ravel()
     A = np.asarray(A, dtype=float)

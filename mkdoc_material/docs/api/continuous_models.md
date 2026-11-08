@@ -77,10 +77,7 @@ Coupled through the membrane potential \(p\) with the graph Laplacian \(C = D - 
 \dot p_i = q_i - p_i^3 + 3p_i^2 - n_i + 3.25 - g\sum_l C_{il}\,p_l, \qquad \dot q_i = 1 - 5p_i^2 - q_i, \qquad \dot n_i = 0.02(p_i + 1.6) - 0.005\,n_i
 \]
 
-!!! note "Difference from the thesis code"
-    The vector field is the same as in `HR_ext.m`. Its Jacobian there has \(-3p^2 + 3p\) for \(\partial \dot p_i/\partial p_i\), but the derivative of the vector field is \(-3p^2 + 6p\), which `hindmarsh_rose_jacobian` uses. Trajectories are unaffected; Lyapunov exponents computed with the MATLAB Jacobian are slightly off.
-
-All Jacobians are checked against finite differences, and the vector fields against the MATLAB code.
+All Jacobians are checked against finite differences.
 
 ## API
 
