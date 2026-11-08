@@ -19,10 +19,23 @@ theme:
     - search.suggest
     - search.highlight
     - content.code.copy
-  palette:
-    scheme: slate
-    primary: green
-    accent: deep purple
+  logo: assets/logo.svg
+  favicon: assets/favicon.svg
+  palette: # Light and dark mode with a toggle; colours in stylesheets/extra.css
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
 
 nav:
   - Home: index.md
@@ -83,6 +96,9 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+extra_css:
+  - stylesheets/extra.css
 
 extra_javascript:
   - javascripts/mathjax.js

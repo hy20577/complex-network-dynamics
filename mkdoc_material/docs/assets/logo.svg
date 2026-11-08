@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Header logo: white nodes for the navy header bar -->
+  <g fill="none" stroke-width="5" stroke-linecap="round">
+    <path d="M22 70 Q30 40 50 30" stroke="#F0997B"/>
+    <path d="M50 30 Q70 40 78 70" stroke="#85B7EB"/>
+    <path d="M22 70 Q36 62 50 74 T78 70" stroke="#F0997B"/>
+  </g>
+  <g fill="#ffffff" stroke="#1F3A5F" stroke-width="3">
+    <circle cx="22" cy="70" r="11"/>
+    <circle cx="50" cy="30" r="11"/>
+    <circle cx="78" cy="70" r="11"/>
+  </g>
+</svg>

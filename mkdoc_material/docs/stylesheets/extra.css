@@ -1,0 +1,102 @@
+/* Site colours: navy header with a coral accent, in both light and dark mode */
+[data-md-color-primary="custom"] {
+  --md-primary-fg-color: #1F3A5F;
+  --md-primary-fg-color--light: #2E5486;
+  --md-primary-fg-color--dark: #142740;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #ffffffb3;
+}
+
+[data-md-color-accent="custom"] {
+  --md-accent-fg-color: #D85A30;
+  --md-accent-fg-color--transparent: #D85A301a;
+  --md-accent-bg-color: #ffffff;
+}
+
+/* Links: navy on white pages, light blue on the dark scheme */
+[data-md-color-scheme="default"] {
+  --md-typeset-a-color: #1F3A5F;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #85B7EB;
+}
+
+/* Outlined buttons would be navy on navy in dark mode */
+[data-md-color-scheme="slate"] .md-typeset .md-button:not(.md-button--primary) {
+  color: #85B7EB;
+  border-color: #85B7EB;
+}
+
+[data-md-color-scheme="slate"] .md-typeset .md-button--primary {
+  background-color: #D85A30;
+  border-color: #D85A30;
+}
+
+/* Home page hero: logo beside the title, tagline and buttons */
+.cnd-hero {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.md-typeset .cnd-hero__logo {
+  width: 9rem;
+  flex-shrink: 0;
+}
+
+.cnd-hero__text h1 {
+  margin-bottom: 0.5rem;
+}
+
+.cnd-hero__text .md-button {
+  margin: 0.25rem 0.5rem 0.25rem 0;
+}
+
+@media screen and (max-width: 44.9375em) {
+  .cnd-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .md-typeset .cnd-hero__logo {
+    width: 5rem;
+  }
+}
+
+/* Workflow: three steps joined by arrows on wide screens */
+.md-typeset .cnd-workflow > ul {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+
+.md-typeset .cnd-workflow > ul > li {
+  position: relative;
+}
+
+.md-typeset .cnd-workflow > ul > li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  right: -1.55rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: var(--md-accent-fg-color);
+}
+
+.md-typeset .cnd-workflow .lg {
+  color: var(--md-accent-fg-color);
+}
+
+@media screen and (max-width: 59.9375em) {
+  .md-typeset .cnd-workflow > ul {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .md-typeset .cnd-workflow > ul > li:not(:last-child)::after {
+    display: none;
+  }
+}

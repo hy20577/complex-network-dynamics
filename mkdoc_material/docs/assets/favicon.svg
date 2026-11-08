@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Browser-tab icon: navy nodes, readable on light and dark tabs -->
+  <g fill="none" stroke-width="7" stroke-linecap="round">
+    <path d="M22 70 Q30 40 50 30" stroke="#D85A30"/>
+    <path d="M50 30 Q70 40 78 70" stroke="#378ADD"/>
+    <path d="M22 70 Q36 62 50 74 T78 70" stroke="#D85A30"/>
+  </g>
+  <g fill="#1F3A5F" stroke="#ffffff" stroke-width="3">
+    <circle cx="22" cy="70" r="13"/>
+    <circle cx="50" cy="30" r="13"/>
+    <circle cx="78" cy="70" r="13"/>
+  </g>
+</svg>

@@ -1,42 +1,61 @@
+---
+hide:
+  - navigation
+  - toc
+---
+
+<div class="cnd-hero" markdown>
+
+![Complex Network Dynamics logo](assets/favicon.svg){ .cnd-hero__logo }
+
+<div class="cnd-hero__text" markdown>
+
 # Complex Network Dynamics
 
 Python toolkit for complex networks of nonlinear oscillators: simulate maps and ODE networks, compute Lyapunov spectra and synchronisation, and infer network structure from time series.
 
-## Features
+[Get started](#installation){ .md-button .md-button--primary }
+[Tutorials](tutorials/index.md){ .md-button }
+[GitHub](https://github.com/hy20577/complex-network-dynamics){ .md-button }
 
-<div class="grid cards" markdown>
+</div>
 
--   **[Discrete Models](api/discrete_models.md)**
+</div>
 
-    Logistic and circle maps, and networks of coupled maps with the full Lyapunov spectrum.
+## From dynamics to networks
 
--   **[Continuous Models](api/continuous_models.md)**
+<div class="grid cards cnd-workflow" markdown>
 
-    Lorenz, Rössler, Hindmarsh–Rose, Kuramoto (also stochastic) and Lotka–Volterra on networks, with Jacobians.
+-   :material-sine-wave:{ .lg } **Simulate**
 
--   **[Integrators](api/integrators.md)**
+    ---
 
-    Euler, RK4, SciPy adaptive and compiled RK4 solvers that compute Lyapunov exponents.
+    Run dynamics on a network and keep the node time series.
 
--   **[Network Inference](api/network_inference.md)**
+    - [Discrete models](api/discrete_models.md): logistic and circle maps, coupled-map networks
+    - [Continuous models](api/continuous_models.md): Lorenz, Rössler, Hindmarsh–Rose, Kuramoto (also stochastic), Lotka–Volterra
+    - [Integrators](api/integrators.md): Euler, RK4, SciPy and compiled RK4
+    - [Datasets](api/datasets.md): example adjacency matrices
 
-    Reconstruct networks from time series with the Mutual Information Rate.
+-   :material-chart-scatter-plot:{ .lg } **Analyse**
 
--   **[Surrogate Data](api/surrogates.md)**
+    ---
 
-    Amplitude-phase modulated surrogates (APMSD) and a statistical test that decides which links are real.
+    Measure the stability and the collective behaviour of the network.
 
--   **[Synchronisation](api/synchronisation.md)**
+    - [Lyapunov spectra](api/integrators.md), computed alongside the integration
+    - [Synchronisation](api/synchronisation.md): Hilbert phases, Kuramoto order parameter, phase locking
+    - [Network metrics](api/network_metrics.md): diameter and average path length
 
-    Hilbert phases, the Kuramoto order parameter and pairwise phase locking.
+-   :material-graph-outline:{ .lg } **Infer**
 
--   **[Network Metrics](api/network_metrics.md)**
+    ---
 
-    Diameter and average path length for connected and disconnected graphs.
+    Recover the network from the time series alone.
 
--   **[Datasets](api/datasets.md)**
-
-    Example adjacency matrices that ship with the package.
+    - [Network inference](api/network_inference.md): Mutual Information Rate (MIR)
+    - [Surrogate data](api/surrogates.md): amplitude-phase modulated surrogates (APMSD)
+    - A false-discovery-rate test that decides which links are real
 
 </div>
 
