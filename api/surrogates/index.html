@@ -1322,7 +1322,6 @@
 <thead>
 <tr>
 <th>Function</th>
-<th>MATLAB name</th>
 <th>Keeps</th>
 <th>Destroys</th>
 </tr>
@@ -1330,25 +1329,21 @@
 <tbody>
 <tr>
 <td><code>amplitude_phase_surrogates</code></td>
-<td><code>HT_mix_A_theta</code></td>
 <td>Range of amplitudes and phases</td>
 <td>Amplitude correlation and phase synchronisation (fractions <code>pc_amplitude</code>, <code>pc_phase</code> of time points)</td>
 </tr>
 <tr>
 <td><code>phaseran</code></td>
-<td><code>twnsd</code></td>
 <td>Power spectrum of each node and linear cross-correlations</td>
 <td>Nonlinear structure</td>
 </tr>
 <tr>
 <td><code>random_surrogates</code></td>
-<td><code>randsd</code></td>
 <td>Shape only</td>
 <td>Everything</td>
 </tr>
 <tr>
 <td><code>correlated_random_surrogates</code></td>
-<td><code>corr_randsd</code></td>
 <td>A fixed correlation between all pairs</td>
 <td>Everything else</td>
 </tr>
@@ -1373,10 +1368,6 @@ z(t) = x(t) + i\,\mathcal{H}[x](t) = A(t)\, e^{i\theta(t)}
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">adjacency</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>   <span class="c1"># inferred network from the longest data</span>
 <a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">tp_fp</span>           <span class="c1"># data length, true positive rate, false positive rate</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Not included</p>
-<p>The MATLAB option <code>IAAFT2</code> uses a third-party GPL-licensed file and is not part of this library.</p>
-</div>
 <h2 id="api">API<a class="headerlink" href="#api" title="Permanent link">&para;</a></h2>
 
 
@@ -1399,7 +1390,7 @@ z(t) = x(t) + i\,\mathcal{H}[x](t) = A(t)\, e^{i\theta(t)}
 
     <div class="doc doc-contents first">
 
-        <p>Amplitude-phase modulated surrogate data (APMSD), MATLAB <code>HT_mix_A_theta</code>.</p>
+        <p>Amplitude-phase modulated surrogate data (APMSD).</p>
 <p>Each node's analytic signal A(t) exp(i theta(t)) is computed with the
 Hilbert transform. In every surrogate, a random fraction <code>pc_amplitude</code> of
 the time points get new amplitudes drawn uniformly between the smallest
@@ -1588,7 +1579,7 @@ Default is 0.5.</p>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-105">105</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-106">106</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-107">107</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-52" name="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-52"></a><span class="k">def</span><span class="w"> </span><span class="nf">amplitude_phase_surrogates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_surrogates</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pc_amplitude</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">pc_phase</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<a id="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-53" name="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-53"></a><span class="w">    </span><span class="sd">"""Amplitude-phase modulated surrogate data (APMSD), MATLAB `HT_mix_A_theta`.</span>
+<a id="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-53" name="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-53"></a><span class="w">    </span><span class="sd">"""Amplitude-phase modulated surrogate data (APMSD).</span>
 <a id="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-54" name="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-54"></a>
 <a id="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-55" name="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-55"></a><span class="sd">    Each node's analytic signal A(t) exp(i theta(t)) is computed with the</span>
 <a id="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-56" name="complex_network_dynamics.surrogates.amplitude_phase_surrogates--source--__codelineno-0-56"></a><span class="sd">    Hilbert transform. In every surrogate, a random fraction `pc_amplitude` of</span>
@@ -1690,7 +1681,7 @@ nonlinear structure.</p>
             <td>
               <div class="doc-md-description">
                 <p>Time series, shape (n_points, n_nodes). If n_points is even, the last
-sample is dropped, as in the MATLAB code.</p>
+sample is dropped.</p>
               </div>
             </td>
             <td>
@@ -1812,7 +1803,7 @@ n_points rounded down to an odd number.</p>
 <a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-17" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-17"></a><span class="sd">    ----------</span>
 <a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-18" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-18"></a><span class="sd">    data : array_like</span>
 <a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-19" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-19"></a><span class="sd">        Time series, shape (n_points, n_nodes). If n_points is even, the last</span>
-<a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-20" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-20"></a><span class="sd">        sample is dropped, as in the MATLAB code.</span>
+<a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-20" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-20"></a><span class="sd">        sample is dropped.</span>
 <a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-21" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-21"></a><span class="sd">    n_surrogates : int, optional</span>
 <a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-22" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-22"></a><span class="sd">        Number of surrogate datasets. Default is 1.</span>
 <a id="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-23" name="complex_network_dynamics.surrogates.phaseran--source--__codelineno-0-23"></a><span class="sd">    rng : numpy.random.Generator or int, optional</span>
@@ -1862,7 +1853,6 @@ n_points rounded down to an odd number.</p>
     <div class="doc doc-contents first">
 
         <p>Uniform random surrogates in [0, 1) with the same shape as the data.</p>
-<p>MATLAB <code>Mir_surrogate_data</code> option "randsd".</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1972,30 +1962,26 @@ n_points rounded down to an odd number.</p>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-126">126</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-127">127</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-128">128</a></span>
-<span class="normal"><a href="#complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-129">129</a></span>
-<span class="normal"><a href="#complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-130">130</a></span>
-<span class="normal"><a href="#complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-131">131</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-110" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-110"></a><span class="k">def</span><span class="w"> </span><span class="nf">random_surrogates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_surrogates</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="normal"><a href="#complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-129">129</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-110" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-110"></a><span class="k">def</span><span class="w"> </span><span class="nf">random_surrogates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_surrogates</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-111" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-111"></a><span class="w">    </span><span class="sd">"""Uniform random surrogates in [0, 1) with the same shape as the data.</span>
 <a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-112" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-112"></a>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-113" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-113"></a><span class="sd">    MATLAB `Mir_surrogate_data` option "randsd".</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-114" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-114"></a>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-115" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-115"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-116" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-116"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-117" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-117"></a><span class="sd">    data : array_like</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-118" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-118"></a><span class="sd">        Time series, shape (n_points, n_nodes); only its shape is used.</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-119" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-119"></a><span class="sd">    n_surrogates : int, optional</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-120" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-120"></a><span class="sd">        Number of surrogate datasets. Default is 1.</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-121" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-121"></a><span class="sd">    rng : numpy.random.Generator or int, optional</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-122" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-122"></a><span class="sd">        Random generator or seed.</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-123" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-123"></a>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-124" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-124"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-125" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-125"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-126" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-126"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-127" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-127"></a><span class="sd">        Surrogates, shape (n_surrogates, n_points, n_nodes).</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-128" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-128"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-129" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-129"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-130" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-130"></a>    <span class="n">n_points</span><span class="p">,</span> <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-131" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-131"></a>    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_surrogates</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">))</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-113" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-113"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-114" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-114"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-115" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-115"></a><span class="sd">    data : array_like</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-116" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-116"></a><span class="sd">        Time series, shape (n_points, n_nodes); only its shape is used.</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-117" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-117"></a><span class="sd">    n_surrogates : int, optional</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-118" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-118"></a><span class="sd">        Number of surrogate datasets. Default is 1.</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-119" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-119"></a><span class="sd">    rng : numpy.random.Generator or int, optional</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-120" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-120"></a><span class="sd">        Random generator or seed.</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-121" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-121"></a>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-122" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-122"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-123" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-123"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-124" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-124"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-125" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-125"></a><span class="sd">        Surrogates, shape (n_surrogates, n_points, n_nodes).</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-126" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-126"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-127" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-127"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-128" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-128"></a>    <span class="n">n_points</span><span class="p">,</span> <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-129" name="complex_network_dynamics.surrogates.random_surrogates--source--__codelineno-0-129"></a>    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">n_surrogates</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2022,9 +2008,9 @@ n_points rounded down to an odd number.</p>
     <div class="doc doc-contents first">
 
         <p>Gaussian surrogates with the same correlation between every pair of nodes.</p>
-<p>MATLAB <code>Mir_surrogate_data</code> option "corr_randsd": standard normal samples
+<p>Standard normal samples
 multiplied by the Cholesky factor of a matrix with ones on the diagonal and
-<code>correlation</code> elsewhere. As in the MATLAB code, the length is fixed
+<code>correlation</code> elsewhere. The length is fixed
 (<code>n_points</code>) rather than taken from the data.</p>
 
 
@@ -2148,7 +2134,9 @@ multiplied by the Cholesky factor of a matrix with ones on the diagonal and
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>complex_network_dynamics/surrogates.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-134">134</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-132">132</a></span>
+<span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-133">133</a></span>
+<span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-134">134</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-135">135</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-136">136</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-137">137</a></span>
@@ -2177,40 +2165,38 @@ multiplied by the Cholesky factor of a matrix with ones on the diagonal and
 <span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-160">160</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-161">161</a></span>
 <span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-162">162</a></span>
-<span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-163">163</a></span>
-<span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-164">164</a></span>
-<span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-165">165</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-134" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-134"></a><span class="k">def</span><span class="w"> </span><span class="nf">correlated_random_surrogates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_surrogates</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">correlation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-135" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-135"></a><span class="w">    </span><span class="sd">"""Gaussian surrogates with the same correlation between every pair of nodes.</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-136" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-136"></a>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-137" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-137"></a><span class="sd">    MATLAB `Mir_surrogate_data` option "corr_randsd": standard normal samples</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-138" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-138"></a><span class="sd">    multiplied by the Cholesky factor of a matrix with ones on the diagonal and</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-139" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-139"></a><span class="sd">    `correlation` elsewhere. As in the MATLAB code, the length is fixed</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-140" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-140"></a><span class="sd">    (`n_points`) rather than taken from the data.</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-141" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-141"></a>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-142" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-142"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-143" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-143"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-144" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-144"></a><span class="sd">    data : array_like</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-145" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-145"></a><span class="sd">        Time series, shape (n_points, n_nodes); only the number of nodes is used.</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-146" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-146"></a><span class="sd">    n_surrogates : int, optional</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-147" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-147"></a><span class="sd">        Number of surrogate datasets. Default is 1.</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-148" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-148"></a><span class="sd">    correlation : float, optional</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-149" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-149"></a><span class="sd">        Correlation between every pair of nodes. Default is 0.5.</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-150" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-150"></a><span class="sd">    n_points : int, optional</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-151" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-151"></a><span class="sd">        Length of each surrogate. Default is 1000.</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-152" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-152"></a><span class="sd">    rng : numpy.random.Generator or int, optional</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-153" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-153"></a><span class="sd">        Random generator or seed.</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-154" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-154"></a>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-155" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-155"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-156" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-156"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-157" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-157"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-158" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-158"></a><span class="sd">        Surrogates, shape (n_surrogates, n_points, n_nodes).</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-159" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-159"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-160" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-160"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-161" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-161"></a>    <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-162" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-162"></a>    <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">),</span> <span class="n">correlation</span><span class="p">)</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-163" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-163"></a>    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-164" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-164"></a>    <span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># MATLAB chol() returns the upper factor</span>
-<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-165" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-165"></a>    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="n">n_surrogates</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">))</span> <span class="o">@</span> <span class="n">upper</span>
+<span class="normal"><a href="#complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-163">163</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-132" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-132"></a><span class="k">def</span><span class="w"> </span><span class="nf">correlated_random_surrogates</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_surrogates</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">correlation</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-133" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-133"></a><span class="w">    </span><span class="sd">"""Gaussian surrogates with the same correlation between every pair of nodes.</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-134" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-134"></a>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-135" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-135"></a><span class="sd">    Standard normal samples</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-136" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-136"></a><span class="sd">    multiplied by the Cholesky factor of a matrix with ones on the diagonal and</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-137" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-137"></a><span class="sd">    `correlation` elsewhere. The length is fixed</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-138" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-138"></a><span class="sd">    (`n_points`) rather than taken from the data.</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-139" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-139"></a>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-140" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-140"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-141" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-141"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-142" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-142"></a><span class="sd">    data : array_like</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-143" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-143"></a><span class="sd">        Time series, shape (n_points, n_nodes); only the number of nodes is used.</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-144" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-144"></a><span class="sd">    n_surrogates : int, optional</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-145" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-145"></a><span class="sd">        Number of surrogate datasets. Default is 1.</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-146" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-146"></a><span class="sd">    correlation : float, optional</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-147" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-147"></a><span class="sd">        Correlation between every pair of nodes. Default is 0.5.</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-148" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-148"></a><span class="sd">    n_points : int, optional</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-149" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-149"></a><span class="sd">        Length of each surrogate. Default is 1000.</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-150" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-150"></a><span class="sd">    rng : numpy.random.Generator or int, optional</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-151" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-151"></a><span class="sd">        Random generator or seed.</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-152" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-152"></a>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-153" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-153"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-154" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-154"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-155" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-155"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-156" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-156"></a><span class="sd">        Surrogates, shape (n_surrogates, n_points, n_nodes).</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-157" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-157"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-158" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-158"></a>    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">rng</span><span class="p">)</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-159" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-159"></a>    <span class="n">n_nodes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">data</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-160" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-160"></a>    <span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">n_nodes</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">),</span> <span class="n">correlation</span><span class="p">)</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-161" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-161"></a>    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-162" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-162"></a>    <span class="n">upper</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">R</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># Upper Cholesky factor</span>
+<a id="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-163" name="complex_network_dynamics.surrogates.correlated_random_surrogates--source--__codelineno-0-163"></a>    <span class="k">return</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="n">n_surrogates</span><span class="p">,</span> <span class="n">n_points</span><span class="p">,</span> <span class="n">n_nodes</span><span class="p">))</span> <span class="o">@</span> <span class="n">upper</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

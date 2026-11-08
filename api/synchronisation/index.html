@@ -1343,33 +1343,27 @@
 <thead>
 <tr>
 <th>Function</th>
-<th>MATLAB name</th>
 <th>Measures</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>hilbert_phases</code></td>
-<td><code>hilbert_phases</code></td>
 <td>Instantaneous phases <span class="arithmatex">\(\theta_i(t)\)</span> from the Hilbert transform</td>
 </tr>
 <tr>
-<td><code>global_sync</code></td>
 <td><code>global_sync</code></td>
 <td>Running average of the Kuramoto order parameter</td>
 </tr>
 <tr>
 <td><code>pairwise_sync</code></td>
-<td><code>pairwise_sync_of_phases</code></td>
 <td>Phase locking between every pair of nodes</td>
 </tr>
 <tr>
 <td><code>global_order</code></td>
-<td><code>globalorder_map</code></td>
 <td>Synchrony <span class="arithmatex">\(R(t)\)</span> of Rubido et al.</td>
 </tr>
 <tr>
-<td><code>deviation_from_sync</code></td>
 <td><code>deviation_from_sync</code></td>
 <td>Average distance between two oscillators over time</td>
 </tr>
@@ -1417,7 +1411,7 @@ R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\
 
     <div class="doc doc-contents first">
 
-        <p>Instantaneous phases from the Hilbert transform, MATLAB <code>hilbert_phases</code>.</p>
+        <p>Instantaneous phases from the Hilbert transform.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1491,7 +1485,7 @@ R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-19">19</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-20">20</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-7" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">hilbert_phases</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-8" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-8"></a><span class="w">    </span><span class="sd">"""Instantaneous phases from the Hilbert transform, MATLAB `hilbert_phases`.</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-8" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-8"></a><span class="w">    </span><span class="sd">"""Instantaneous phases from the Hilbert transform.</span>
 <a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-9" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-9"></a>
 <a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-10" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-10"></a><span class="sd">    Parameters</span>
 <a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-11" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-11"></a><span class="sd">    ----------</span>
@@ -1524,7 +1518,7 @@ R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\
 
     <div class="doc doc-contents first">
 
-        <p>Running average of the Kuramoto order parameter, MATLAB <code>global_sync</code>.</p>
+        <p>Running average of the Kuramoto order parameter.</p>
 <p>The order parameter at time t is</p>
 <div class="highlight"><pre><span></span><code>rho(t) = |sum_j exp(i theta_j(t))| / M,
 </code></pre></div>
@@ -1611,7 +1605,7 @@ time points.</p>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-44">44</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-45">45</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-46">46</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-24" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">global_sync</span><span class="p">(</span><span class="n">phases</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-25" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-25"></a><span class="w">    </span><span class="sd">"""Running average of the Kuramoto order parameter, MATLAB `global_sync`.</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-25" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-25"></a><span class="w">    </span><span class="sd">"""Running average of the Kuramoto order parameter.</span>
 <a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-26" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-26"></a>
 <a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-27" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-27"></a><span class="sd">    The order parameter at time t is</span>
 <a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-28" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-28"></a>
@@ -1652,7 +1646,7 @@ time points.</p>
 
     <div class="doc doc-contents first">
 
-        <p>Phase synchronisation between every pair of nodes, MATLAB <code>pairwise_sync_of_phases</code>.</p>
+        <p>Phase synchronisation between every pair of nodes.</p>
 <p>r_ij = |mean_t exp(i (theta_i(t) - theta_j(t)))| (Gomez-Gardenes et al., 2010),
 1 for phase-locked nodes and near 0 for independent ones.</p>
 
@@ -1732,7 +1726,7 @@ time points.</p>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-65">65</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-66">66</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-67">67</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-49" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-49"></a><span class="k">def</span><span class="w"> </span><span class="nf">pairwise_sync</span><span class="p">(</span><span class="n">phases</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-50" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-50"></a><span class="w">    </span><span class="sd">"""Phase synchronisation between every pair of nodes, MATLAB `pairwise_sync_of_phases`.</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-50" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-50"></a><span class="w">    </span><span class="sd">"""Phase synchronisation between every pair of nodes.</span>
 <a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-51" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-51"></a>
 <a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-52" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-52"></a><span class="sd">    r_ij = |mean_t exp(i (theta_i(t) - theta_j(t)))| (Gomez-Gardenes et al., 2010),</span>
 <a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-53" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-53"></a><span class="sd">    1 for phase-locked nodes and near 0 for independent ones.</span>
@@ -1769,7 +1763,7 @@ time points.</p>
 
     <div class="doc doc-contents first">
 
-        <p>Synchronisation measure R(t) of Rubido et al., MATLAB <code>globalorder_map</code>.</p>
+        <p>Synchronisation measure R(t) of Rubido et al.</p>
 <p>R(t) is the variance over time of the network average, divided by the
 network average of each node's variance over time, both computed from
 the first t points. It is 1 for fully synchronised nodes and near 1/M for
@@ -1823,7 +1817,7 @@ independent ones.</p>
             <td>
               <div class="doc-md-description">
                 <p>Shape (n_points,). The first value is undefined (the variance of a
-single point, 0/0) and returned as NaN; MATLAB's rounding can give 0 there.</p>
+single point, 0/0) and returned as NaN.</p>
               </div>
             </td>
           </tr>
@@ -1859,7 +1853,7 @@ single point, 0/0) and returned as NaN; MATLAB's rounding can give 0 there.</p>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-93">93</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-94">94</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-95">95</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-70" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-70"></a><span class="k">def</span><span class="w"> </span><span class="nf">global_order</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-71" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-71"></a><span class="w">    </span><span class="sd">"""Synchronisation measure R(t) of Rubido et al., MATLAB `globalorder_map`.</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-71" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-71"></a><span class="w">    </span><span class="sd">"""Synchronisation measure R(t) of Rubido et al.</span>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-72" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-72"></a>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-73" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-73"></a><span class="sd">    R(t) is the variance over time of the network average, divided by the</span>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-74" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-74"></a><span class="sd">    network average of each node's variance over time, both computed from</span>
@@ -1875,7 +1869,7 @@ single point, 0/0) and returned as NaN; MATLAB's rounding can give 0 there.</p>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84"></a><span class="sd">    -------</span>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85"></a><span class="sd">    np.ndarray</span>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86"></a><span class="sd">        Shape (n_points,). The first value is undefined (the variance of a</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87"></a><span class="sd">        single point, 0/0) and returned as NaN; MATLAB's rounding can give 0 there.</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87"></a><span class="sd">        single point, 0/0) and returned as NaN.</span>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88"></a><span class="sd">    """</span>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 <a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
@@ -1903,9 +1897,9 @@ single point, 0/0) and returned as NaN; MATLAB's rounding can give 0 there.</p>
 
     <div class="doc doc-contents first">
 
-        <p>Average distance between two oscillators over time, MATLAB <code>deviation_from_sync</code>.</p>
+        <p>Average distance between two oscillators over time.</p>
 <p>E(t_i) = (1 / t_i) * sum_{k &lt;= i} |x2(t_k) - x1(t_k)|, for i = 2, ..., n - 2
-(1-based, as in the MATLAB code).</p>
+(1-based).</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1986,8 +1980,7 @@ single point, 0/0) and returned as NaN; MATLAB's rounding can give 0 there.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Shape (len(tvalues) - 3,). The MATLAB function returns one more
-element, a trailing 0 that is never filled in; it is left out here.</p>
+                <p>Shape (len(tvalues) - 3,).</p>
               </div>
             </td>
           </tr>
@@ -2020,12 +2013,11 @@ element, a trailing 0 that is never filled in; it is left out here.</p>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118">118</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119">119</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120">120</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121">121</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-122">122</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-98" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-98"></a><span class="k">def</span><span class="w"> </span><span class="nf">deviation_from_sync</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">tvalues</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-99" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-99"></a><span class="w">    </span><span class="sd">"""Average distance between two oscillators over time, MATLAB `deviation_from_sync`.</span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121">121</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-98" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-98"></a><span class="k">def</span><span class="w"> </span><span class="nf">deviation_from_sync</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">tvalues</span><span class="p">):</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-99" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-99"></a><span class="w">    </span><span class="sd">"""Average distance between two oscillators over time.</span>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-100" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-100"></a>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-101" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-101"></a><span class="sd">    E(t_i) = (1 / t_i) * sum_{k &lt;= i} |x2(t_k) - x1(t_k)|, for i = 2, ..., n - 2</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-102" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-102"></a><span class="sd">    (1-based, as in the MATLAB code).</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-102" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-102"></a><span class="sd">    (1-based).</span>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-103" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-103"></a>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-104" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-104"></a><span class="sd">    Parameters</span>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-105" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-105"></a><span class="sd">    ----------</span>
@@ -2037,15 +2029,14 @@ element, a trailing 0 that is never filled in; it is left out here.</p>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111"></a><span class="sd">    Returns</span>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-112" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-112"></a><span class="sd">    -------</span>
 <a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-113" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-113"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114"></a><span class="sd">        Shape (len(tvalues) - 3,). The MATLAB function returns one more</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115"></a><span class="sd">        element, a trailing 0 that is never filled in; it is left out here.</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117"></a>    <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118"></a>    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119"></a>    <span class="n">tvalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">tvalues</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121"></a>    <span class="n">running</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x2</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">x1</span><span class="p">[:</span><span class="n">n</span><span class="p">]))</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-122" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-122"></a>    <span class="k">return</span> <span class="n">running</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">tvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114"></a><span class="sd">        Shape (len(tvalues) - 3,).</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116"></a>    <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117"></a>    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118"></a>    <span class="n">tvalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">tvalues</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120"></a>    <span class="n">running</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x2</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">x1</span><span class="p">[:</span><span class="n">n</span><span class="p">]))</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121"></a>    <span class="k">return</span> <span class="n">running</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">tvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
