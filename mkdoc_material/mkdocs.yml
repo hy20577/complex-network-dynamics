@@ -16,6 +16,8 @@ theme:
     - navigation.indexes
     - navigation.top
     - toc.follow
+    - toc.integrate # Page contents sit in the left menu and follow the scroll
+    - navigation.tracking # The address bar follows the section in view
     - search.suggest
     - search.highlight
     - content.code.copy
