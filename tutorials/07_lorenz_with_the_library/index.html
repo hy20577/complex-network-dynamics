@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#using-rk4-in-njit-fast-rk4" class="md-skip">
+        <a href="#simulation-of-uncoupled-model-of-lorenz-with-euler-and-rk4" class="md-skip">
           Skip to content
         </a>
       
@@ -705,10 +705,82 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#simulation-of-uncoupled-model-of-lorenz-with-euler-and-rk4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simulation of Uncoupled Model of Lorenz with Euler and RK4
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-of-the-coupled-lorenz-model-with-euler-rk4-and-rk45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration of the Coupled Lorenz Model with Euler, RK4 and RK45
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Integration of the Coupled Lorenz Model with Euler, RK4 and RK45">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-euler-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Euler Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-rk4-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using RK4 Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#using-rk4-in-njit-fast-rk4" class="md-nav__link">
     <span class="md-ellipsis">
       
         Using RK4 in njit (Fast RK4)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-rk45-adaptive-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using RK45 Adaptive Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-of-the-methods-on-coupled-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison of the Methods on Coupled Model
       
     </span>
   </a>
@@ -1439,7 +1511,7 @@ import time</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div><h3 style="text-align:center">Simulation of Uncoupled Model of Lorenz with Euler and RK4 </h3></div>
+<h2 id="simulation-of-uncoupled-model-of-lorenz-with-euler-and-rk4">Simulation of Uncoupled Model of Lorenz with Euler and RK4<a class="anchor-link" href="#simulation-of-uncoupled-model-of-lorenz-with-euler-and-rk4">¶</a></h2>
 </div>
 </div>
 </div>
@@ -1765,7 +1837,7 @@ Elapsed time for Euler: 15.343267 seconds
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div> <h2 style="text-align: center">Integration of <strong>Coupled Lorenz Model</strong> using the methods of Euler, RK4 and RK45 </h2>
+<h2 id="integration-of-the-coupled-lorenz-model-with-euler-rk4-and-rk45">Integration of the Coupled Lorenz Model with Euler, RK4 and RK45<a class="anchor-link" href="#integration-of-the-coupled-lorenz-model-with-euler-rk4-and-rk45">¶</a></h2><div>
 <p>Here, we solve the differential equations of Lorenz model in <span class="arithmatex">\(N \times 3 \)</span> dimensions using the integration methods, Euler, RK4 and RK5 for the compatible parameters and measure their running time to compare them at the end. Here, <span class="arithmatex">\(N\)</span> is the number of nodes in network and we used 12 nodes network from the library "<strong>C</strong>omplex <strong>N</strong>etwork <strong>D</strong>ynamics" for all.</p>
 <h4>Calling Adjacency Matrices from the package content: </h4>
 </div>
@@ -1867,8 +1939,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3> Using Euler Method </h3>
-<p>To solve the differential equations using Euler method, we require small step size like <span class="arithmatex">\(h=0.0001 = 10^{-4}\)</span> or smaller maybe to get more precise results.</p>
+<h3 id="using-euler-method">Using Euler Method<a class="anchor-link" href="#using-euler-method">¶</a></h3><p>To solve the differential equations using Euler method, we require small step size like <span class="arithmatex">\(h=0.0001 = 10^{-4}\)</span> or smaller maybe to get more precise results.</p>
 <p>We simulate the model for 250 secs and remove first 50 secs (20% of all) as transient.</p>
 </div>
 </div>
@@ -2188,7 +2259,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3> Using RK4 Method </h3>
+<h3 id="using-rk4-method">Using RK4 Method<a class="anchor-link" href="#using-rk4-method">¶</a></h3>
 </div>
 </div>
 </div>
@@ -2785,7 +2856,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3> Using RK45 Adaptive Method </h3>
+<h3 id="using-rk45-adaptive-method">Using RK45 Adaptive Method<a class="anchor-link" href="#using-rk45-adaptive-method">¶</a></h3>
 </div>
 </div>
 </div>
@@ -2959,7 +3030,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div><h3 style="text-align:center"> Comparison of the Methods on Coupled Model </h3></div>
+<h2 id="comparison-of-the-methods-on-coupled-model">Comparison of the Methods on Coupled Model<a class="anchor-link" href="#comparison-of-the-methods-on-coupled-model">¶</a></h2>
 </div>
 </div>
 </div>

@@ -81,6 +81,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#functions" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -511,6 +516,24 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Network Types
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -527,6 +550,106 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ring-lattice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ring Lattice
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#random-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random Networks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#small-world-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Small World Network
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scale-free-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scale-Free Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scale-Free Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preferential-attachment-the-rich-get-richer-the-poor-stay-poor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preferential attachment ⇒ the rich get richer, the poor stay poor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comparison-of-network-topologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison of Network Topologies
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1351,32 +1474,13 @@ from scipy.stats import binom</div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0e71878d-d3ea-4153-a30c-74476e0eae38">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div>
-<h2>Contents</h2>
-<ol>
-<li>Ring Lattice</li>
-<li>Random Networks</li>
-<li>Small World Networks</li>
-<li>Scale-Free Networks</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=07fbb3df-be0c-4717-8d29-4b6ce547c9ce">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div> <h2 style="text-align:center;"> FUNCTIONS </h2> </div>
+<h2 id="functions">Functions<a class="anchor-link" href="#functions">¶</a></h2>
 </div>
 </div>
 </div>
@@ -1551,8 +1655,7 @@ def calculate_distance_metrics(G, mode="giant"):
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align: center; font-size:24px ">Ring Lattice</div>
-<div>Ring lattice (RL) belongs to the family of regular network meaning that all nodes have constant degree, $deg(n_{i}) = k$ for all $i$, called $k$-regular network. Apart from the regular network, in a ring lattice network, all nodes are connected to $\frac{k}{2}$ neighbours on both side. A ring lattice is a kind of regular graph, which Watts and Strogatz use as the basis of their model (with probability of wiring, $p=0$). </div>
+<h2 id="ring-lattice">Ring Lattice<a class="anchor-link" href="#ring-lattice">¶</a></h2><div>Ring lattice (RL) belongs to the family of regular network meaning that all nodes have constant degree, $deg(n_{i}) = k$ for all $i$, called $k$-regular network. Apart from the regular network, in a ring lattice network, all nodes are connected to $\frac{k}{2}$ neighbours on both side. A ring lattice is a kind of regular graph, which Watts and Strogatz use as the basis of their model (with probability of wiring, $p=0$). </div>
 </div>
 </div>
 </div>
@@ -1982,8 +2085,7 @@ plt.show()
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align: center; font-size:24px ">Random Networks</div>
-<div> Random networks, which have been introduced by Paul Erdös and Alfred Rényi in the early 1960s, have the same probability to draw a link between any two nodes. For a network with $N$ nodes and $n$ links, the possible number of networks can be constructed is $n$ choose number of all links, $\frac{N(N−1)}{2}$. The degree $k$ of any node is governed by a binomial distribution:
+<h2 id="random-networks">Random Networks<a class="anchor-link" href="#random-networks">¶</a></h2><div> Random networks, which have been introduced by Paul Erdös and Alfred Rényi in the early 1960s, have the same probability to draw a link between any two nodes. For a network with $N$ nodes and $n$ links, the possible number of networks can be constructed is $n$ choose number of all links, $\frac{N(N−1)}{2}$. The degree $k$ of any node is governed by a binomial distribution:
 \[ 
     P(k)=\binom{N-1}{k}p^{k}(1-p)^{N-1-k}
 \]
@@ -2273,8 +2375,7 @@ Transitivity:  0.20160701241782322
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align: center; font-size:24px">Small World Network</div>
-<div style="text-align: justify;">
+<h2 id="small-world-network">Small World Network<a class="anchor-link" href="#small-world-network">¶</a></h2><div style="text-align: justify;">
 As we see in the ring lattice, the shortest path length depends on the network size, and it increases as N rises. However, in most of the real networks, despite their often large size, they have a relatively short path length in average between any two nodes. This property is first investigated in a social science network inferred from Milgram’s experiment. In his experiment, randomly selected individuals in Nebraska were asked to forward a letter to a distant target individual if they knew them, based on provided information such as names, occupation, and approximate location. If they did not know the target, they were instructed to send the letter to someone who might know the person. Milgram then tracked the path of the letters and surprisingly found that, on average, the letters reached the target individual
 after only 6 deliveries. It shows that a network might have relatively small mean of the shortest path lengths even if it involves many nodes. This is known as small-wordness of a network, and it helps one to characterise the network at hand. Brain networks and World Wide Webs (WWW) are frequently classified as small world network because some links connects different clusters within these systems, significantly speeding up information transmission. <strong> Watts and Strogatz</strong> conducted research that showed similarities in the neural networks of Caenorhabditis elegans, the power grid of the western US, and the collaboration network of film actors.  They developed an algorithm to generate small-world (SW) a network which has 2 parameters, number of neighbours and probability of being connected. This algorithm starts with an initial network in which all nodes connected to a given number of nearest neighbours, and the links are reconstructed based on the given probability. Since some nodes will connect to a distant node, this increase the connectivity of network and eventually provide the property of small-wordness.
 </div>
@@ -2518,14 +2619,13 @@ Transitivity:  0.49119718309859156
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align: center; font-size:24px">Scale-Free Network</div>
-<div style="text-align: justify;">
+<h2 id="scale-free-network">Scale-Free Network<a class="anchor-link" href="#scale-free-network">¶</a></h2><div style="text-align: justify;">
 Traditionally, ER model has been extensively used to study in complex networks, assuming an equal connection probability for all nodes. However, the analyses of large real networks show that the degree distribution of most of them follows power-law instead of binomial distribution (or Poison distribution for large networks). Albert Laszlo Barabasi and Reka Albert analysed the topological structure of real-world networks like the WWW and the citation network of scientific articles, and they showed that the nodes with higher degrees tend to have a higher connection probability, which is called <b>“preferential attachment”</b>. Based on this observations, they devise an algorithm to generate scale-free (SF) network, is known as BA model. There are two generic mechanism underlying the algorithm: 
 <ol>
 <li> New nodes get involved in the network in each iteration.</li>
 <li> The probability of being connected for the nodes depends on their existing number of connections. In such networks, the probability of nodes being rewired follows a distribution with a power-law decay, denoted as $p(k)\sim k^{-\gamma}$. </li></ol>
 </div>
-<div style="text-align: center; font-size:24px"> Prefential Attachment $\implies$ Rich gets rich, poor stays poor </div>
+<h3 id="preferential-attachment-the-rich-get-richer-the-poor-stay-poor">Preferential attachment ⇒ the rich get richer, the poor stay poor<a class="anchor-link" href="#preferential-attachment-the-rich-get-richer-the-poor-stay-poor">¶</a></h3>
 </div>
 </div>
 </div>
@@ -2815,7 +2915,7 @@ Transitivity:  0.2471395881006865
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div> <h2 style="text-align:center">COMPARISON OF NETWORK TOPOLOGIES</h2></div>
+<h2 id="comparison-of-network-topologies">Comparison of Network Topologies<a class="anchor-link" href="#comparison-of-network-topologies">¶</a></h2>
 </div>
 </div>
 </div>

@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-regular-network" class="md-skip">
+        <a href="#introduction-to-network-theory" class="md-skip">
           Skip to content
         </a>
       
@@ -537,13 +537,91 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-regular-network" class="md-nav__link">
+  <a href="#introduction-to-network-theory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Regular Network
+        Introduction to Network Theory
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regular-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regular Network
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Regular Network">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#degree-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Degree distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shortest-path-length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shortest path length
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#average-path-length-and-diameter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Average path length and diameter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clustering-coefficients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clustering coefficients
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1400,56 +1478,13 @@ import matplotlib.pyplot as plt</div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=36724132-a7f5-4043-b29a-89544a82512f">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div>
-<h2 cell-id='884f9ccc-31f7-4099-8d33-bda3ed9dd292"' class="jp-Cell jp-MarkdownCell jp-Notebook-cell" style="text-align: center&gt; CONTENTS&lt;/h2&gt;
-&lt;/div&gt;
-
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-
-
-
-
-&lt;div id=">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div>
-<h2>CONTENTS</h2>
-<ol>
-<li>Introduction to Network Theory</li>
-<li> Regular Network</li>
-<li> Network Metrics </li><ol>
-<li> Degree Distribution</li>
-<li> Shortest Path Length and its matrix representation</li>
-<li>Average path length and diameter</li>
-<li>Global(Transitivity) and Local Clustering Coefficients</li>
-</ol></ol></div>
-</div>
-</div>
-</div>
-</h2></div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4ed45b8c-0b21-4d60-9266-7e626293a9ab">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div style="text-align: center !important; font-size:24px !important">
-Introduction to the Network Theory
-</div>
-<div>
+<h2 id="introduction-to-network-theory">Introduction to Network Theory<a class="anchor-link" href="#introduction-to-network-theory">¶</a></h2><div>
 The history of graph theory in mathematical problem-solving dates back to 1739. Swiss-born mathematician Leonhard Euler played a role in the birth of graph theory. During his time in St. Petersburg, Euler encountered a famous question among the locals: Could one visit all the islands using each bridge exactly once? This problem involved four islands connected by seven bridges.
 </div>
 <figure style="text-align: center; float: right; margin-right: 15px">
@@ -1489,7 +1524,7 @@ G =&amp; (V(G),E(G),ψG), \text{where}\\
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="1-regular-network"> 1. Regular Network<a class="anchor-link" href="#1-regular-network">¶</a></h3>
+<h2 id="regular-network">Regular Network<a class="anchor-link" href="#regular-network">¶</a></h2>
 </div>
 </div>
 </div>
@@ -1643,7 +1678,19 @@ print(sum(sum(A))) ## Total number of degrees equals to nxd.</div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d8cf3615">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="degree-distribution">Degree distribution<a class="anchor-link" href="#degree-distribution">¶</a></h3>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=5361d9c0-8755-4fe2-8a69-1924505db381">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -1729,8 +1776,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div>
-<h3 style="text-align: center;"> Network Metrics </h3>
+<h2 id="network-metrics">Network Metrics<a class="anchor-link" href="#network-metrics">¶</a></h2><h3 id="shortest-path-length">Shortest path length<a class="anchor-link" href="#shortest-path-length">¶</a></h3><div>
 <p><b> Path Length: </b> A path in a network is defined as the set of links that connect any two nodes. For instance,
 $P_1 = 1 \to 3  \to 2 \to 4$ is a path between nodes $1$ and $4$ traversing along nodes $3$ and $2$. The path length is the number of links traversed along the path so, the path length is $\ |P_1|= 3$ for this path.</p>
 <p><b>Shortest Path Matrix (<span class="arithmatex">\(\mathcal{D}\)</span>):</b> For the adjaceny matrix <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(A^{k}\)</span> is the matrix whose entries give the number of <span class="arithmatex">\(k\)</span>-length between any 2 nodes such that:
@@ -1848,7 +1894,7 @@ The algorithm below, calculates the power of adjacency matrix until all entries 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div>
+<h3 id="average-path-length-and-diameter">Average path length and diameter<a class="anchor-link" href="#average-path-length-and-diameter">¶</a></h3><div>
 <p><b>Average Shortest Path Length:</b> $\bar{d}$, is the mean of the shortest path lengths across the network,</p>
         \[ \bar{d} = \frac{1}{n (n-1)}\sum_{i \neq j}^{n}\mathcal{D}_{ij} \]
     <p><b> Diameter:</b> The diameter, $R$, of a network is the maximum of the shortest path lengths across all
@@ -1956,8 +2002,7 @@ Diameter =  2
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div>
-<p><b>Clustering Coefficients </b></p>
+<h3 id="clustering-coefficients">Clustering coefficients<a class="anchor-link" href="#clustering-coefficients">¶</a></h3><div>
     There are two types of clustering coefficients has been worked in the literature:
     <li> <b>The global clustering coefficient</b>, also known as <b>transitivity</b>, considers the number of connected triplets of nodes,
     \begin{align*}
@@ -2142,7 +2187,7 @@ Transitivity (Global Clustering): 0.3333
 </div>
 </div> <!-- jp-Notebook -->
 </div> <!-- jupyter-wrapper -->
-</div></div></div></div>
+
         <style>
         ['pre { line-height: 125%; }\ntd.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }\nspan.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }\ntd.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }\nspan.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }\n.highlight-ipynb .hll { background-color: var(--jp-cell-editor-active-background) }\n.highlight-ipynb { background: var(--jp-cell-editor-background); color: var(--jp-mirror-editor-variable-color) }\n.highlight-ipynb .c { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment */\n.highlight-ipynb .err { color: var(--jp-mirror-editor-error-color) } /* Error */\n.highlight-ipynb .k { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword */\n.highlight-ipynb .o { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator */\n.highlight-ipynb .p { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation */\n.highlight-ipynb .ch { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Hashbang */\n.highlight-ipynb .cm { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Multiline */\n.highlight-ipynb .cp { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Preproc */\n.highlight-ipynb .cpf { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.PreprocFile */\n.highlight-ipynb .c1 { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Single */\n.highlight-ipynb .cs { color: var(--jp-mirror-editor-comment-color); font-style: italic } /* Comment.Special */\n.highlight-ipynb .kc { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Constant */\n.highlight-ipynb .kd { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Declaration */\n.highlight-ipynb .kn { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Namespace */\n.highlight-ipynb .kp { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Pseudo */\n.highlight-ipynb .kr { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Reserved */\n.highlight-ipynb .kt { color: var(--jp-mirror-editor-keyword-color); font-weight: bold } /* Keyword.Type */\n.highlight-ipynb .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */\n.highlight-ipynb .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */\n.highlight-ipynb .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */\n.highlight-ipynb .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */\n.highlight-ipynb .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */\n.highlight-ipynb .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */\n.highlight-ipynb .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */\n.highlight-ipynb .mh { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Hex */\n.highlight-ipynb .mi { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer */\n.highlight-ipynb .mo { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Oct */\n.highlight-ipynb .sa { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Affix */\n.highlight-ipynb .sb { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Backtick */\n.highlight-ipynb .sc { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Char */\n.highlight-ipynb .dl { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Delimiter */\n.highlight-ipynb .sd { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Doc */\n.highlight-ipynb .s2 { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Double */\n.highlight-ipynb .se { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Escape */\n.highlight-ipynb .sh { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Heredoc */\n.highlight-ipynb .si { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Interpol */\n.highlight-ipynb .sx { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Other */\n.highlight-ipynb .sr { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Regex */\n.highlight-ipynb .s1 { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Single */\n.highlight-ipynb .ss { color: var(--jp-mirror-editor-string-color) } /* Literal.String.Symbol */\n.highlight-ipynb .il { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Integer.Long */']
         </style>

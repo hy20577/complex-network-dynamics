@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#model-1-the-lotka-volterra-predator-prey-model" class="md-skip">
+        <a href="#numerical-integration-methods-for-ordinary-differential-equations-odes" class="md-skip">
           Skip to content
         </a>
       
@@ -677,6 +677,29 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#numerical-integration-methods-for-ordinary-differential-equations-odes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numerical Integration Methods for Ordinary Differential Equations (ODEs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-euler-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Euler Method
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Euler Method">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#model-1-the-lotka-volterra-predator-prey-model" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -685,13 +708,57 @@
     </span>
   </a>
   
-</li>
+    <nav class="md-nav" aria-label="Model 1: The Lotka-Volterra (Predator-Prey) Model">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#euler-with-lyapunov-exponent-calculations" class="md-nav__link">
+    <span class="md-ellipsis">
       
-        <li class="md-nav__item">
+        Euler with Lyapunov exponent calculations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#model-2-lorenz-attractors" class="md-nav__link">
     <span class="md-ellipsis">
       
         Model 2: Lorenz Attractors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-fourth-order-runge-kutta-method-rk4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Fourth-Order Runge-Kutta Method (RK4)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-adaptive-runge-kutta-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Adaptive Runge-Kutta Methods
       
     </span>
   </a>
@@ -1427,7 +1494,7 @@ import networkx as nx</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div><h2 style="text-align:center">Numerical Integration Methods for Ordinary Differential Equations (ODEs)</h2>
+<h2 id="numerical-integration-methods-for-ordinary-differential-equations-odes">Numerical Integration Methods for Ordinary Differential Equations (ODEs)<a class="anchor-link" href="#numerical-integration-methods-for-ordinary-differential-equations-odes">¶</a></h2><div>
 <p>Systems of ODE are often challenging to solve analytically; therefore, numerical integration methods are commonly used to numerically calculate their trajectories from ODE. In particular, for a continuous system (or flow), the general form of an ordinary differential equation
 <div class="arithmatex">\[
  \begin{equation}
@@ -1458,8 +1525,7 @@ where <span class="arithmatex">\(y_{t}\)</span> is actually computed from the gi
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3> 1. Euler Method</h3>
-<p>The fundamental approximation technique for a solution of a system of ODE is the <strong>Euler Method</strong>. To approximate further steps, it uses the first order solution of the Taylor series expansion, which is given
+<h2 id="1-euler-method">1. Euler Method<a class="anchor-link" href="#1-euler-method">¶</a></h2><p>The fundamental approximation technique for a solution of a system of ODE is the <strong>Euler Method</strong>. To approximate further steps, it uses the first order solution of the Taylor series expansion, which is given
 <div class="arithmatex">\[\begin{align}
     f(x+h) &amp;= f(x) + h f'(x) + h^{2} \frac{f''(x)}{2!} + h^{3} \frac{f^{(3)}(x)}{3!} + \ldots \nonumber \\
     &amp;= f(x) + \sum_{n=1} h^{n} \frac{f^{(n)}(x)}{n!}, \nonumber
@@ -1607,7 +1673,7 @@ where <span class="arithmatex">\(y_{t}\)</span> is actually computed from the gi
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="model-1-the-lotka-volterra-predator-prey-model"> Model 1: The Lotka-Volterra (Predator-Prey) Model<a class="anchor-link" href="#model-1-the-lotka-volterra-predator-prey-model">¶</a></h3><p>It is a 2D nonlinear ODE system where prey (x) and predator (y) populations oscillate over time.
+<h3 id="model-1-the-lotka-volterra-predator-prey-model">Model 1: The Lotka-Volterra (Predator-Prey) Model<a class="anchor-link" href="#model-1-the-lotka-volterra-predator-prey-model">¶</a></h3><p>It is a 2D nonlinear ODE system where prey (x) and predator (y) populations oscillate over time.
 The Equations
 <div class="arithmatex">\[\begin{align*}
 \frac{dt}{dx} &amp;= \alpha x−\beta xy  \\
@@ -1828,10 +1894,7 @@ plt.show()</div>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h4>Euler with Lyapunov exponent calculations </h4>
-Extended the Euler integrator to include tangent space variational equations and Lyapunov exponent calculation.
-
-
+<h4 id="euler-with-lyapunov-exponent-calculations">Euler with Lyapunov exponent calculations<a class="anchor-link" href="#euler-with-lyapunov-exponent-calculations">¶</a></h4><p>Extended the Euler integrator to include tangent space variational equations and Lyapunov exponent calculation.</p>
 </div>
 </div>
 </div>
@@ -2212,7 +2275,7 @@ print(f"Computed Lyapunov Spectrum: λ1 = {spectrum_lotka[0]:.3f}, λ2 = {spectr
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="model-2-lorenz-attractors"> Model 2: Lorenz Attractors<a class="anchor-link" href="#model-2-lorenz-attractors">¶</a></h3>
+<h3 id="model-2-lorenz-attractors">Model 2: Lorenz Attractors<a class="anchor-link" href="#model-2-lorenz-attractors">¶</a></h3>
 </div>
 </div>
 </div>
@@ -2400,7 +2463,7 @@ Actual Lyapunov Spectrum:   λ1 = 0.906, λ2 = 0.000, λ3 = -14.572
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div><h3> 2. The $4^{th}-$order Runge-Kutta Method (RK4)</h3>
+<h2 id="2-the-fourth-order-runge-kutta-method-rk4">2. The Fourth-Order Runge-Kutta Method (RK4)<a class="anchor-link" href="#2-the-fourth-order-runge-kutta-method-rk4">¶</a></h2><div>
 The RK4 method stands as the most widely recognised member of the Runge-Kutta numerical method family. This method approximates the analytical solution by expanding it to the $4^{th}$ order of its Taylor series expansion and the derivation of the coefficients. The pseudocode for the RK4 method is given in algorithm below.
 
 <p><div class="arithmatex">\[\begin{array}{l} \textbf{Algorithm 2: } \text{Algorithm for the $4^{th}-$order Runge-Kutta} \\ \hline 
@@ -2889,7 +2952,7 @@ Actual Lyapunov Spectrum:   λ1 = 0.906, λ2 = 0.000, λ3 = -14.572
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<div> <h3> 3. Adaptive Runge-Kutta Methods </h3>
+<h2 id="3-adaptive-runge-kutta-methods">3. Adaptive Runge-Kutta Methods<a class="anchor-link" href="#3-adaptive-runge-kutta-methods">¶</a></h2><div>
 <p>The adaptive Runge-Kutta methods are based on the estimation of local truncation error, considering the methods of <span class="arithmatex">\(p\)</span> and <span class="arithmatex">\(p+1\)</span> order Runge-Kutta.</p>
 </div>
 </div>
