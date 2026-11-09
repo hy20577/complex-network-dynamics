@@ -104,10 +104,6 @@
 /* Left menu hidden on wide screens until the menu button is clicked
    (narrow screens already use Material's slide-out drawer) */
 @media screen and (min-width: 76.25em) {
-  .md-header__button[for="__drawer"] {
-    display: inline-block;
-  }
-
   .md-sidebar--primary {
     display: none;
   }
@@ -115,4 +111,17 @@
   [data-md-toggle="drawer"]:checked ~ .md-container .md-sidebar--primary {
     display: block;
   }
+}
+
+/* Menu button in the tab bar, just left of Home */
+.cnd-tabs__menu .md-tabs__link {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.cnd-tabs__menu svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  fill: currentcolor;
+  vertical-align: middle;
 }
