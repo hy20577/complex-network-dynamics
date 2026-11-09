@@ -101,15 +101,11 @@
   }
 }
 
-/* Left menu hidden on wide screens until the menu button is clicked
+/* Left menu shown on wide screens, hidden while the menu button is toggled
    (narrow screens already use Material's slide-out drawer) */
 @media screen and (min-width: 76.25em) {
-  .md-sidebar--primary {
-    display: none;
-  }
-
   [data-md-toggle="drawer"]:checked ~ .md-container .md-sidebar--primary {
-    display: block;
+    display: none;
   }
 }
 
