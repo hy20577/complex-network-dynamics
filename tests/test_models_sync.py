@@ -150,6 +150,7 @@ def test_hindmarsh_rose_matches_matlab(network):
     (kuramoto, kuramoto_jacobian, dict(K=2.0)),
     (rossler, rossler_jacobian, dict(K=0.3, a=0.15, f=0.2, c=10)),
     (hindmarsh_rose, hindmarsh_rose_jacobian, dict(g=0.2)),
+    (hindmarsh_rose, hindmarsh_rose_jacobian, dict(g=0.2, a=1.2, b=2.5, c=0.8, d=4.0, r=0.01, s=3.5, p0=-1.4, I_ext=3.0)),
 ])
 def test_jacobians_match_finite_differences(network, f, df, params):
     A, w = network
@@ -205,3 +206,54 @@ def test_stochastic_kuramoto_noise_has_the_right_size():
     np.testing.assert_allclose(increments.mean(axis=0), w * 0.1, atol=0.005)
     np.testing.assert_allclose(increments.std(axis=0), 2.0 * np.sqrt(0.1), rtol=0.01)
     assert len(t) == 200_001
+
+
+def test_kuramoto_follows_the_row_convention():
+    """dtheta_i/dt = w_i + (K/M) sum_j A_ij sin(theta_j - theta_i): row i drives node i."""
+    rng = np.random.default_rng(3)
+    M, K = 6, 3.0
+    A = (rng.random((M, M)) < 0.4).astype(float)
+    np.fill_diagonal(A, 0.0)
+    w, theta = rng.uniform(-np.pi, np.pi, M), rng.uniform(0, 2 * np.pi, M)
+    expected = w + K / M * np.array([A[i] @ np.sin(theta - theta[i]) for i in range(M)])
+    np.testing.assert_allclose(kuramoto(0, theta, A, w, K), expected)
+
+
+@pytest.mark.parametrize("func", [kuramoto, kuramoto_jacobian])
+def test_kuramoto_rejects_inputs_of_different_sizes(func):
+    A, w = np.ones((4, 4)), np.zeros(4)
+    with pytest.raises(ValueError, match="Dimension mismatch"):
+        func(0, np.zeros(5), A, w)
+    with pytest.raises(ValueError, match="Dimension mismatch"):
+        func(0, np.zeros(4), A, np.zeros(3))
+    with pytest.raises(ValueError, match="Dimension mismatch"):
+        stochastic_kuramoto(np.zeros(5), A, w, n_steps=1)
+
+
+@pytest.mark.parametrize("func", [rossler, rossler_jacobian])
+def test_rossler_rejects_inputs_of_different_sizes(func):
+    A = np.ones((4, 4))
+    with pytest.raises(ValueError, match="Dimension mismatch"):
+        func(0, np.zeros(11), A)
+    with pytest.raises(ValueError, match="Dimension mismatch"):
+        func(0, np.zeros(12), A, w=np.ones(3))
+    func(0, np.zeros(12), A, w=np.ones(4))  # one frequency per node is fine
+
+
+def test_hindmarsh_rose_coupling_is_diffusive():
+    """With C = D - A, the coupling term is +g sum_l A_il (p_l - p_i), on a directed network too."""
+    rng = np.random.default_rng(4)
+    M, g = 6, 0.3
+    A = (rng.random((M, M)) < 0.4).astype(float)
+    np.fill_diagonal(A, 0.0)
+    state = rng.normal(size=3 * M)
+    uncoupled = hindmarsh_rose(0, state, A, g=0.0)[:M]
+    p = state[:M]
+    expected = uncoupled + g * np.array([A[i] @ (p - p[i]) for i in range(M)])
+    np.testing.assert_allclose(hindmarsh_rose(0, state, A, g=g)[:M], expected)
+
+
+@pytest.mark.parametrize("func", [hindmarsh_rose, hindmarsh_rose_jacobian])
+def test_hindmarsh_rose_rejects_a_state_of_the_wrong_size(func):
+    with pytest.raises(ValueError, match="Dimension mismatch"):
+        func(0, np.zeros(11), np.ones((4, 4)))
