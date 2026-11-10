@@ -81,7 +81,10 @@ def coupled_lorenz_njit(t, y, args):
     """Network of diffusively coupled Lorenz oscillators, compiled with Numba.
 
     Nodes are coupled through the x variable:
-    dx_i/dt = sigma (y_i - x_i) + K * sum_j A_ij (x_j - x_i).
+
+        dx_i/dt = sigma (y_i - x_i) + K sum_j A_ij (x_j - x_i)
+        dy_i/dt = x_i (rho - z_i) - y_i
+        dz_i/dt = x_i y_i - beta z_i
 
     Parameters
     ----------
@@ -198,7 +201,8 @@ def coupled_lorenz_jacobian_njit(t, y, args):
 def lotka_volterra(t, y, alpha=1.1, beta=0.4, delta=0.1, gamma=0.4):
     """Lotka-Volterra predator-prey model.
 
-    dx/dt = alpha x - beta x p,   dp/dt = delta x p - gamma p
+        dx/dt = alpha x - beta x p
+        dp/dt = delta x p - gamma p
 
     The orbits are closed curves around the equilibrium (gamma/delta, alpha/beta),
     on which V = delta x - gamma ln x + beta p - alpha ln p stays constant, so
@@ -262,7 +266,9 @@ def lotka_volterra_jacobian(
 def lorenz(t, y, sigma=10.0, rho=28.0, beta=8.0 / 3.0):
     """Lorenz system.
 
-    dx/dt = sigma (y - x),  dy/dt = x (rho - z) - y,  dz/dt = x y - beta z
+        dx/dt = sigma (y - x)
+        dy/dt = x (rho - z) - y
+        dz/dt = x y - beta z
 
     Parameters
     ----------
@@ -329,9 +335,12 @@ def coupled_lorenz(t, y, A, K=0.1, sigma=10.0, rho=28.0, beta=8.0 / 3.0):
     """Network of diffusively coupled Lorenz oscillators.
 
     Nodes are coupled through the x variable:
-    dx_i/dt = sigma (y_i - x_i) + K * sum_j A_ij (x_j - x_i),
-    with dy_i/dt and dz_i/dt as in `lorenz`. This is Eq. (20) of
-    Yildirim & Antonopoulos (2024), which uses K = 0.2.
+
+        dx_i/dt = sigma (y_i - x_i) + K sum_j A_ij (x_j - x_i)
+        dy_i/dt = x_i (rho - z_i) - y_i
+        dz_i/dt = x_i y_i - beta z_i
+
+    This is Eq. (20) of Yildirim & Antonopoulos (2024), which uses K = 0.2.
 
     Parameters
     ----------
@@ -493,7 +502,7 @@ def _kuramoto_inputs(y, A, w):
 def kuramoto(t, y, A, w, K=1.0):
     """Kuramoto oscillators on a network.
 
-    dtheta_i/dt = w_i + (K / M) * sum_j A_ij sin(theta_j - theta_i)
+        dtheta_i/dt = w_i + (K / M) sum_j A_ij sin(theta_j - theta_i)
 
     This is Eq. (22) of Yildirim & Antonopoulos (2024).
 
@@ -570,7 +579,7 @@ def kuramoto_jacobian(t, y, A, w, K=1.0):
 def stochastic_kuramoto(theta0, A, w, K=10.0, D=10.0, dt=0.1, n_steps=1000, rng=None):
     """Stochastic Kuramoto oscillators, integrated with Euler-Maruyama.
 
-    dtheta_i = [w_i + (K / M) sum_j A_ij sin(theta_j - theta_i)] dt + D dW_i,
+        dtheta_i = [w_i + (K / M) sum_j A_ij sin(theta_j - theta_i)] dt + D dW_i
 
     with independent Wiener processes W_i. This is Eq. (3.18) of the thesis
     and Eq. (23) of Yildirim & Antonopoulos (2024), integrated with the
@@ -644,9 +653,9 @@ def _rossler_inputs(y, A, w):
 def rossler(t, y, A, K=0.1, w=1.0, a=0.2, f=0.2, c=5.7):
     """Rossler oscillators coupled through x.
 
-    dx_i/dt = -w_i y_i - z_i + K * sum_j A_ij (x_j - x_i)
-    dy_i/dt =  w_i x_i + a y_i
-    dz_i/dt =  f + z_i (x_i - c)
+        dx_i/dt = -w_i y_i - z_i + K sum_j A_ij (x_j - x_i)
+        dy_i/dt =  w_i x_i + a y_i
+        dz_i/dt =  f + z_i (x_i - c)
 
     This is `rossler_ext` of the thesis MATLAB code.
 
@@ -744,9 +753,9 @@ def _hindmarsh_rose_inputs(y, A):
 def hindmarsh_rose(t, y, A, g=0.1, a=1.0, b=3.0, c=1.0, d=5.0, r=0.005, s=4.0, p0=-1.6, I_ext=3.25):
     """Hindmarsh-Rose neurons coupled through the membrane potential.
 
-    dp_i/dt = q_i - a p_i^3 + b p_i^2 - n_i + I_ext - g * sum_l C_il p_l
-    dq_i/dt = c - d p_i^2 - q_i
-    dn_i/dt = r (s (p_i - p0) - n_i)
+        dp_i/dt = q_i - a p_i^3 + b p_i^2 - n_i + I_ext - g sum_l C_il p_l
+        dq_i/dt = c - d p_i^2 - q_i
+        dn_i/dt = r (s (p_i - p0) - n_i)
 
     where C = D - A is the graph Laplacian and D the diagonal matrix of the
     row sums of A, so the coupling is g * sum_l A_il (p_l - p_i). This is
