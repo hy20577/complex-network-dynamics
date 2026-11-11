@@ -1049,6 +1049,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#phases-of-signals-with-a-nonzero-mean" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phases of signals with a nonzero mean
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1270,6 +1281,15 @@ r_{ij} = \Big|\big\langle e^{i(\theta_i(t)-\theta_j(t))}\big\rangle_t\Big|
 R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\sum_i \big(\langle x_i^2\rangle_t - \langle x_i\rangle_t^2\big)}
 \]</div>
 <p>All three are 1 for fully synchronised nodes.</p>
+<p><strong>Deviation from synchronisation</strong>: the running average of <span class="arithmatex">\(|x_2 - x_1|\)</span>, which goes to zero when two
+oscillators synchronise completely.</p>
+<h2 id="phases-of-signals-with-a-nonzero-mean">Phases of signals with a nonzero mean<a class="headerlink" href="#phases-of-signals-with-a-nonzero-mean" title="Permanent link">&para;</a></h2>
+<p><code>hilbert_phases</code> subtracts each node's mean before the Hilbert transform (<code>demean=True</code>). The phase is the
+angle of <span class="arithmatex">\(x(t) + i\,\mathcal{H}[x](t)\)</span> seen from the origin, and the transform of a constant is zero, so an
+offset moves the whole orbit away from the origin: for maps on <span class="arithmatex">\([0, 1]\)</span> the angle hardly moves, and
+uncoupled nodes look synchronised (two independent logistic maps give <span class="arithmatex">\(r_{12} \approx 0.49\)</span> instead of
+<span class="arithmatex">\(\approx 0\)</span>). For signals that oscillate around zero, such as the Lorenz <span class="arithmatex">\(x\)</span>, demeaning changes nothing.
+The thesis and the paper used the raw signals; pass <code>demean=False</code> to reproduce their values.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_network</span><span class="p">,</span> <span class="n">stochastic_kuramoto</span><span class="p">,</span> <span class="n">global_sync</span><span class="p">,</span> <span class="n">pairwise_sync</span>
@@ -1293,12 +1313,18 @@ R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\
 
 
 <a href="#complex_network_dynamics.synchronisation.hilbert_phases" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">hilbert_phases</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">hilbert_phases</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">demean</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
 
         <p>Instantaneous phases from the Hilbert transform.</p>
+<p>The phase is the angle of the analytic signal x(t) + i H<a href="t">x</a>, measured
+from the origin. The Hilbert transform of a constant is zero, so a signal
+with a nonzero mean gives an orbit shifted away from the origin, and for a
+large offset (e.g. maps on [0, 1]) the angle hardly moves: uncoupled nodes
+then look phase-synchronised. Subtracting each node's mean first removes
+this artefact and changes nothing for signals that oscillate around zero.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1326,6 +1352,24 @@ R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\
             </td>
             <td>
                 <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>demean</code>
+            </td>
+            <td>
+                  <code><span title="bool">bool</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Subtract each node's mean before the transform. Default is True.
+Use False to reproduce the thesis and Yildirim &amp; Antonopoulos (2024),
+e.g. rho = 0.93 for the 4 logistic maps in Table 1.</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
             </td>
           </tr>
       </tbody>
@@ -1371,21 +1415,47 @@ R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-18">18</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-19">19</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-21">21</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-7" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">hilbert_phases</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-7" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">hilbert_phases</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">demean</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-8" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-8"></a><span class="w">    </span><span class="sd">"""Instantaneous phases from the Hilbert transform.</span>
 <a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-9" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-9"></a>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-10" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-10"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-11" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-11"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-12" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-12"></a><span class="sd">    data : array_like</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-13" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-13"></a><span class="sd">        Time series, shape (n_points, n_nodes).</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-14" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-14"></a>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-15" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-15"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-16" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-16"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-17" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-17"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-18" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-18"></a><span class="sd">        Unwrapped phase of each node's analytic signal, same shape as `data`.</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-19" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-19"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-20" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-20"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-21" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-21"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unwrap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">hilbert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-10" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-10"></a><span class="sd">    The phase is the angle of the analytic signal x(t) + i H[x](t), measured</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-11" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-11"></a><span class="sd">    from the origin. The Hilbert transform of a constant is zero, so a signal</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-12" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-12"></a><span class="sd">    with a nonzero mean gives an orbit shifted away from the origin, and for a</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-13" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-13"></a><span class="sd">    large offset (e.g. maps on [0, 1]) the angle hardly moves: uncoupled nodes</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-14" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-14"></a><span class="sd">    then look phase-synchronised. Subtracting each node's mean first removes</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-15" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-15"></a><span class="sd">    this artefact and changes nothing for signals that oscillate around zero.</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-16" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-16"></a>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-17" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-17"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-18" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-18"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-19" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-19"></a><span class="sd">    data : array_like</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-20" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-20"></a><span class="sd">        Time series, shape (n_points, n_nodes).</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-21" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-21"></a><span class="sd">    demean : bool, optional</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-22" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-22"></a><span class="sd">        Subtract each node's mean before the transform. Default is True.</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-23" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-23"></a><span class="sd">        Use False to reproduce the thesis and Yildirim &amp; Antonopoulos (2024),</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-24" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-24"></a><span class="sd">        e.g. rho = 0.93 for the 4 logistic maps in Table 1.</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-25" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-25"></a>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-26" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-26"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-27" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-27"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-28" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-28"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-29" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-29"></a><span class="sd">        Unwrapped phase of each node's analytic signal, same shape as `data`.</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-30" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-30"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-31" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-31"></a>    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-32" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-32"></a>    <span class="k">if</span> <span class="n">demean</span><span class="p">:</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-33" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-33"></a>        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-34" name="complex_network_dynamics.synchronisation.hilbert_phases--source--__codelineno-0-34"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unwrap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">hilbert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1469,20 +1539,7 @@ time points.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>complex_network_dynamics/synchronisation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-31">31</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-33">33</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-34">34</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-36">36</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-37">37</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-37">37</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-38">38</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-39">39</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-40">40</a></span>
@@ -1491,29 +1548,42 @@ time points.</p>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-43">43</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-44">44</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-45">45</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-46">46</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-24" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">global_sync</span><span class="p">(</span><span class="n">phases</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-25" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-25"></a><span class="w">    </span><span class="sd">"""Running average of the Kuramoto order parameter.</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-26" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-26"></a>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-27" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-27"></a><span class="sd">    The order parameter at time t is</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-28" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-28"></a>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-29" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-29"></a><span class="sd">        rho(t) = |sum_j exp(i theta_j(t))| / M,</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-30" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-30"></a>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-31" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-31"></a><span class="sd">    which is 1 when all phases are equal and near 0 when they are spread out.</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-32" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-32"></a>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-33" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-33"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-34" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-34"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-35" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-35"></a><span class="sd">    phases : array_like</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-36" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-36"></a><span class="sd">        Phases, shape (n_points, M).</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-37" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-37"></a>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-38" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-38"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-39" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-39"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-40" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-40"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-41" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-41"></a><span class="sd">        Shape (n_points,): the mean of rho over the first 1, 2, ..., n_points</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-42" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-42"></a><span class="sd">        time points.</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-43" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-43"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-44" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-44"></a>    <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-45" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-45"></a>    <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phases</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">phases</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-46" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-46"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-59">59</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-37" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-37"></a><span class="k">def</span><span class="w"> </span><span class="nf">global_sync</span><span class="p">(</span><span class="n">phases</span><span class="p">):</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-38" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-38"></a><span class="w">    </span><span class="sd">"""Running average of the Kuramoto order parameter.</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-39" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-39"></a>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-40" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-40"></a><span class="sd">    The order parameter at time t is</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-41" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-41"></a>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-42" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-42"></a><span class="sd">        rho(t) = |sum_j exp(i theta_j(t))| / M,</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-43" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-43"></a>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-44" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-44"></a><span class="sd">    which is 1 when all phases are equal and near 0 when they are spread out.</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-45" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-45"></a>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-46" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-46"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-47" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-47"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-48" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-48"></a><span class="sd">    phases : array_like</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-49" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-49"></a><span class="sd">        Phases, shape (n_points, M).</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-50" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-50"></a>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-51" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-51"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-52" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-52"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-53" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-53"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-54" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-54"></a><span class="sd">        Shape (n_points,): the mean of rho over the first 1, 2, ..., n_points</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-55" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-55"></a><span class="sd">        time points.</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-56" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-56"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-57" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-57"></a>    <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-58" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-58"></a>    <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phases</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">phases</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<a id="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-59" name="complex_network_dynamics.synchronisation.global_sync--source--__codelineno-0-59"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">rho</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1594,43 +1664,43 @@ time points.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>complex_network_dynamics/synchronisation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-49">49</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-50">50</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-51">51</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-52">52</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-53">53</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-54">54</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-55">55</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-56">56</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-57">57</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-58">58</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-59">59</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-60">60</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-61">61</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-62">62</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-62">62</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-63">63</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-64">64</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-65">65</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-66">66</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-67">67</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-49" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-49"></a><span class="k">def</span><span class="w"> </span><span class="nf">pairwise_sync</span><span class="p">(</span><span class="n">phases</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-50" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-50"></a><span class="w">    </span><span class="sd">"""Phase synchronisation between every pair of nodes.</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-51" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-51"></a>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-52" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-52"></a><span class="sd">    r_ij = |mean_t exp(i (theta_i(t) - theta_j(t)))| (Gomez-Gardenes et al., 2010),</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-53" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-53"></a><span class="sd">    1 for phase-locked nodes and near 0 for independent ones.</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-54" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-54"></a>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-55" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-55"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-56" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-56"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-57" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-57"></a><span class="sd">    phases : array_like</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-58" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-58"></a><span class="sd">        Phases, shape (n_points, M).</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-59" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-59"></a>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-60" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-60"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-61" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-61"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-62" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-62"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-63" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-63"></a><span class="sd">        Symmetric (M, M) matrix with ones on the diagonal.</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-64" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-64"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-65" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-65"></a>    <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-66" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-66"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phases</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-67" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-67"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">phases</span><span class="p">)</span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-67">67</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-68">68</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-70">70</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-71">71</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-73">73</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-74">74</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-75">75</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-76">76</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-77">77</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-78">78</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-79">79</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-62" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-62"></a><span class="k">def</span><span class="w"> </span><span class="nf">pairwise_sync</span><span class="p">(</span><span class="n">phases</span><span class="p">):</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-63" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-63"></a><span class="w">    </span><span class="sd">"""Phase synchronisation between every pair of nodes.</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-64" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-64"></a>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-65" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-65"></a><span class="sd">    r_ij = |mean_t exp(i (theta_i(t) - theta_j(t)))| (Gomez-Gardenes et al., 2010),</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-66" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-66"></a><span class="sd">    1 for phase-locked nodes and near 0 for independent ones.</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-67" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-67"></a>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-68" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-68"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-69" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-69"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-70" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-70"></a><span class="sd">    phases : array_like</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-71" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-71"></a><span class="sd">        Phases, shape (n_points, M).</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-72" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-72"></a>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-73" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-73"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-74" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-74"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-75" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-75"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-76" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-76"></a><span class="sd">        Symmetric (M, M) matrix with ones on the diagonal.</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-77" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-77"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-78" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-78"></a>    <span class="n">phases</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">phases</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-79" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-79"></a>    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">phases</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-80" name="complex_network_dynamics.synchronisation.pairwise_sync--source--__codelineno-0-80"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">np</span><span class="o">.</span><span class="n">conj</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">phases</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1714,57 +1784,57 @@ single point, 0/0) and returned as NaN.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>complex_network_dynamics/synchronisation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-70">70</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-71">71</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-72">72</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-73">73</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-74">74</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-75">75</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-76">76</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-77">77</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-78">78</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-79">79</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-80">80</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-81">81</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-82">82</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-83">83</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84">84</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85">85</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86">86</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87">87</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88">88</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89">89</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90">90</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-91">91</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-92">92</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-93">93</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-94">94</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-95">95</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-70" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-70"></a><span class="k">def</span><span class="w"> </span><span class="nf">global_order</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-71" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-71"></a><span class="w">    </span><span class="sd">"""Synchronisation measure R(t) of Rubido et al.</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-72" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-72"></a>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-73" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-73"></a><span class="sd">    R(t) is the variance over time of the network average, divided by the</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-74" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-74"></a><span class="sd">    network average of each node's variance over time, both computed from</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-75" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-75"></a><span class="sd">    the first t points. It is 1 for fully synchronised nodes and near 1/M for</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-76" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-76"></a><span class="sd">    independent ones.</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-77" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-77"></a>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-78" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-78"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-79" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-79"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-80" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-80"></a><span class="sd">    data : array_like</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-81" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-81"></a><span class="sd">        Time series, shape (n_points, M).</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-82" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-82"></a>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-83" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-83"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86"></a><span class="sd">        Shape (n_points,). The first value is undefined (the variance of a</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87"></a><span class="sd">        single point, 0/0) and returned as NaN.</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-91" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-91"></a>    <span class="n">x_avg</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-92" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-92"></a>    <span class="n">numerator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">x_avg</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">x_avg</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-93" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-93"></a>    <span class="n">node_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-94" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-94"></a>    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-95" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-95"></a>        <span class="k">return</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">node_var</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-83"> 83</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84"> 84</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85"> 85</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86"> 86</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87"> 87</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88"> 88</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89"> 89</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90"> 90</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-91"> 91</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-92"> 92</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-93"> 93</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-94"> 94</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-95"> 95</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-96"> 96</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-97"> 97</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-98"> 98</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-99"> 99</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-100">100</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-101">101</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-102">102</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-103">103</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-104">104</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-105">105</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-106">106</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-107">107</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-108">108</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-83" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-83"></a><span class="k">def</span><span class="w"> </span><span class="nf">global_order</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-84"></a><span class="w">    </span><span class="sd">"""Synchronisation measure R(t) of Rubido et al.</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-85"></a>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-86"></a><span class="sd">    R(t) is the variance over time of the network average, divided by the</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-87"></a><span class="sd">    network average of each node's variance over time, both computed from</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-88"></a><span class="sd">    the first t points. It is 1 for fully synchronised nodes and near 1/M for</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-89"></a><span class="sd">    independent ones.</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-90"></a>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-91" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-91"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-92" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-92"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-93" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-93"></a><span class="sd">    data : array_like</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-94" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-94"></a><span class="sd">        Time series, shape (n_points, M).</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-95" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-95"></a>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-96" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-96"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-97" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-97"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-98" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-98"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-99" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-99"></a><span class="sd">        Shape (n_points,). The first value is undefined (the variance of a</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-100" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-100"></a><span class="sd">        single point, 0/0) and returned as NaN.</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-101" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-101"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-102" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-102"></a>    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-103" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-103"></a>    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-104" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-104"></a>    <span class="n">x_avg</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-105" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-105"></a>    <span class="n">numerator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">x_avg</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">x_avg</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-106" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-106"></a>    <span class="n">node_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">X</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">t</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-107" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-107"></a>    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">):</span>
+<a id="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-108" name="complex_network_dynamics.synchronisation.global_order--source--__codelineno-0-108"></a>        <span class="k">return</span> <span class="n">numerator</span> <span class="o">/</span> <span class="n">node_var</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1779,14 +1849,15 @@ single point, 0/0) and returned as NaN.</p>
 
 
 <a href="#complex_network_dynamics.synchronisation.deviation_from_sync" class="headerlink" title="Permanent link">&para;</a></h3>
-<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">deviation_from_sync</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">tvalues</span><span class="p">)</span>
+<div class="doc-signature highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">deviation_from_sync</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
 </code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Average distance between two oscillators over time.</p>
-<p>E(t_i) = (1 / t_i) * sum_{k &lt;= i} |x2(t_k) - x1(t_k)|, for i = 2, ..., n - 2
-(1-based).</p>
+        <p>Running average distance between two oscillators.</p>
+<div class="highlight"><pre><span></span><code>E_i = (1 / i) sum_{k=1}^{i} |x2_k - x1_k|,   i = 1, ..., n
+</code></pre></div>
+<p>E goes to zero when the two oscillators synchronise completely.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1809,7 +1880,7 @@ single point, 0/0) and returned as NaN.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Time series of the two oscillators.</p>
+                <p>Time series of the two oscillators, of equal length n.</p>
               </div>
             </td>
             <td>
@@ -1825,23 +1896,7 @@ single point, 0/0) and returned as NaN.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Time series of the two oscillators.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>tvalues</code>
-            </td>
-            <td>
-                  <code><span title="array_like">array_like</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Time of each point.</p>
+                <p>Time series of the two oscillators, of equal length n.</p>
               </div>
             </td>
             <td>
@@ -1867,7 +1922,7 @@ single point, 0/0) and returned as NaN.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Shape (len(tvalues) - 3,).</p>
+                <p>Shape (n,): the average of |x2 - x1| over the first 1, 2, ..., n points.</p>
               </div>
             </td>
           </tr>
@@ -1875,22 +1930,17 @@ single point, 0/0) and returned as NaN.</p>
     </table>
 
 
+<details class="note" open>
+  <summary>Notes</summary>
+  <p>The thesis MATLAB code (<code>deviation_from_sync.m</code>, used for Fig. 4.3(e))
+divided the running sum by the time t_i instead of the number of points,
+which gives the average only for a unit step starting at t = 0 (for a step
+h it is 1/h times too large), and dropped the last two points.</p>
+</details>
+
             <details class="mkdocstrings-source">
               <summary>Source code in <code>complex_network_dynamics/synchronisation.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-98"> 98</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-99"> 99</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-100">100</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-101">101</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-102">102</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-103">103</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-104">104</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-105">105</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-106">106</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-107">107</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-108">108</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-109">109</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-110">110</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111">111</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111">111</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-112">112</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-113">113</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114">114</a></span>
@@ -1900,30 +1950,53 @@ single point, 0/0) and returned as NaN.</p>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118">118</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119">119</a></span>
 <span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120">120</a></span>
-<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121">121</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-98" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-98"></a><span class="k">def</span><span class="w"> </span><span class="nf">deviation_from_sync</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">tvalues</span><span class="p">):</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-99" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-99"></a><span class="w">    </span><span class="sd">"""Average distance between two oscillators over time.</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-100" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-100"></a>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-101" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-101"></a><span class="sd">    E(t_i) = (1 / t_i) * sum_{k &lt;= i} |x2(t_k) - x1(t_k)|, for i = 2, ..., n - 2</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-102" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-102"></a><span class="sd">    (1-based).</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-103" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-103"></a>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-104" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-104"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-105" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-105"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-106" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-106"></a><span class="sd">    x1, x2 : array_like</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-107" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-107"></a><span class="sd">        Time series of the two oscillators.</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-108" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-108"></a><span class="sd">    tvalues : array_like</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-109" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-109"></a><span class="sd">        Time of each point.</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-110" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-110"></a>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-112" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-112"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-113" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-113"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114"></a><span class="sd">        Shape (len(tvalues) - 3,).</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116"></a>    <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117"></a>    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118"></a>    <span class="n">tvalues</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">tvalues</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119"></a>    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tvalues</span><span class="p">)</span> <span class="o">-</span> <span class="mi">2</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120"></a>    <span class="n">running</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x2</span><span class="p">[:</span><span class="n">n</span><span class="p">]</span> <span class="o">-</span> <span class="n">x1</span><span class="p">[:</span><span class="n">n</span><span class="p">]))</span>
-<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121"></a>    <span class="k">return</span> <span class="n">running</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">/</span> <span class="n">tvalues</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121">121</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-122">122</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-123">123</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-124">124</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-125">125</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-126">126</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-127">127</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-128">128</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-129">129</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-130">130</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-131">131</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-132">132</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-133">133</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-134">134</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-135">135</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-136">136</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-137">137</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-138">138</a></span>
+<span class="normal"><a href="#complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-139">139</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-111"></a><span class="k">def</span><span class="w"> </span><span class="nf">deviation_from_sync</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-112" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-112"></a><span class="w">    </span><span class="sd">"""Running average distance between two oscillators.</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-113" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-113"></a>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-114"></a><span class="sd">        E_i = (1 / i) sum_{k=1}^{i} |x2_k - x1_k|,   i = 1, ..., n</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-115"></a>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-116"></a><span class="sd">    E goes to zero when the two oscillators synchronise completely.</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-117"></a>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-118"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-119"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-120"></a><span class="sd">    x1, x2 : array_like</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-121"></a><span class="sd">        Time series of the two oscillators, of equal length n.</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-122" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-122"></a>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-123" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-123"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-124" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-124"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-125" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-125"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-126" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-126"></a><span class="sd">        Shape (n,): the average of |x2 - x1| over the first 1, 2, ..., n points.</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-127" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-127"></a>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-128" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-128"></a><span class="sd">    Notes</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-129" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-129"></a><span class="sd">    -----</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-130" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-130"></a><span class="sd">    The thesis MATLAB code (`deviation_from_sync.m`, used for Fig. 4.3(e))</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-131" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-131"></a><span class="sd">    divided the running sum by the time t_i instead of the number of points,</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-132" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-132"></a><span class="sd">    which gives the average only for a unit step starting at t = 0 (for a step</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-133" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-133"></a><span class="sd">    h it is 1/h times too large), and dropped the last two points.</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-134" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-134"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-135" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-135"></a>    <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-136" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-136"></a>    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-137" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-137"></a>    <span class="k">if</span> <span class="n">x1</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="n">x2</span><span class="o">.</span><span class="n">shape</span><span class="p">:</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-138" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-138"></a>        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"x1 and x2 must have the same length, got </span><span class="si">{</span><span class="n">x1</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">x2</span><span class="o">.</span><span class="n">size</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-139" name="complex_network_dynamics.synchronisation.deviation_from_sync--source--__codelineno-0-139"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x2</span> <span class="o">-</span> <span class="n">x1</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">x1</span><span class="o">.</span><span class="n">size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
