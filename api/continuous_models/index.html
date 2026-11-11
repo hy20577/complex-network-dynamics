@@ -1441,7 +1441,7 @@
 <tr>
 <td>Numba (<code>*_njit</code>)</td>
 <td><code>f(t, y, args)</code> with <code>args</code> a tuple</td>
-<td><code>build_rk4_lyapunov</code>, <code>rk4_lyapunov_fast</code></td>
+<td><code>build_rk4_lyapunov</code></td>
 </tr>
 </tbody>
 </table>
@@ -5310,7 +5310,7 @@ enter the Jacobian.</p>
     <div class="doc doc-contents first">
 
         <p>Lorenz vector field, compiled with Numba.</p>
-<p>Use with <code>build_rk4_lyapunov</code> or <code>rk4_lyapunov_fast</code>.</p>
+<p>Use with <code>build_rk4_lyapunov</code>.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -5442,7 +5442,7 @@ enter the Jacobian.</p>
 <a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-11" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">lorenz_njit</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
 <a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-12" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-12"></a><span class="w">    </span><span class="sd">"""Lorenz vector field, compiled with Numba.</span>
 <a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-13" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-13"></a>
-<a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-14" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-14"></a><span class="sd">    Use with `build_rk4_lyapunov` or `rk4_lyapunov_fast`.</span>
+<a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-14" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-14"></a><span class="sd">    Use with `build_rk4_lyapunov`.</span>
 <a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-15" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-15"></a>
 <a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-16" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-16"></a><span class="sd">    Parameters</span>
 <a id="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-17" name="complex_network_dynamics.continuous_models.lorenz_njit--source--__codelineno-0-17"></a><span class="sd">    ----------</span>
