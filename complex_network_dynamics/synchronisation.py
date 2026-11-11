@@ -4,13 +4,24 @@ from scipy.signal import hilbert
 # Phases and time series are (n_points, n_nodes) arrays, one column per node.
 
 
-def hilbert_phases(data):
+def hilbert_phases(data, demean=True):
     """Instantaneous phases from the Hilbert transform.
+
+    The phase is the angle of the analytic signal x(t) + i H[x](t), measured
+    from the origin. The Hilbert transform of a constant is zero, so a signal
+    with a nonzero mean gives an orbit shifted away from the origin, and for a
+    large offset (e.g. maps on [0, 1]) the angle hardly moves: uncoupled nodes
+    then look phase-synchronised. Subtracting each node's mean first removes
+    this artefact and changes nothing for signals that oscillate around zero.
 
     Parameters
     ----------
     data : array_like
         Time series, shape (n_points, n_nodes).
+    demean : bool, optional
+        Subtract each node's mean before the transform. Default is True.
+        Use False to reproduce the thesis and Yildirim & Antonopoulos (2024),
+        e.g. rho = 0.93 for the 4 logistic maps in Table 1.
 
     Returns
     -------
@@ -18,6 +29,8 @@ def hilbert_phases(data):
         Unwrapped phase of each node's analytic signal, same shape as `data`.
     """
     data = np.asarray(data, dtype=float)
+    if demean:
+        data = data - data.mean(axis=0)
     return np.unwrap(np.angle(hilbert(data, axis=0)), axis=0)
 
 
@@ -95,27 +108,32 @@ def global_order(data):
         return numerator / node_var.mean(axis=1)
 
 
-def deviation_from_sync(x1, x2, tvalues):
-    """Average distance between two oscillators over time.
+def deviation_from_sync(x1, x2):
+    """Running average distance between two oscillators.
 
-    E(t_i) = (1 / t_i) * sum_{k <= i} |x2(t_k) - x1(t_k)|, for i = 2, ..., n - 2
-    (1-based).
+        E_i = (1 / i) sum_{k=1}^{i} |x2_k - x1_k|,   i = 1, ..., n
+
+    E goes to zero when the two oscillators synchronise completely.
 
     Parameters
     ----------
     x1, x2 : array_like
-        Time series of the two oscillators.
-    tvalues : array_like
-        Time of each point.
+        Time series of the two oscillators, of equal length n.
 
     Returns
     -------
     np.ndarray
-        Shape (len(tvalues) - 3,).
+        Shape (n,): the average of |x2 - x1| over the first 1, 2, ..., n points.
+
+    Notes
+    -----
+    The thesis MATLAB code (`deviation_from_sync.m`, used for Fig. 4.3(e))
+    divided the running sum by the time t_i instead of the number of points,
+    which gives the average only for a unit step starting at t = 0 (for a step
+    h it is 1/h times too large), and dropped the last two points.
     """
-    x1 = np.asarray(x1, dtype=float)
-    x2 = np.asarray(x2, dtype=float)
-    tvalues = np.asarray(tvalues, dtype=float)
-    n = len(tvalues) - 2
-    running = np.cumsum(np.abs(x2[:n] - x1[:n]))
-    return running[1:] / tvalues[1:n]
+    x1 = np.asarray(x1, dtype=float).ravel()
+    x2 = np.asarray(x2, dtype=float).ravel()
+    if x1.shape != x2.shape:
+        raise ValueError(f"x1 and x2 must have the same length, got {x1.size} and {x2.size}")
+    return np.cumsum(np.abs(x2 - x1)) / np.arange(1, x1.size + 1)

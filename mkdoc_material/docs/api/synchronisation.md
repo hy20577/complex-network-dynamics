@@ -32,6 +32,18 @@ R(t) = \frac{\langle \bar x^2\rangle_t - \langle \bar x\rangle_t^2}{\frac{1}{M}\
 
 All three are 1 for fully synchronised nodes.
 
+**Deviation from synchronisation**: the running average of \(|x_2 - x_1|\), which goes to zero when two
+oscillators synchronise completely.
+
+## Phases of signals with a nonzero mean
+
+`hilbert_phases` subtracts each node's mean before the Hilbert transform (`demean=True`). The phase is the
+angle of \(x(t) + i\,\mathcal{H}[x](t)\) seen from the origin, and the transform of a constant is zero, so an
+offset moves the whole orbit away from the origin: for maps on \([0, 1]\) the angle hardly moves, and
+uncoupled nodes look synchronised (two independent logistic maps give \(r_{12} \approx 0.49\) instead of
+\(\approx 0\)). For signals that oscillate around zero, such as the Lorenz \(x\), demeaning changes nothing.
+The thesis and the paper used the raw signals; pass `demean=False` to reproduce their values.
+
 ## Example
 
 ```python

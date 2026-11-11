@@ -78,16 +78,24 @@ def test_global_order(series):
 
 
 def test_deviation_from_sync(series):
-    t = 0.1 * np.arange(1, len(series) + 1)
+    # The MATLAB code divided the running sum by the time t_i = 0.1 i instead of by i,
+    # so its values are 1/0.1 times ours; its first entry is i = 2.
     ref = load("ref_deviation_from_sync.txt").ravel()
-    got = deviation_from_sync(series[:, 0], series[:, 1], t)
-    assert ref[-1] == 0  # the MATLAB output ends with an unfilled 0, left out in Python
-    np.testing.assert_allclose(got, ref[:-1], rtol=1e-12)
+    got = deviation_from_sync(series[:, 0], series[:, 1])
+    assert ref[-1] == 0  # the MATLAB output ends with an unfilled 0
+    np.testing.assert_allclose(got[1:len(ref)], 0.1 * ref[:-1], rtol=1e-12)
+
+
+def test_deviation_from_sync_is_the_running_average_distance():
+    x1, x2 = np.zeros(500), np.ones(500)
+    np.testing.assert_allclose(deviation_from_sync(x1, x2), 1.0)
+    with pytest.raises(ValueError, match="same length"):
+        deviation_from_sync(np.zeros(3), np.zeros(4))
 
 
 def test_hilbert_phases_of_a_sine_grow_linearly():
     t = np.arange(4000) * 0.01
-    phases = hilbert_phases(np.column_stack([np.sin(2 * t), np.cos(3 * t)]))
+    phases = hilbert_phases(np.column_stack([np.sin(2 * t), np.cos(3 * t)]), demean=False)
     np.testing.assert_array_equal(phases, np.unwrap(np.angle(hilbert(np.column_stack([np.sin(2 * t), np.cos(3 * t)]), axis=0)), axis=0))
     middle = slice(500, 3500)  # away from the edge effects of the transform
     slopes = np.polyfit(t[middle], phases[middle], 1)[0]
@@ -257,3 +265,16 @@ def test_hindmarsh_rose_coupling_is_diffusive():
 def test_hindmarsh_rose_rejects_a_state_of_the_wrong_size(func):
     with pytest.raises(ValueError, match="Dimension mismatch"):
         func(0, np.zeros(11), np.ones((4, 4)))
+
+
+def test_demeaning_removes_the_hilbert_offset_artefact():
+    """Two independent signals on [0, 1] look phase-locked unless the mean is removed."""
+    rng = np.random.default_rng(5)
+    x = np.empty((20_000, 2))
+    x[0] = rng.random(2)
+    for k in range(1, len(x)):
+        x[k] = 4 * x[k - 1] * (1 - x[k - 1])
+    assert pairwise_sync(hilbert_phases(x, demean=False))[0, 1] > 0.3
+    assert pairwise_sync(hilbert_phases(x))[0, 1] < 0.05
+    shifted = np.sin(0.01 * np.arange(5000))[:, None] + 3.0
+    np.testing.assert_allclose(hilbert_phases(shifted), hilbert_phases(shifted - 3.0))
