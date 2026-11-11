@@ -49,7 +49,7 @@ def main():
     mir_surrogate_test(traj16[:300, :4], p_sl=0.5, rng=0)  # compile
     x0_lorenz = np.ones(3)
     solver = build_rk4_lyapunov(lorenz_njit, lorenz_jacobian_njit)
-    solver(x0_lorenz, 0.0, 0.01, 100, 10, (10.0, 28.0, 8 / 3))  # compile
+    solver(x0_lorenz, 0.0, 0.01, 100, (10.0, 28.0, 8 / 3))  # compile
 
     cases = [
         ("simulate_discrete_models: 16 nodes, 10k steps",
@@ -66,9 +66,9 @@ def main():
          lambda: rk4_with_lyapunov(coupled_lorenz, rng.random(36), 0.0, 0.01, 5_000,
                                    df=coupled_lorenz_jacobian, n_transient=0, A=A12, K=0.5), 1),
         ("solve_ivp_with_lyapunov: Lorenz, t=100",
-         lambda: solve_ivp_with_lyapunov(lorenz, lorenz_jacobian, x0_lorenz, 100.0), 1),
+         lambda: solve_ivp_with_lyapunov(lorenz, x0_lorenz, 0.0, 100.0, df=lorenz_jacobian), 1),
         ("build_rk4_lyapunov (Numba): Lorenz, 50k steps",
-         lambda: solver(x0_lorenz, 0.0, 0.01, 50_000, 10, (10.0, 28.0, 8 / 3)), 3),
+         lambda: solver(x0_lorenz, 0.0, 0.01, 50_000, (10.0, 28.0, 8 / 3)), 3),
     ]
 
     print(f"Python {platform.python_version()}, numpy {np.__version__}, {platform.machine()} {platform.system()}\n")

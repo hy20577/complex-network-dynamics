@@ -17,18 +17,28 @@ Lyapunov exponents are the time-averaged logarithms of the diagonal of \(R\):
 | `euler_with_lyapunov` | Forward Euler, fixed step | fast, low accuracy | NumPy model |
 | `rk4_with_lyapunov` | RK4, fixed step | good default | NumPy model |
 | `solve_ivp_with_lyapunov` | SciPy adaptive (`RK45`, `DOP853`, …) | slower, most accurate | NumPy model |
-| `rk4_lyapunov_fast` | RK4, Numba-compiled | very fast | Numba (`*_njit`) model |
-| `build_rk4_lyapunov` | RK4, compiled per system, with transient | fastest | Numba (`*_njit`) model |
+| `build_rk4_lyapunov` | RK4, compiled with Numba; same results as `rk4_with_lyapunov` | about 10× faster | Numba (`*_njit`) model |
+
+## Shared names
+
+All integrators use the same names: `f`, `df` (vector field and Jacobian), `y0`, `t0` (initial state and time),
+`h` (step size), `n_steps` (recorded points), `n_transient` (steps discarded first), `qr_interval` (steps
+between QR re-orthonormalisations) and `lyap_mode`. `solve_ivp_with_lyapunov` is adaptive, so it takes the
+recorded time `t_total` and the window length `dt_qr` instead of `h`, `n_steps` and `qr_interval`, and counts
+`n_transient` in windows of `dt_qr`.
+
+Time runs on through the transient: the first recorded point is at `t0 + n_transient * h`
+(`t0 + n_transient * dt_qr` for `solve_ivp_with_lyapunov`).
 
 ## The `lyap_mode` option
 
-The NumPy integrators accept `lyap_mode`:
+All integrators accept `lyap_mode`:
 
 | `lyap_mode` | Returns |
 |-------------|---------|
 | `"none"` | `t_vals, traj` |
 | `"spectrum"` (default) | `t_vals, traj, spectrum` |
-| `"history"` | `t_vals, traj, lyap_t, lyap_history` |
+| `"history"` | `t_vals, traj, lyap_times, lyap_history` |
 
 Use `"history"` to check that the exponents have converged.
 
@@ -51,8 +61,8 @@ import numpy as np
 from complex_network_dynamics import build_rk4_lyapunov, lorenz_njit, lorenz_jacobian_njit
 
 solver = build_rk4_lyapunov(lorenz_njit, lorenz_jacobian_njit)
-t, traj, spectrum, lyap_t, lyap_hist = solver(
-    np.ones(3), 0.0, 0.01, 50_000, 10, (10.0, 28.0, 8.0 / 3.0)
+t, traj, spectrum = solver(
+    np.ones(3), t0=0.0, h=0.01, n_steps=50_000, args=(10.0, 28.0, 8.0 / 3.0)
 )
 ```
 
@@ -64,8 +74,4 @@ t, traj, spectrum, lyap_t, lyap_hist = solver(
 
 ::: complex_network_dynamics.integrators.solve_ivp_with_lyapunov
 
-::: complex_network_dynamics.integrators.rk4_lyapunov_fast
-
 ::: complex_network_dynamics.integrators.build_rk4_lyapunov
-
-::: complex_network_dynamics.integrators._apply_qr_update

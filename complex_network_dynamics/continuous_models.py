@@ -11,7 +11,7 @@ from numba import njit
 def lorenz_njit(t, y, args):
     """Lorenz vector field, compiled with Numba.
 
-    Use with `build_rk4_lyapunov` or `rk4_lyapunov_fast`.
+    Use with `build_rk4_lyapunov`.
 
     Parameters
     ----------

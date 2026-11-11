@@ -5,7 +5,7 @@ Vector fields and Jacobians for continuous-time systems. Each model comes in two
 | Flavour | Signature | Use with |
 |---------|-----------|----------|
 | NumPy   | `f(t, y, **params)` | `euler_with_lyapunov`, `rk4_with_lyapunov`, `solve_ivp_with_lyapunov` |
-| Numba (`*_njit`) | `f(t, y, args)` with `args` a tuple | `build_rk4_lyapunov`, `rk4_lyapunov_fast` |
+| Numba (`*_njit`) | `f(t, y, args)` with `args` a tuple | `build_rk4_lyapunov` |
 
 ## Lorenz system
 

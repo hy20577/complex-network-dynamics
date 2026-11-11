@@ -1,5 +1,5 @@
 from .discrete_models import df_logistic, logistic, df_circle, circle, composite_logistic, df_composite_logistic, simulate_discrete_models
-from .integrators import euler_with_lyapunov, rk4_with_lyapunov, solve_ivp_with_lyapunov, rk4_lyapunov_fast, _apply_qr_update, build_rk4_lyapunov
+from .integrators import euler_with_lyapunov, rk4_with_lyapunov, solve_ivp_with_lyapunov, build_rk4_lyapunov
 from .continuous_models import lotka_volterra, lotka_volterra_jacobian, lorenz, lorenz_jacobian, coupled_lorenz, coupled_lorenz_jacobian,  lorenz_njit, lorenz_jacobian_njit, coupled_lorenz_njit, coupled_lorenz_jacobian_njit, kuramoto, kuramoto_jacobian, stochastic_kuramoto, rossler, rossler_jacobian, hindmarsh_rose, hindmarsh_rose_jacobian
 from .synchronisation import hilbert_phases, global_sync, pairwise_sync, global_order, deviation_from_sync
 from .network_metrics import calculate_distance_metrics
@@ -12,7 +12,7 @@ __all__ = [
      "logistic", "df_circle",
      "circle", "composite_logistic", "df_composite_logistic", "simulate_discrete_models",
      "euler_with_lyapunov", 
-     "rk4_with_lyapunov", "solve_ivp_with_lyapunov",  "rk4_lyapunov_fast", "_apply_qr_update", "build_rk4_lyapunov",
+     "rk4_with_lyapunov", "solve_ivp_with_lyapunov",  "build_rk4_lyapunov",
      "lotka_volterra", "lotka_volterra_jacobian", "lorenz", "lorenz_jacobian", 
        "coupled_lorenz", "coupled_lorenz_jacobian",
        "lorenz_njit", "lorenz_jacobian_njit", "coupled_lorenz_njit", "coupled_lorenz_jacobian_njit",
