@@ -31,3 +31,6 @@ mkdoc_material/site/
 
 # pytest
 .pytest_cache/
+
+# Publisher PDFs (copyright): keep local, never commit
+research/references/

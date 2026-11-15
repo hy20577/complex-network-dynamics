@@ -15,9 +15,12 @@ from .surrogates import (
 
 def plot_similarity_gap_bars(similarity_matrix, true_adjacency, sort_bars=True, title=None):
     """
-    Plots a bar chart of similarity values, coloring true vs false edges,
-    and highlights the exact threshold band for 100% perfect network inference.
-    
+    Bar chart of the pairwise similarities, coloured by true and false links.
+
+    The grey band marks the thresholds that separate the links from the
+    non-links perfectly, if there are any. The figure is shown with
+    `plt.show()`.
+
     Parameters
     ----------
     similarity_matrix : np.ndarray
@@ -139,10 +142,10 @@ def _cell_rows_cols(Dat, grid):
 
 @njit(fastmath=True)
 def location_jit(Dat, grid):
-  """JIT-compiled spatial grid binning.
+  """Cell of each point on a grid x grid partition (Numba-compiled).
 
-  Normalizes a 2D point cloud to the unit square and assigns each point to a
-  cell of a `grid` x `grid` partition.
+  Internal helper of `MIR`: the 2-D point cloud is scaled to the unit square
+  and each point assigned to a cell of a `grid` x `grid` partition.
 
   Parameters
   ----------
@@ -186,9 +189,12 @@ def location_jit(Dat, grid):
 
 
 def Grid(Dat):
-  """Computes optimal partition bounds [N_min, N_max] based on
+  """Range of grid sizes [N_min, N_max] for `MIR`, from the occupancy of the cells.
 
-  average occupancy criteria across node pairs.
+  For each pair of nodes, the largest grid size N is found whose average
+  number of points per cell, npts / N^2, is not more than the number of
+  occupied cells; N_max is the mean of these sizes and N_min about a tenth of
+  it, as in the thesis code (`MIR.m`).
 
   Parameters
   ----------
@@ -393,11 +399,10 @@ def _pairs_mi_and_decay(Dat, pi, pj, N):
 
 @njit(fastmath=True)
 def compute_single_pair_mi(node12, N):
-  """JIT-compiled computation of Shannon Mutual Information for a single pair at
+  """Mutual information of one pair of nodes on an N x N grid (Numba-compiled).
 
-  partition N.
-
-  Precomputes 1D marginal frequencies in O(npts) instead of O(npts * N^2).
+  Internal helper of `MIR`. The marginal counts are computed in one pass, in
+  O(npts) instead of O(npts N^2).
 
   Parameters
   ----------
@@ -605,15 +610,19 @@ def fdr_bh(pvals, q=0.05, method="pdep"):
 def tpr_fpr(true_adjacency, inferred_adjacency):
   """True and false positive rates of an inferred network.
 
-  Every entry of the matrices is counted, including
-  the diagonal (where both are 0, so the diagonal adds true negatives).
+  The two matrices are compared entry by entry over the whole M x M matrix,
+  as in the thesis code (`TPR_FPR.m`): each link of a symmetric network is
+  counted twice, and the diagonal, which is 0 in both, adds M true negatives.
+  FPR is therefore slightly lower than the fraction of non-linked pairs
+  inferred as linked (2 FP / (2 n_0 + M) instead of FP / n_0, with n_0 the
+  number of non-linked pairs).
 
   Parameters
   ----------
   true_adjacency : array_like
-      Ground-truth binary adjacency matrix, shape (M, M).
+      Ground-truth binary (0/1) adjacency matrix, shape (M, M).
   inferred_adjacency : array_like
-      Inferred binary adjacency matrix, shape (M, M).
+      Inferred binary (0/1) adjacency matrix, shape (M, M).
 
   Returns
   -------
@@ -621,7 +630,24 @@ def tpr_fpr(true_adjacency, inferred_adjacency):
       TP / (TP + FN), or NaN if the true network has no links.
   fpr : float
       FP / (FP + TN), or NaN if the true network has no non-links.
+
+  Raises
+  ------
+  ValueError
+      If either matrix has entries other than 0 and 1 (a weighted network),
+      or the two have different shapes.
   """
+  for name, matrix in (("true_adjacency", true_adjacency), ("inferred_adjacency", inferred_adjacency)):
+    values = np.unique(np.asarray(matrix, dtype=float))
+    if not np.all(np.isin(values, (0.0, 1.0))):
+      raise ValueError(
+        f"{name} must be binary (0 for no link, 1 for a link); got values {values[:5]}. TPR and FPR "
+        "are defined for binary networks: for a weighted network, pass (W != 0).astype(int)."
+      )
+  if np.shape(true_adjacency) != np.shape(inferred_adjacency):
+    raise ValueError(
+      f"The matrices have different shapes: {np.shape(true_adjacency)} and {np.shape(inferred_adjacency)}."
+    )
   A = np.asarray(true_adjacency) == 1
   B = np.asarray(inferred_adjacency) == 1
   A0 = np.asarray(true_adjacency) == 0
@@ -656,11 +682,19 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
   nodes in the data and in 1/p_sl surrogate datasets. A pair's p-value is the
   fraction of surrogates whose MIR is at least the MIR of the data. The
   Benjamini-Hochberg procedure (`fdr_bh`) then decides which pairs are linked.
+  This is the method of Yildirim & Antonopoulos (2024) and of the thesis
+  code `Mir_surrogate_data.m`; the paper uses p_sl = 0.1 (10 surrogates) on
+  the 11 x 11 grid of pc_amplitude, pc_phase = 0, 0.1, ..., 1.
+
+  With the default false discovery rate q = p_sl / 100, the smallest nonzero
+  p-value, 1/n_surrogates, never passes, so a pair is linked exactly when the
+  MIR of the data exceeds the MIR of every surrogate.
 
   Parameters
   ----------
   data : array_like
-      Time series after the transient, shape (n_points, n_nodes).
+      Time series after the transient, shape (n_points, n_nodes), with at
+      least two nodes.
   p_sl : float, optional
       Significance level; also sets the number of surrogates, 1/p_sl.
       Default is 0.01 (100 surrogates).
@@ -693,9 +727,22 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
   tp_fp_rate : np.ndarray
       Shape (len(time_range), 3): data length, TPR and FPR (NaN without
       `true_network`).
+
+  Raises
+  ------
+  ValueError
+      If `data` is not an (n_points, n_nodes) array with at least two nodes,
+      the surrogate type is unknown, or `true_network` is not binary.
   """
   data = np.asarray(data, dtype=float)
+  if data.ndim != 2 or data.shape[1] < 2:
+    raise ValueError(
+      f"data must have shape (n_points, n_nodes) with at least two nodes, one column per node; "
+      f"got shape {data.shape}. A single node has no links to infer."
+    )
   n_points, n_nodes = data.shape
+  if true_network is not None:
+    tpr_fpr(true_network, true_network)  # check it is binary before the long computation
   rng = np.random.default_rng(rng)
   n_surrogates = int(round(1 / p_sl))
   fdr_q = p_sl / 100 if fdr_q is None else fdr_q

@@ -8,13 +8,13 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from complex_network_dynamics.network_inference import location_jit
 from complex_network_dynamics import (
     MIR,
     Grid,
     corr_decay,
     df_logistic,
     euler_with_lyapunov,
-    location_jit,
     logistic,
     lorenz,
     lorenz_jacobian,

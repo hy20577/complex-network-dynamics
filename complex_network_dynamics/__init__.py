@@ -4,7 +4,7 @@ from .continuous_models import lotka_volterra, lotka_volterra_jacobian, lorenz, 
 from .synchronisation import hilbert_phases, global_sync, pairwise_sync, global_order, deviation_from_sync
 from .network_metrics import calculate_distance_metrics
 from .datasets import load_network
-from .network_inference import plot_similarity_gap_bars, location_jit, Grid, corr_decay, compute_single_pair_mi, MIR, fdr_bh, tpr_fpr, mir_surrogate_test, double_normalised_mir, lagged_double_mir, best_case_tpr_fpr
+from .network_inference import plot_similarity_gap_bars, Grid, corr_decay, MIR, fdr_bh, tpr_fpr, mir_surrogate_test, double_normalised_mir, lagged_double_mir, best_case_tpr_fpr
 from .surrogates import phaseran, amplitude_phase_surrogates, random_surrogates, correlated_random_surrogates
 
 __all__ = [
@@ -20,7 +20,7 @@ __all__ = [
        "hindmarsh_rose", "hindmarsh_rose_jacobian",
        "hilbert_phases", "global_sync", "pairwise_sync", "global_order", "deviation_from_sync", 
       "calculate_distance_metrics", "load_network", 
-      "plot_similarity_gap_bars", "location_jit", "Grid", "corr_decay", "compute_single_pair_mi", "MIR",
+      "plot_similarity_gap_bars", "Grid", "corr_decay", "MIR",
       "fdr_bh", "tpr_fpr", "mir_surrogate_test",
       "double_normalised_mir", "lagged_double_mir", "best_case_tpr_fpr",
       "phaseran", "amplitude_phase_surrogates", "random_surrogates", "correlated_random_surrogates"

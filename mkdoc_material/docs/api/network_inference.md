@@ -6,8 +6,8 @@ Reconstruct a network from the time series of its nodes using the **Mutual Infor
 
 For every pair of nodes \((i, j)\):
 
-1. The joint trajectory \((x_i, x_j)\) is normalized and binned on an \(N \times N\) grid (`location_jit`).
-2. The mutual information \(I_{ij}\) is computed from the grid occupancy (`compute_single_pair_mi`):
+1. The joint trajectory \((x_i, x_j)\) is normalized and binned on an \(N \times N\) grid.
+2. The mutual information \(I_{ij}\) is computed from the grid occupancy:
    \[
    I_{ij} = \sum_{a,b} p_{ab} \ln \frac{p_{ab}}{p_a\, p_b}
    \]
@@ -87,7 +87,3 @@ Pass `nodes=(i, j)` to `MIR` to plot how MI and MIR for one pair change with the
 ::: complex_network_dynamics.network_inference.Grid
 
 ::: complex_network_dynamics.network_inference.corr_decay
-
-::: complex_network_dynamics.network_inference.compute_single_pair_mi
-
-::: complex_network_dynamics.network_inference.location_jit
