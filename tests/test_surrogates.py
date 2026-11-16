@@ -127,3 +127,38 @@ def test_random_surrogates_shape_and_range(series):
     surr = random_surrogates(series, n_surrogates=2, rng=4)
     assert surr.shape == (2,) + series.shape
     assert surr.min() >= 0 and surr.max() < 1
+
+
+# --------------------------------------------------------------------------- input checks
+
+
+def test_surrogates_reject_a_one_dimensional_series(series):
+    for make in (phaseran, amplitude_phase_surrogates, random_surrogates, correlated_random_surrogates):
+        with pytest.raises(ValueError, match=r"\(n_points, n_nodes\)"):
+            make(series[:, 0])
+        assert make(series[:, :1], 2).shape[::2] == (2, 1)  # one node as a column works
+
+
+@pytest.mark.parametrize("pc_amplitude, pc_phase", [(-0.1, 0.5), (1.5, 0.5), (1, 50)])
+def test_amplitude_phase_rejects_fractions_outside_0_1(series, pc_amplitude, pc_phase):
+    with pytest.raises(ValueError, match="between 0 and 1"):
+        amplitude_phase_surrogates(series, 1, pc_amplitude, pc_phase)
+
+
+def test_amplitude_phase_randomises_the_same_time_points_for_all_nodes(series):
+    s = amplitude_phase_surrogates(series, 1, pc_amplitude=0.2, pc_phase=0, rng=6)[0]
+    changed = ~np.isclose(s, series, atol=1e-12)
+    rows = changed.any(axis=1)
+    assert rows.sum() == 200
+    assert changed[rows].all()
+
+
+def test_correlated_random_surrogates_length(series):
+    assert correlated_random_surrogates(series, 2, rng=0).shape == (2,) + series.shape
+    assert correlated_random_surrogates(series, 2, n_points=50, rng=0).shape == (2, 50, 5)
+
+
+@pytest.mark.parametrize("correlation", [1.0, -0.25, -0.5])
+def test_correlated_random_surrogates_reject_impossible_correlation(series, correlation):
+    with pytest.raises(ValueError, match="correlation"):
+        correlated_random_surrogates(series, 1, correlation=correlation)

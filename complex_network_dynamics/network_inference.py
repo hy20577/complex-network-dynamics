@@ -780,6 +780,30 @@ def mir_surrogate_test(data, p_sl=0.01, time_range=None, surrogate="amplitude_ph
   return mir_overall, adjacency, tp_fp_rate
 
 
+def _check_series(Dat, name):
+  """Return Dat as a float (npts, M) array; the scaled MIR needs M >= 3."""
+  Dat = np.asarray(Dat, dtype=np.float64)
+  if Dat.ndim != 2 or Dat.shape[1] < 3:
+    raise ValueError(
+      f"Dat must have shape (npts, M) with at least three nodes, one column per node; got shape "
+      f"{Dat.shape}. {name} scales the MIR between the smallest and the largest pair, so it needs "
+      "more than one pair."
+    )
+  return Dat
+
+
+def _check_true_network(true_network, M):
+  """Return the ground-truth network as a float array after checking that it
+  is binary, (M, M) and has at least one link."""
+  tpr_fpr(true_network, true_network)  # raises if it is not binary
+  A = np.asarray(true_network, dtype=float)
+  if A.shape != (M, M):
+    raise ValueError(f"true_network must have shape ({M}, {M}), one row and column per node; got {A.shape}.")
+  if A.sum() == 0:
+    raise ValueError("true_network has no links, so the reconstruction rate is not defined.")
+  return A
+
+
 def _rescale_upper(I_c, guard_equal):
   """Min-max scale the upper triangle of I_c, as in the double-normalised
   MIR: the minimum is taken over the nonzero entries of the whole matrix."""
@@ -800,17 +824,19 @@ def _rescale_upper(I_c, guard_equal):
 def double_normalised_mir(Dat, true_network=None):
   """Double-normalised MIR.
 
-  The data are scaled to [0, 1]. For each grid size from `Grid`, the MIR of
-  all pairs is min-max scaled; the scaled matrices are summed over grid sizes
-  and divided by their largest entry.
+  The MIR is normalised twice (thesis code `double_normalised_MIR.m`). Each
+  node's data are first scaled to [0, 1]. Then, for each grid size from
+  `Grid`, the MIR of all pairs is min-max scaled, so the pair with the
+  smallest MIR gets 0 and the pair with the largest gets 1. The scaled
+  matrices are summed over the grid sizes and divided by their largest entry.
 
   Parameters
   ----------
   Dat : array_like
-      Time series, shape (npts, M).
+      Time series, shape (npts, M), with at least three nodes.
   true_network : array_like, optional
-      Ground-truth adjacency matrix. If given, the best reconstruction rate
-      over thresholds 0.01, 0.02, ..., 1 is returned.
+      Ground-truth binary (0/1) adjacency matrix, shape (M, M). If given, the
+      best reconstruction rate over thresholds 0.01, 0.02, ..., 1 is returned.
 
   Returns
   -------
@@ -820,11 +846,24 @@ def double_normalised_mir(Dat, true_network=None):
       Largest reconstruction percentage, 100 - 100 * (mismatched entries) /
       (number of links counted in both directions), floored at 0.
       None if `true_network` is not given.
+
+  Raises
+  ------
+  ValueError
+      If `Dat` is not an (npts, M) array with at least three nodes, a node's
+      time series is constant, or `true_network` is not a binary (M, M)
+      matrix with at least one link.
   """
-  Dat = np.asarray(Dat, dtype=np.float64)
-  Dat = (Dat - Dat.min(axis=0)) / (Dat.max(axis=0) - Dat.min(axis=0))
-  Dat = np.ascontiguousarray(Dat)
+  Dat = _check_series(Dat, "double_normalised_mir")
   M = Dat.shape[1]
+  A = None if true_network is None else _check_true_network(true_network, M)
+  span = Dat.max(axis=0) - Dat.min(axis=0)
+  if np.any(span == 0):
+    raise ValueError(
+      f"Node(s) {np.flatnonzero(span == 0).tolist()} have a constant time series, which cannot be "
+      "scaled to [0, 1] and carries no information about links."
+    )
+  Dat = np.ascontiguousarray((Dat - Dat.min(axis=0)) / span)
   pi, pj = np.triu_indices(M, k=1)
   N_min, N_max = Grid(Dat)
 
@@ -838,9 +877,8 @@ def double_normalised_mir(Dat, true_network=None):
   normalised = total / total.max()
   normalised = normalised + normalised.T
 
-  if true_network is None:
+  if A is None:
     return normalised, None
-  A = np.asarray(true_network, dtype=float)
   rates = np.empty(100)
   for k in range(1, 101):
     adj = normalised.copy()
@@ -892,9 +930,9 @@ def lagged_double_mir(Dat, max_lag):
   Parameters
   ----------
   Dat : array_like
-      Time series, shape (npts, M).
+      Time series, shape (npts, M), with at least three nodes.
   max_lag : int
-      Largest lag, in time steps.
+      Largest lag, in time steps; 0 uses no lag. Must be smaller than npts.
 
   Returns
   -------
@@ -903,9 +941,20 @@ def lagged_double_mir(Dat, max_lag):
       over grid sizes.
   lagged_MIR : np.ndarray
       Symmetric (M, M) double-normalised MIR, values up to 1.
+
+  Raises
+  ------
+  ValueError
+      If `Dat` is not an (npts, M) array with at least three nodes, or
+      `max_lag` is not a whole number between 0 and npts - 1.
   """
-  Dat = np.ascontiguousarray(Dat, dtype=np.float64)
+  Dat = np.ascontiguousarray(_check_series(Dat, "lagged_double_mir"))
   M = Dat.shape[1]
+  if max_lag != int(max_lag) or not 0 <= max_lag < Dat.shape[0]:
+    raise ValueError(
+      f"max_lag must be a whole number of time steps between 0 and npts - 1 = {Dat.shape[0] - 1}; "
+      f"got {max_lag}."
+    )
   pi, pj = np.triu_indices(M, k=1)
 
   N_final = _grid_sizes_per_pair(Dat, pi, pj, True)
@@ -945,7 +994,7 @@ def best_case_tpr_fpr(similarity_matrix, true_adjacency):
   similarity_matrix : array_like
       (M, M) similarity matrix, e.g. MIR. Its diagonal is ignored.
   true_adjacency : array_like
-      (M, M) ground-truth binary adjacency matrix.
+      (M, M) ground-truth binary (0/1) adjacency matrix.
 
   Returns
   -------
@@ -957,10 +1006,21 @@ def best_case_tpr_fpr(similarity_matrix, true_adjacency):
   inferred : np.ndarray
       Inferred adjacency matrix at the best threshold (the smallest one if
       several are equally good): pairs with similarity at least the threshold.
+
+  Raises
+  ------
+  ValueError
+      If `similarity_matrix` is not square, the two matrices have different
+      shapes, or `true_adjacency` is not binary.
   """
   S = np.array(similarity_matrix, dtype=float)
   A = np.asarray(true_adjacency)
   M = len(S)
+  if S.ndim != 2 or S.shape != (M, M) or M < 2:
+    raise ValueError(f"similarity_matrix must be square, (M, M) with M >= 2; got shape {S.shape}.")
+  if A.shape != S.shape:
+    raise ValueError(f"The matrices have different shapes: similarity {S.shape}, true network {A.shape}.")
+  tpr_fpr(A, A)  # raises if the true network is not binary
   np.fill_diagonal(S, 0)
   if np.array_equal(S, np.triu(S)):
     S = S + S.T

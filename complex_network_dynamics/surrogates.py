@@ -5,13 +5,24 @@ from scipy.signal import hilbert
 # node, and return surrogates as an (n_surrogates, n_points, n_nodes) array.
 
 
+def _check_data(data):
+    """Return the time series as a float (n_points, n_nodes) array."""
+    data = np.asarray(data, dtype=float)
+    if data.ndim != 2:
+        raise ValueError(
+            f"data must have shape (n_points, n_nodes), one column per node; got shape {data.shape}. "
+            "For a single time series x, pass x[:, None]."
+        )
+    return data
+
+
 def phaseran(data, n_surrogates=1, rng=None):
-    """Phase-randomised (twin) surrogates that keep the cross-correlations.
+    """Phase-randomised surrogates that keep the cross-correlations.
 
     The same random phases are added to every column's Fourier transform
     (Prichard & Theiler, 1994), so each surrogate keeps the power spectrum of
     every node and the linear correlations between nodes, but destroys any
-    nonlinear structure.
+    nonlinear structure. The thesis code calls this surrogate type `twnsd`.
 
     Parameters
     ----------
@@ -30,8 +41,10 @@ def phaseran(data, n_surrogates=1, rng=None):
         n_points rounded down to an odd number.
     """
     rng = np.random.default_rng(rng)
-    data = np.asarray(data, dtype=float)
+    data = _check_data(data)
     n_frames, n_nodes = data.shape
+    if n_frames < 3:
+        raise ValueError(f"data needs at least 3 time points to randomise its Fourier phases; got {n_frames}.")
     if n_frames % 2 == 0:
         n_frames -= 1
         data = data[:n_frames]
@@ -61,6 +74,12 @@ def amplitude_phase_surrogates(data, n_surrogates=1, pc_amplitude=1.0, pc_phase=
     amplitudes removes amplitude correlation between nodes; randomising phases
     removes phase synchronisation.
 
+    As in the thesis code (`HT_mix_A_theta`), the randomised time points are
+    the same for all nodes, while every node gets its own new values; the
+    smallest and largest amplitude and phase are taken over all nodes
+    together; and the Hilbert transform is applied to the data as given, with
+    the mean left in (unlike `hilbert_phases`, which removes it by default).
+
     Parameters
     ----------
     data : array_like
@@ -80,10 +99,18 @@ def amplitude_phase_surrogates(data, n_surrogates=1, pc_amplitude=1.0, pc_phase=
     -------
     np.ndarray
         Surrogates, shape (n_surrogates, n_points, n_nodes).
+
+    Raises
+    ------
+    ValueError
+        If `data` is not two-dimensional, or a fraction is outside [0, 1].
     """
     rng = np.random.default_rng(rng)
-    data = np.asarray(data, dtype=float)
+    data = _check_data(data)
     n_points, n_nodes = data.shape
+    for name, pc in (("pc_amplitude", pc_amplitude), ("pc_phase", pc_phase)):
+        if not 0 <= pc <= 1:
+            raise ValueError(f"{name} is a fraction of the time points and must be between 0 and 1; got {pc}.")
 
     analytic = hilbert(data, axis=0)
     amplitude = np.abs(analytic)
@@ -125,28 +152,29 @@ def random_surrogates(data, n_surrogates=1, rng=None):
         Surrogates, shape (n_surrogates, n_points, n_nodes).
     """
     rng = np.random.default_rng(rng)
-    n_points, n_nodes = np.shape(data)
+    n_points, n_nodes = _check_data(data).shape
     return rng.random((n_surrogates, n_points, n_nodes))
 
 
-def correlated_random_surrogates(data, n_surrogates=1, correlation=0.5, n_points=1000, rng=None):
+def correlated_random_surrogates(data, n_surrogates=1, correlation=0.5, n_points=None, rng=None):
     """Gaussian surrogates with the same correlation between every pair of nodes.
 
-    Standard normal samples
-    multiplied by the Cholesky factor of a matrix with ones on the diagonal and
-    `correlation` elsewhere. The length is fixed
-    (`n_points`) rather than taken from the data.
+    Standard normal samples multiplied by the Cholesky factor of a matrix with
+    ones on the diagonal and `correlation` elsewhere. The thesis code
+    (`corr_randsd`) always made 1000 points; here the surrogates are as long
+    as the data unless `n_points` is given.
 
     Parameters
     ----------
     data : array_like
-        Time series, shape (n_points, n_nodes); only the number of nodes is used.
+        Time series, shape (n_points, n_nodes); only its shape is used.
     n_surrogates : int, optional
         Number of surrogate datasets. Default is 1.
     correlation : float, optional
-        Correlation between every pair of nodes. Default is 0.5.
+        Correlation between every pair of nodes, above -1/(n_nodes - 1) and
+        below 1. Default is 0.5.
     n_points : int, optional
-        Length of each surrogate. Default is 1000.
+        Length of each surrogate. Default is the length of the data.
     rng : numpy.random.Generator or int, optional
         Random generator or seed.
 
@@ -154,9 +182,22 @@ def correlated_random_surrogates(data, n_surrogates=1, correlation=0.5, n_points
     -------
     np.ndarray
         Surrogates, shape (n_surrogates, n_points, n_nodes).
+
+    Raises
+    ------
+    ValueError
+        If `data` is not two-dimensional, or no set of nodes can have the
+        requested correlation between every pair.
     """
     rng = np.random.default_rng(rng)
-    n_nodes = np.shape(data)[1]
+    data_points, n_nodes = _check_data(data).shape
+    n_points = data_points if n_points is None else int(n_points)
+    lowest = -1.0 / (n_nodes - 1) if n_nodes > 1 else -1.0
+    if not lowest < correlation < 1:
+        raise ValueError(
+            f"correlation must be above {lowest:.3g} (= -1/(n_nodes - 1)) and below 1 for {n_nodes} nodes; "
+            f"got {correlation}."
+        )
     R = np.full((n_nodes, n_nodes), correlation)
     np.fill_diagonal(R, 1.0)
     upper = np.linalg.cholesky(R).T  # Upper Cholesky factor
