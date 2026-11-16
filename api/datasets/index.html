@@ -1207,7 +1207,14 @@ Everything in <code>Data/</code> is bundled when the package is built.</p>
 
     <div class="doc doc-contents first">
 
-        <p>Load a built-in network matrix from the package Data directory.</p>
+        <p>Load one of the example networks that ship with the package.</p>
+<p>Two undirected, unweighted, connected networks are included:</p>
+<ul>
+<li>"16nodes": 16 nodes, 26 links; the network of the 16-node examples in
+  Yildirim &amp; Antonopoulos (2024).</li>
+<li>"12nodes": 12 nodes, 14 links; the network of the 12-node examples
+  (file <code>12nodes.txt</code> of the thesis code).</li>
+</ul>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -1230,7 +1237,8 @@ Everything in <code>Data/</code> is bundled when the package is built.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Name of the dataset file (with or without extension, e.g., '16nodes' or '16nodes.txt').</p>
+                <p>Name of the network, with or without the file extension
+("16nodes" or "16nodes.txt"). Default is "16nodes".</p>
               </div>
             </td>
             <td>
@@ -1256,7 +1264,32 @@ Everything in <code>Data/</code> is bundled when the package is built.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Adjacency matrix.</p>
+                <p>Adjacency matrix of floats, shape (M, M): 1 where two nodes are
+linked, 0 elsewhere; symmetric, with a zero diagonal.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="FileNotFoundError">FileNotFoundError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If there is no network with this name. The message lists the
+available ones.</p>
               </div>
             </td>
           </tr>
@@ -1266,10 +1299,7 @@ Everything in <code>Data/</code> is bundled when the package is built.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>complex_network_dynamics/datasets.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-5"> 5</a></span>
-<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-6"> 6</a></span>
-<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-7"> 7</a></span>
-<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-8"> 8</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-8"> 8</a></span>
 <span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-9"> 9</a></span>
 <span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-10">10</a></span>
 <span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-11">11</a></span>
@@ -1289,30 +1319,59 @@ Everything in <code>Data/</code> is bundled when the package is built.</p>
 <span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-25">25</a></span>
 <span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-26">26</a></span>
 <span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-28">28</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-5" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_network</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"16nodes"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-6" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-6"></a><span class="w">    </span><span class="sd">"""</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-7" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-7"></a><span class="sd">    Load a built-in network matrix from the package Data directory.</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-8" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-8"></a>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-9" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-9"></a><span class="sd">    Parameters</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-10" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-10"></a><span class="sd">    ----------</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-11" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-11"></a><span class="sd">    name : str</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-12" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-12"></a><span class="sd">        Name of the dataset file (with or without extension, e.g., '16nodes' or '16nodes.txt').</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-13" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-13"></a>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-14" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-14"></a><span class="sd">    Returns</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-15" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-15"></a><span class="sd">    -------</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-16" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-16"></a><span class="sd">    np.ndarray</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-17" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-17"></a><span class="sd">        Adjacency matrix.</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-18" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-18"></a><span class="sd">    """</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-19" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-19"></a>    <span class="c1"># Auto-append extension if omitted</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-20" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-20"></a>    <span class="n">filename</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">".txt"</span><span class="p">,</span> <span class="s2">".csv"</span><span class="p">))</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.txt"</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-21" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-21"></a>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-22" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-22"></a>    <span class="n">file_ref</span> <span class="o">=</span> <span class="n">files</span><span class="p">(</span><span class="s2">"complex_network_dynamics"</span><span class="p">)</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="s2">"Data"</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#complex_network_dynamics.datasets.load_network--source--__codelineno-0-44">44</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-8" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_network</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"16nodes"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-9" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-9"></a><span class="w">    </span><span class="sd">"""Load one of the example networks that ship with the package.</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-10" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-10"></a>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-11" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-11"></a><span class="sd">    Two undirected, unweighted, connected networks are included:</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-12" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-12"></a>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-13" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-13"></a><span class="sd">    - "16nodes": 16 nodes, 26 links; the network of the 16-node examples in</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-14" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-14"></a><span class="sd">      Yildirim &amp; Antonopoulos (2024).</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-15" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-15"></a><span class="sd">    - "12nodes": 12 nodes, 14 links; the network of the 12-node examples</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-16" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-16"></a><span class="sd">      (file `12nodes.txt` of the thesis code).</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-17" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-17"></a>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-18" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-18"></a><span class="sd">    Parameters</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-19" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-19"></a><span class="sd">    ----------</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-20" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-20"></a><span class="sd">    name : str, optional</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-21" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-21"></a><span class="sd">        Name of the network, with or without the file extension</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-22" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-22"></a><span class="sd">        ("16nodes" or "16nodes.txt"). Default is "16nodes".</span>
 <a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-23" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-23"></a>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-24" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-24"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">file_ref</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-25" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-25"></a>        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Dataset '</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">' not found in package Data folder."</span><span class="p">)</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-26" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-26"></a>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-27" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-27"></a>    <span class="k">with</span> <span class="n">file_ref</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-28" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-28"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-24" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-24"></a><span class="sd">    Returns</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-25" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-25"></a><span class="sd">    -------</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-26" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-26"></a><span class="sd">    np.ndarray</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-27" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-27"></a><span class="sd">        Adjacency matrix of floats, shape (M, M): 1 where two nodes are</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-28" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-28"></a><span class="sd">        linked, 0 elsewhere; symmetric, with a zero diagonal.</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-29" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-29"></a>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-30" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-30"></a><span class="sd">    Raises</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-31" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-31"></a><span class="sd">    ------</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-32" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-32"></a><span class="sd">    FileNotFoundError</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-33" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-33"></a><span class="sd">        If there is no network with this name. The message lists the</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-34" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-34"></a><span class="sd">        available ones.</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-35" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-35"></a><span class="sd">    """</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-36" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-36"></a>    <span class="n">filename</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">".txt"</span><span class="p">,</span> <span class="s2">".csv"</span><span class="p">))</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.txt"</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-37" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-37"></a>    <span class="n">file_ref</span> <span class="o">=</span> <span class="n">_DATA</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-38" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-38"></a>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-39" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-39"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">file_ref</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-40" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-40"></a>        <span class="n">available</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s2">"."</span><span class="p">,</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">_DATA</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">".txt"</span><span class="p">,</span> <span class="s2">".csv"</span><span class="p">)))</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-41" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-41"></a>        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"No network named '</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">' in the package. Available: </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">available</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-42" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-42"></a>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-43" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-43"></a>    <span class="k">with</span> <span class="n">file_ref</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="complex_network_dynamics.datasets.load_network--source--__codelineno-0-44" name="complex_network_dynamics.datasets.load_network--source--__codelineno-0-44"></a>        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
