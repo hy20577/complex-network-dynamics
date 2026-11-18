@@ -1,7 +1,8 @@
-# Tutorials
+# Guides
 
-Step-by-step Jupyter notebooks covering the ideas behind the library, from basic network theory to inferring networks from data.
-Each page shows the notebook with its saved results, and you can download it with the button at the top of the page.
+Guides to the ideas behind the library, from basic network theory to inferring networks from data.
+Each page shows the text, figures and results. The code behind them is in the Jupyter notebook of
+the page, which you can open in Colab, download or view on GitHub from the links at the top.
 
 ## Network structure
 

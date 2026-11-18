@@ -41,7 +41,7 @@ theme:
 
 nav:
   - Home: index.md
-  - Tutorials:
+  - Guides:
       - tutorials/index.md
       - Introduction to Network Theory: tutorials/01_introduction_to_network_theory.ipynb
       - Network Types: tutorials/02_network_types.ipynb
