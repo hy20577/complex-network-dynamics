@@ -262,7 +262,7 @@
   
     
   
-  Tutorials
+  Guides
 
         </a>
       </li>
@@ -440,7 +440,7 @@
   <span class="md-ellipsis">
     
   
-    Tutorials
+    Guides
   
 
     
@@ -462,7 +462,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Tutorials
+    Guides
   
 
           </label>
@@ -1421,9 +1421,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="integrating-odes-euler-runge-kutta-and-lyapunov-exponents">Integrating ODEs: Euler, Runge-Kutta and Lyapunov Exponents<a class="anchor-link" href="#integrating-odes-euler-runge-kutta-and-lyapunov-exponents">¶</a></h1><p><strong>Code:</strong> <a href="https://colab.research.google.com/github/hy20577/complex-network-dynamics/blob/main/mkdoc_material/docs/tutorials/04_integrating_odes.ipynb">Open in Colab</a> · <a href="https://hy20577.github.io/complex-network-dynamics/tutorials/04_integrating_odes/04_integrating_odes.ipynb">Download the notebook</a> · <a href="https://github.com/hy20577/complex-network-dynamics/blob/main/mkdoc_material/docs/tutorials/04_integrating_odes.ipynb">View on GitHub</a></p>
-<p>In the <a href="../03_discrete_maps/">previous tutorial</a> time advanced in steps. The continuous models
+<p>In the <a href="../03_discrete_maps/">previous guide</a> time advanced in steps. The continuous models
 of the library (Lorenz, Rössler, Hindmarsh-Rose, Kuramoto) are systems of ordinary differential
-equations (ODEs), which have to be solved numerically. In this tutorial we introduce the
+equations (ODEs), which have to be solved numerically. In this guide we introduce the
 numerical integration methods of the library, following Sections 3.1.1, 3.2.2 and 3.3.2 of the
 <a href="https://repository.essex.ac.uk/39296/">PhD thesis</a> [<a href="#ref-1">1</a>], and use them on the Lorenz system of
 <a href="https://doi.org/10.1016/j.chaos.2024.115554">Yıldırım &amp; Antonopoulos (2024)</a> [<a href="#ref-2">2</a>].</p>
@@ -1604,7 +1604,7 @@ the same step size as before, and compare the conserved quantity <span class="ar
 <p>With the same step size, the RK4 solution closes on itself and keeps <span class="arithmatex">\(V\)</span> constant many orders of
 magnitude better than the Euler solution. To reach a similar accuracy, the Euler method would
 need a far smaller step size, and, consequently, far more steps.</p>
-<h2 id="4-lyapunov-exponents-of-a-flow">4. Lyapunov Exponents of a Flow<a class="anchor-link" href="#4-lyapunov-exponents-of-a-flow">¶</a></h2><p>In the previous tutorial, the Lyapunov exponent of a map was the average of <span class="arithmatex">\(\log|f'(x_n)|\)</span>
+<h2 id="4-lyapunov-exponents-of-a-flow">4. Lyapunov Exponents of a Flow<a class="anchor-link" href="#4-lyapunov-exponents-of-a-flow">¶</a></h2><p>In the previous guide, the Lyapunov exponent of a map was the average of <span class="arithmatex">\(\log|f'(x_n)|\)</span>
 along the trajectory. For a system of ODEs the idea is the same (Section 3.2.2 of the thesis, following [<a href="#ref-4">4</a>, <a href="#ref-5">5</a>]).
 A small perturbation <span class="arithmatex">\(\delta y\)</span> of the solution evolves according to the <strong>variational
 equation</strong>,</p>
@@ -2000,7 +2000,7 @@ Lyapunov spectrum and the <span class="arithmatex">\(x\)</span> variable of all 
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Each node switches between the two wings of its own attractor (yellow and purple bands) at its
 own times: with <span class="arithmatex">\(K = 0.2\)</span> the nodes are coupled, but far from synchronised. Whether the links
-can be recovered from such data is the subject of the tutorials on
+can be recovered from such data is the subject of the guides on
 <a href="../05_correlation_and_mutual_information/">correlation and mutual information</a> and on
 <a href="../06_apmsd_network_inference/">MIR and APMSD</a>.</p>
 <h2 id="summary">Summary<a class="anchor-link" href="#summary">¶</a></h2><ul>
