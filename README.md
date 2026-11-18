@@ -9,7 +9,7 @@ The package provides:
 - **Synchronisation**: Hilbert phases, the Kuramoto order parameter, pairwise phase locking and Rubido's global order.
 - **Integrators with Lyapunov exponents**: Euler, RK4, SciPy `solve_ivp`, and a fast Numba RK4.
 - **Network inference**: Mutual Information Rate (MIR) to reconstruct a network from node time series, plus a plot to judge how well the inferred edges separate from non-edges.
-- **Surrogate data test**: amplitude-phase modulated surrogate data (APMSD) and a false-discovery-rate test that decides which inferred links are real.
+- **Surrogate data test**: amplitude-phase modulated surrogate data (APMSD) and a false-discovery-rate test that decides which inferred links are real. The surrogate parameters (pc₁, pc₂) are currently chosen on systems whose network is known; choosing them from the data alone is ongoing work.
 - **Network metrics**: diameter and average shortest path length, for connected and disconnected graphs.
 - **Built-in datasets**: example adjacency matrices in the `Data` folder.
 

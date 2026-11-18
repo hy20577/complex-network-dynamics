@@ -51,7 +51,8 @@ Python toolkit for complex networks of nonlinear oscillators: simulate maps and 
 
     ---
 
-    Recover the network from the time series alone.
+    Infer the network from the time series. The surrogate parameters are currently chosen on
+    systems whose network is known; choosing them from the data alone is ongoing work.
 
     - [Network inference](api/network_inference.md): Mutual Information Rate (MIR)
     - [Surrogate data](api/surrogates.md): amplitude-phase modulated surrogates (APMSD)
