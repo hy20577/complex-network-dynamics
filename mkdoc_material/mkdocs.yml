@@ -47,9 +47,10 @@ nav:
       - Network Types: tutorials/02_network_types.ipynb
       - "Discrete Maps: from One Map to a Network": tutorials/03_discrete_maps.ipynb
       - "Integrating ODEs: Euler, Runge-Kutta and Lyapunov Exponents": tutorials/04_integrating_odes.ipynb
-      - Correlation and Mutual Information: tutorials/05_correlation_and_mutual_information.ipynb
-      - Network Inference with MIR and APMSD: tutorials/06_apmsd_network_inference.ipynb
-      - Phase and Amplitude Coupling in APMSD: tutorials/07_phase_and_amplitude_coupling.ipynb
+      - Frequency, Phase and Synchronisation: tutorials/05_frequency_phase_and_synchronisation.ipynb
+      - Correlation and Mutual Information: tutorials/06_correlation_and_mutual_information.ipynb
+      - Network Inference with MIR and APMSD: tutorials/07_apmsd_network_inference.ipynb
+      - Phase and Amplitude Coupling in APMSD: tutorials/08_phase_and_amplitude_coupling.ipynb
   - API Reference:
       - Datasets: api/datasets.md
       - Discrete Models: api/discrete_models.md
