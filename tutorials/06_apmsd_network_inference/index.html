@@ -760,6 +760,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#choosing-pc_1-pc_2-without-the-true-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing $(pc_{1}, pc_{2})$ without the true network
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1902,6 +1913,25 @@ perfect inference, <span class="arithmatex">\((1, 0)\)</span>, on the ROC plane:
 </div>
 </div>
 </div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=043203ad">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="choosing-pc_1-pc_2-without-the-true-network">Choosing <span class="arithmatex">\((pc_{1}, pc_{2})\)</span> without the true network<a class="anchor-link" href="#choosing-pc_1-pc_2-without-the-true-network">¶</a></h3><p>Note that we found the green region by comparing every inferred network with the true one, which we
+know here because we generated the data. This is how inference methods are tested, but it hides a
+limitation worth stating clearly. The test itself uses only the time series: for a given pair
+<span class="arithmatex">\((pc_{1}, pc_{2})\)</span>, the inferred network does not depend on the true network. The choice of the pair,
+however, does: the paper and this guide pick it from the region where the inferred network matches
+the true one. With recorded data, where the network is unknown, there is no such region to look at,
+and how to choose <span class="arithmatex">\((pc_{1}, pc_{2})\)</span> from the data alone is still an open problem, which is the subject
+of our current work. Hence, the results of this guide show that the method infers the network
+perfectly for suitable parameters, not yet that it can infer an unknown network from recorded data
+alone.</p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput">
 <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=b2238053">
 <div class="jp-Cell-outputWrapper">
@@ -1966,6 +1996,8 @@ in the thesis code, so this part is not a like-for-like comparison.</p>
 the dependence between linked nodes. Here phase randomisation is what matters, which
 fits the strong phase synchronisation (<span class="arithmatex">\(\rho \approx 0.93\)</span>) and weak correlation of
 this system.</li>
+<li>The pair <span class="arithmatex">\((pc_{1}, pc_{2})\)</span> is chosen here with the true network known; choosing it from the
+data alone is still an open problem.</li>
 <li>The method still works on down-sampled data of 1000 points; at 200 points this
 implementation does not reproduce the paper's Fig. 3c.</li>
 </ul>
