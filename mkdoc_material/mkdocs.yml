@@ -45,13 +45,11 @@ nav:
       - tutorials/index.md
       - Introduction to Network Theory: tutorials/01_introduction_to_network_theory.ipynb
       - Network Types: tutorials/02_network_types.ipynb
-      - Logistic and Circle Maps: tutorials/03_logistic_and_circle_maps.ipynb
-      - Coupled Discrete Models: tutorials/04_coupled_discrete_models.ipynb
-      - Lyapunov Exponents of Coupled Maps: tutorials/05_discrete_models_lyapunov.ipynb
-      - Numerical Integration of ODEs: tutorials/06_numerical_integration_odes.ipynb
-      - Lorenz System with the Library: tutorials/07_lorenz_with_the_library.ipynb
-      - Correlation and Mutual Information: tutorials/08_correlation_and_mutual_information.ipynb
-      - Network Inference with MIR and APMSD: tutorials/09_apmsd_network_inference.ipynb
+      - "Discrete Maps: from One Map to a Network": tutorials/03_discrete_maps.ipynb
+      - "Integrating ODEs: Euler, Runge-Kutta and Lyapunov Exponents": tutorials/04_integrating_odes.ipynb
+      - Correlation and Mutual Information: tutorials/05_correlation_and_mutual_information.ipynb
+      - Network Inference with MIR and APMSD: tutorials/06_apmsd_network_inference.ipynb
+      - Phase and Amplitude Coupling in APMSD: tutorials/07_phase_and_amplitude_coupling.ipynb
   - API Reference:
       - Datasets: api/datasets.md
       - Discrete Models: api/discrete_models.md
@@ -69,6 +67,9 @@ plugins:
       execute: false # Show the notebooks with their saved outputs
       include_source: true # Adds a download button for the .ipynb
       ignore_h1_titles: true # Use the titles from nav
+      remove_tag_config:
+        remove_input_tags:
+          - hide-code # A code cell with this tag shows its output only
   - mkdocstrings:
       handlers:
         python:
@@ -101,6 +102,7 @@ markdown_extensions:
 
 hooks:
   - hooks/cache_bust.py # Versions the stylesheet link
+  - hooks/notebook_links.py # Fixes links between tutorials written inside the notebooks
 
 extra_css:
   - stylesheets/extra.css
