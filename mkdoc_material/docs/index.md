@@ -15,7 +15,7 @@ hide:
 Python toolkit for complex networks of nonlinear oscillators: simulate maps and ODE networks, compute Lyapunov spectra and synchronisation, and infer network structure from time series.
 
 [Get started](#installation){ .md-button .md-button--primary }
-[Guides](tutorials/index.md){ .md-button }
+[Guides & Tutorials](tutorials/index.md){ .md-button }
 [GitHub](https://github.com/hy20577/complex-network-dynamics){ .md-button }
 
 </div>

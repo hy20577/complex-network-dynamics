@@ -1,8 +1,19 @@
-# Guides
+# Guides & Tutorials
 
-Guides to the ideas behind the library, from basic network theory to inferring networks from data.
-Each page shows the text, figures and results. The code behind them is in the Jupyter notebook of
-the page, which you can open in Colab, download or view on GitHub from the links at the top.
+Each topic below comes in two forms:
+
+- a **guide**: this website's page, with the explanation, the figures and the results, to read;
+- a **tutorial**: the Jupyter notebook behind the page, with all the code, to run step by step.
+
+!!! tip "Run the tutorials yourself"
+
+    Every tutorial is shared as a Jupyter notebook. The **Code** line at the top of each page lets you:
+
+    - :material-google: **Open in Colab**: run the notebook in your browser, with nothing to install;
+    - :material-download: **Download the notebook**: run it on your own computer with Jupyter;
+    - :fontawesome-brands-github: **View on GitHub**: read the code online.
+
+The topics go from basic network theory to inferring networks from data.
 
 ## Network structure
 
