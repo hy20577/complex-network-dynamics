@@ -67,6 +67,7 @@ plugins:
       execute: false # Show the notebooks with their saved outputs
       include_source: true # Adds a download button for the .ipynb
       ignore_h1_titles: true # Use the titles from nav
+      no_input: true # Show text and outputs only; the code is in the notebook (Colab, download, GitHub)
       remove_tag_config:
         remove_input_tags:
           - hide-code # A code cell with this tag shows its output only
