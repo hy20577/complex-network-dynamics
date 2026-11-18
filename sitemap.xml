@@ -61,15 +61,19 @@
          <lastmod>2026-11-18</lastmod>
     </url>
     <url>
-         <loc>https://hy20577.github.io/complex-network-dynamics/tutorials/05_correlation_and_mutual_information/</loc>
+         <loc>https://hy20577.github.io/complex-network-dynamics/tutorials/05_frequency_phase_and_synchronisation/</loc>
          <lastmod>2026-11-18</lastmod>
     </url>
     <url>
-         <loc>https://hy20577.github.io/complex-network-dynamics/tutorials/06_apmsd_network_inference/</loc>
+         <loc>https://hy20577.github.io/complex-network-dynamics/tutorials/06_correlation_and_mutual_information/</loc>
          <lastmod>2026-11-18</lastmod>
     </url>
     <url>
-         <loc>https://hy20577.github.io/complex-network-dynamics/tutorials/07_phase_and_amplitude_coupling/</loc>
+         <loc>https://hy20577.github.io/complex-network-dynamics/tutorials/07_apmsd_network_inference/</loc>
+         <lastmod>2026-11-18</lastmod>
+    </url>
+    <url>
+         <loc>https://hy20577.github.io/complex-network-dynamics/tutorials/08_phase_and_amplitude_coupling/</loc>
          <lastmod>2026-11-18</lastmod>
     </url>
 </urlset>
