@@ -1407,56 +1407,6 @@ Lyapunov spectrum (Table 3.2 of the thesis).</li>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=fdfc7d0e">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cnd</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># e.g. on Google Colab: install the library from GitHub</span>
-    <span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hy20577</span><span class="o">/</span><span class="nb">complex</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="n">dynamics</span><span class="o">.</span><span class="n">git</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cnd</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-
-<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># fixed seed, so the results are the same on every run</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-1">try:
-    import complex_network_dynamics as cnd
-except ImportError:  # e.g. on Google Colab: install the library from GitHub
-    %pip install -q git+https://github.com/hy20577/complex-network-dynamics.git
-    import complex_network_dynamics as cnd
-
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import pandas as pd
-
-rng = np.random.default_rng(0)  # fixed seed, so the results are the same on every run</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9febdba2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -1493,7 +1443,7 @@ depends on <span class="arithmatex">\(r\)</span>:</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1520,7 +1470,7 @@ depends on <span class="arithmatex">\(r\)</span>:</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-2">n_steps = 60
+<div class="clipboard-copy-txt" id="cell-1">n_steps = 60
 fig, axes = plt.subplots(1, 3, figsize=(14, 3.5), sharey=True)
 
 for ax, r in zip(axes, [2, 3.4, 4]):
@@ -1584,7 +1534,7 @@ irregularity.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1621,7 +1571,7 @@ irregularity.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Bifurcation diagram of the logistic map"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-3">def bifurcation(f, r_values, n_transient=1000, n_keep=300, **params):
+<div class="clipboard-copy-txt" id="cell-2">def bifurcation(f, r_values, n_transient=1000, n_keep=300, **params):
     """Points visited by x -&gt; f(x, r) after the transient, for every r at once.
 
     Returns an array of shape (n_keep, len(r_values)).
@@ -1698,7 +1648,7 @@ plot it over the bifurcation diagram, as in Fig. 3.9(a) of the thesis.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1745,7 +1695,7 @@ plot it over the bifurcation diagram, as in Fig. 3.9(a) of the thesis.</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lyapunov exponent at r = 4: </span><span class="si">{</span><span class="n">lambda_logistic</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">   (exact: log 2 = </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-4">def lyapunov_exponent(f, df, r_values, n_transient=1000, n_average=5000, **params):
+<div class="clipboard-copy-txt" id="cell-3">def lyapunov_exponent(f, df, r_values, n_transient=1000, n_average=5000, **params):
     """Lyapunov exponent of x -&gt; f(x, r): the average of log|f'(x)| along the orbit, for every r at once."""
     x = np.full(len(r_values), 0.4)
     for _ in range(n_transient):
@@ -1832,7 +1782,7 @@ one node with no links.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1850,7 +1800,7 @@ one node with no links.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Trajectory shape:"</span><span class="p">,</span> <span class="n">trajectory</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lyapunov exponent at r = 4 from the library: </span><span class="si">{</span><span class="n">exponents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-5">one_node = np.zeros((1, 1))  # a single node with no links
+<div class="clipboard-copy-txt" id="cell-4">one_node = np.zeros((1, 1))  # a single node with no links
 
 trajectory, exponents = cnd.simulate_discrete_models(
     rng.random(1), cnd.logistic, cnd.df_logistic, one_node, t=10**5, alpha=0, r=4,
@@ -1903,7 +1853,7 @@ same analysis, which gives Fig. 3.9(b) of the thesis.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1923,7 +1873,7 @@ same analysis, which gives Fig. 3.9(b) of the thesis.</p>
 <span class="n">at_035</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">r_circle</span> <span class="o">-</span> <span class="mf">0.35</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lyapunov exponent at r = </span><span class="si">{</span><span class="n">r_circle</span><span class="p">[</span><span class="n">at_035</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">lambda_circle</span><span class="p">[</span><span class="n">at_035</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-6">r_circle = np.linspace(0, 1, 2000)
+<div class="clipboard-copy-txt" id="cell-5">r_circle = np.linspace(0, 1, 2000)
 orbit_circle = bifurcation(cnd.circle, r_circle)
 lambda_circle = lyapunov_exponent(cnd.circle, cnd.df_circle, r_circle)
 
@@ -1991,7 +1941,7 @@ of its neighbours more and more.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2015,7 +1965,7 @@ of its neighbours more and more.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-7">A12 = cnd.load_network("12nodes")
+<div class="clipboard-copy-txt" id="cell-6">A12 = cnd.load_network("12nodes")
 A16 = cnd.load_network("16nodes")
 
 fig, axes = plt.subplots(1, 2, figsize=(13, 6))
@@ -2070,7 +2020,7 @@ discuss in the next section.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2092,7 +2042,7 @@ discuss in the next section.</p>
 <span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Shape of each trajectory (iterations, nodes):"</span><span class="p">,</span> <span class="n">traj_logistic</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-8">M = A16.shape[0]
+<div class="clipboard-copy-txt" id="cell-7">M = A16.shape[0]
 x0 = rng.random(M)
 alpha = 0.1
 
@@ -2130,7 +2080,7 @@ print("Shape of each trajectory (iterations, nodes):", traj_logistic.shape)</div
 <div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2154,7 +2104,7 @@ print("Shape of each trajectory (iterations, nodes):", traj_logistic.shape)</div
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-9">linked = np.argwhere(np.triu(A16))[0]  # the first linked pair of nodes
+<div class="clipboard-copy-txt" id="cell-8">linked = np.argwhere(np.triu(A16))[0]  # the first linked pair of nodes
 window = slice(3000, 3100)
 
 fig, axes = plt.subplots(2, 1, figsize=(11, 6), sharex=True)
@@ -2219,7 +2169,7 @@ asymptotically periodic, no exponent is exactly zero and at least one exponent i
 <div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2243,7 +2193,7 @@ asymptotically periodic, no exponent is exactly zero and at least one exponent i
       <span class="sa">f</span><span class="s2">"circle </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spectrum_circle</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">thesis_circle</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 <span class="n">table</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-10">thesis_logistic = [0.45, 0.44, 0.44, 0.43, 0.42, 0.42, 0.41, 0.40, 0.39, 0.38, 0.37, 0.35, 0.34, 0.31, 0.29, 0.24]
+<div class="clipboard-copy-txt" id="cell-9">thesis_logistic = [0.45, 0.44, 0.44, 0.43, 0.42, 0.42, 0.41, 0.40, 0.39, 0.38, 0.37, 0.35, 0.34, 0.31, 0.29, 0.24]
 thesis_circle = [1.21, 1.18, 1.15, 1.12, 1.10, 1.07, 1.03, 1.00, 0.96, 0.93, 0.88, 0.83, 0.77, 0.70, 0.62, 0.47]
 
 table = pd.DataFrame({

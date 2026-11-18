@@ -1417,58 +1417,6 @@ in the ring lattice, while its clustering stays far higher than in a random netw
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=5652bed7-6931-4ad6-868f-be330434b271">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cnd</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># e.g. on Google Colab: install the library from GitHub</span>
-    <span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hy20577</span><span class="o">/</span><span class="nb">complex</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="n">dynamics</span><span class="o">.</span><span class="n">git</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cnd</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_distance_metrics</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">binom</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-1">try:
-    import complex_network_dynamics as cnd
-except ImportError:  # e.g. on Google Colab: install the library from GitHub
-    %pip install -q git+https://github.com/hy20577/complex-network-dynamics.git
-    import complex_network_dynamics as cnd
-
-from complex_network_dynamics import calculate_distance_metrics
-
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import pandas as pd
-from scipy.stats import binom</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f16f297c-0c0d-4c2f-b391-5c64ef580842">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -1489,7 +1437,7 @@ from scipy.stats import binom</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [20]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1545,7 +1493,7 @@ from scipy.stats import binom</div>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-2">n_RL = 40
+<div class="clipboard-copy-txt" id="cell-1">n_RL = 40
 k_RL = 8
 
 # Generate regular ring lattice (p = 0 ensures no rewired edges)
@@ -1630,7 +1578,7 @@ plt.show()
 <div class="jp-InputPrompt jp-InputArea-prompt">In [21]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1652,7 +1600,7 @@ plt.show()
 <span class="n">transitivity_RL</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">transitivity</span><span class="p">(</span><span class="n">ring_lattice</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"Transitivity: "</span><span class="p">,</span> <span class="n">transitivity_RL</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-3">
+<div class="clipboard-copy-txt" id="cell-2">
 r_RL, l_RL = calculate_distance_metrics(ring_lattice, mode="all") # shortest path is for all components and averaging them if graph is unconnected.
 print('Diameter of the network:', r_RL)
 print('The average shortest path: ', round(l_RL,2))
@@ -1711,7 +1659,7 @@ C = \frac{3(k-2)}{4(k-1)},
 <div class="jp-InputPrompt jp-InputArea-prompt">In [22]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1738,7 +1686,7 @@ C = \frac{3(k-2)}{4(k-1)},
     <span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-4">summary_records = []
+<div class="clipboard-copy-txt" id="cell-3">summary_records = []
 # --- 1. Ring Lattice ---
 summary_records.append(
     {
@@ -1768,7 +1716,7 @@ summary_records.append(
 <div class="jp-InputPrompt jp-InputArea-prompt">In [23]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1831,7 +1779,7 @@ summary_records.append(
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-5">k = 8  # Each node connects to k nearest neighbors (must be even)
+<div class="clipboard-copy-txt" id="cell-4">k = 8  # Each node connects to k nearest neighbors (must be even)
 n_size = 50
 n_values = range(k+1, n_size)
 avg_path_lengths = []
@@ -1948,7 +1896,7 @@ P(k) = \binom{N-1}{k}\, p^{k} (1-p)^{N-1-k}.
 <div class="jp-InputPrompt jp-InputArea-prompt">In [24]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2033,7 +1981,7 @@ P(k) = \binom{N-1}{k}\, p^{k} (1-p)^{N-1-k}.
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-6"># 1. Network &amp; Distribution Parameters
+<div class="clipboard-copy-txt" id="cell-5"># 1. Network &amp; Distribution Parameters
 n_ER = 40  # Number of nodes
 n_trials = n_ER - 1  # 39 possible connections per node
 p = 0.2  # Edge probability
@@ -2145,7 +2093,7 @@ plt.show()</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [25]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2181,7 +2129,7 @@ plt.show()</div>
     <span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-7">r_ER, l_ER = calculate_distance_metrics(G_ER, mode="giant") # if graph is unconnected, it chooses the biggest components and calculates the average of shortest pathes through components. 
+<div class="clipboard-copy-txt" id="cell-6">r_ER, l_ER = calculate_distance_metrics(G_ER, mode="giant") # if graph is unconnected, it chooses the biggest components and calculates the average of shortest pathes through components. 
 print('Diameter of the network:', r_ER)
 print('The average shortest path: ', round(l_ER,2))
 # Clustering Coefficients
@@ -2250,7 +2198,7 @@ Transitivity:  0.18202764976958524
 <div class="jp-InputPrompt jp-InputArea-prompt">In [26]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2306,7 +2254,7 @@ Transitivity:  0.18202764976958524
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-8">
+<div class="clipboard-copy-txt" id="cell-7">
 n_WS = 40 # number of nodes
 k_WS = 8 # every node starts linked to its k nearest neighbours, k/2 on each side
 p_WS = 0.1 # probability of rewiring each link
@@ -2391,7 +2339,7 @@ plt.show()
 <div class="jp-InputPrompt jp-InputArea-prompt">In [27]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2432,7 +2380,7 @@ plt.show()
     <span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-9">r_WS, l_WS = calculate_distance_metrics(G_WS, mode="all") # shortest path is for all components and averaging them if graph is unconnected.
+<div class="clipboard-copy-txt" id="cell-8">r_WS, l_WS = calculate_distance_metrics(G_WS, mode="all") # shortest path is for all components and averaging them if graph is unconnected.
 print('Diameter of the network:', r_WS)
 print('The average shortest path: ', round(l_WS,2))
 
@@ -2511,7 +2459,7 @@ Transitivity:  0.4766107678729038
 <div class="jp-InputPrompt jp-InputArea-prompt">In [28]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2591,7 +2539,7 @@ Transitivity:  0.4766107678729038
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-10"># 1. Generate a Scale-Free Network using Barabási–Albert (BA) model
+<div class="clipboard-copy-txt" id="cell-9"># 1. Generate a Scale-Free Network using Barabási–Albert (BA) model
 # n: total number of nodes, m: number of edges to attach from a new node to existing nodes
 n_BA = 40
 m_BA = 4
@@ -2699,7 +2647,7 @@ plt.show()
 <div class="jp-InputPrompt jp-InputArea-prompt">In [29]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2741,7 +2689,7 @@ plt.show()
     <span class="p">}</span>
 <span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-11">r_BA, l_BA = calculate_distance_metrics(G_BA, mode="all") # shortest path is for all components and averaging them if graph is unconnected.
+<div class="clipboard-copy-txt" id="cell-10">r_BA, l_BA = calculate_distance_metrics(G_BA, mode="all") # shortest path is for all components and averaging them if graph is unconnected.
 print('Diameter of the network:', r_BA)
 print('The average shortest path: ', round(l_BA,2))
 
@@ -2820,7 +2768,7 @@ latter, the first nodes, which collect the most links, form dense rows and colum
 <div class="jp-InputPrompt jp-InputArea-prompt">In [30]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-12">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2851,7 +2799,7 @@ latter, the first nodes, which collect the most links, form dense rows and colum
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-12"># Adjacency matrices of the four networks: a dark square at row i, column j means nodes i and j are linked
+<div class="clipboard-copy-txt" id="cell-11"># Adjacency matrices of the four networks: a dark square at row i, column j means nodes i and j are linked
 networks = {
     "Ring lattice": ring_lattice,
     "Erdős–Rényi": G_ER,
@@ -2921,7 +2869,7 @@ the thesis [<a href="#ref-1">1</a>].</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [31]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-13">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-12">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2987,7 +2935,7 @@ the thesis [<a href="#ref-1">1</a>].</p>
 
 <span class="n">styled_table</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-13">
+<div class="clipboard-copy-txt" id="cell-12">
 # Convert records to DataFrame
 df_summary = pd.DataFrame(summary_records)
 

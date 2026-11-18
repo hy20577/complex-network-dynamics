@@ -1437,62 +1437,6 @@ only, something no real system allows.</p>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=94b200f2">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-<div class="CodeMirror cm-s-jupyter">
-<div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
-<div>
-<span class="notice" hidden="">Copied!</span>
-<svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
-<path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-<path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-</clipboard-copy>
-</div>
-<div class="highlight-ipynb hl-python"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cnd</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># e.g. on Google Colab: install the library from GitHub</span>
-    <span class="o">%</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">q</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">hy20577</span><span class="o">/</span><span class="nb">complex</span><span class="o">-</span><span class="n">network</span><span class="o">-</span><span class="n">dynamics</span><span class="o">.</span><span class="n">git</span>
-    <span class="kn">import</span><span class="w"> </span><span class="nn">complex_network_dynamics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cnd</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">combinations</span>
-
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.ndimage</span><span class="w"> </span><span class="kn">import</span> <span class="n">uniform_filter1d</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.signal</span><span class="w"> </span><span class="kn">import</span> <span class="n">hilbert</span>
-</pre></div>
-<div class="clipboard-copy-txt" id="cell-1">try:
-    import complex_network_dynamics as cnd
-except ImportError:  # e.g. on Google Colab: install the library from GitHub
-    %pip install -q git+https://github.com/hy20577/complex-network-dynamics.git
-    import complex_network_dynamics as cnd
-
-import time
-from itertools import combinations
-
-import matplotlib.pyplot as plt
-import networkx as nx
-import numpy as np
-import pandas as pd
-from scipy.ndimage import uniform_filter1d
-from scipy.signal import hilbert</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=47db6be8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -1548,7 +1492,7 @@ point every 25 steps (every 0.25 time units, about 25 points per oscillation) un
 <div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-1">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1586,7 +1530,7 @@ point every 25 steps (every 0.25 time units, about 25 points per oscillation) un
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x_loga</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x_theta</span><span class="p">),</span> <span class="n">a</span><span class="p">,</span> <span class="n">x_theta</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-2">def simulate_oscillators(w, C_phase, C_amp, n_points=20_000, dt=0.01, sample_every=25,
+<div class="clipboard-copy-txt" id="cell-1">def simulate_oscillators(w, C_phase, C_amp, n_points=20_000, dt=0.01, sample_every=25,
                          n_transient=50_000, K=0.5, k=0.5, sigma_phase=0.1, tau=10.0,
                          sigma_amp=0.5, rng=None):
     # Signals x_i = a_i cos(theta_i) with separate phase (C_phase) and amplitude (C_amp) coupling.
@@ -1678,7 +1622,7 @@ is one-way (D drives, P and M follow), which is why only one entry of each matri
 <div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-2">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1701,7 +1645,7 @@ is one-way (D drives, P and M follow), which is why only one entry of each matri
 <span class="c1"># the true network: a link in either channel, in either direction</span>
 <span class="n">A</span> <span class="o">=</span> <span class="p">((</span><span class="n">C_phase</span> <span class="o">+</span> <span class="n">C_amp</span> <span class="o">+</span> <span class="n">C_phase</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">C_amp</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-3">names = ["D", "P", "M", "C"]
+<div class="clipboard-copy-txt" id="cell-2">names = ["D", "P", "M", "C"]
 C_phase = np.zeros((4, 4))
 C_amp = np.zeros((4, 4))
 C_phase[1, 0] = 1  # P follows D's phase
@@ -1756,7 +1700,7 @@ with D, P does not.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-3">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1794,7 +1738,7 @@ with D, P does not.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-4">t = 0.25 * np.arange(len(data))
+<div class="clipboard-copy-txt" id="cell-3">t = 0.25 * np.arange(len(data))
 colours = {"D": "black", "P": "tab:blue", "M": "tab:red", "C": "tab:grey"}
 fig, axes = plt.subplots(3, 1, figsize=(10, 8))
 
@@ -1880,7 +1824,7 @@ subtracting each node's mean before the transform is essential.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-4">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -1909,7 +1853,7 @@ subtracting each node's mean before the transform is essential.</p>
 
 <span class="n">relations_table</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-5">def channel_relations(data):
+<div class="clipboard-copy-txt" id="cell-4">def channel_relations(data):
     # PLV and amplitude correlation of every pair, from the Hilbert transform of the demeaned signals
     z = hilbert(data - data.mean(axis=0), axis=0)
     plv = cnd.pairwise_sync(np.angle(z))
@@ -2048,7 +1992,7 @@ oscillation, and with it any phase relation, is lost.</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-5">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2071,7 +2015,7 @@ oscillation, and with it any phase relation, is lost.</li>
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-6">cells_to_show = [(0, 0), (1, 0), (0, 1), (0.5, 0.5)]
+<div class="clipboard-copy-txt" id="cell-5">cells_to_show = [(0, 0), (1, 0), (0, 1), (0.5, 0.5)]
 fig, axes = plt.subplots(len(cells_to_show), 1, figsize=(10, 7), sharex=True)
 w = slice(0, 200)
 for ax, (pc1, pc2) in zip(axes, cells_to_show):
@@ -2124,7 +2068,7 @@ TPR and FPR.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-6">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2158,7 +2102,7 @@ TPR and FPR.</p>
 <span class="n">found</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">fpr</span> <span class="o">=</span> <span class="n">apmsd_grid</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"121 cells in </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> s"</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-7">LEVELS = np.linspace(0, 1, 11)
+<div class="clipboard-copy-txt" id="cell-6">LEVELS = np.linspace(0, 1, 11)
 
 
 def apmsd_grid(data, true_network, levels=LEVELS, rng=0):
@@ -2208,7 +2152,7 @@ print(f"121 cells in {time.time() - start:.0f} s")</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-7">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2241,7 +2185,7 @@ print(f"121 cells in {time.time() - start:.0f} s")</div>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">names</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s2">: inferred as a link in </span><span class="si">{</span><span class="n">found</span><span class="p">[:,</span><span class="w"> </span><span class="p">:,</span><span class="w"> </span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2"> of 121 cells"</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"perfect cells (TPR = 1, FPR = 0):"</span><span class="p">,</span> <span class="nb">int</span><span class="p">(((</span><span class="n">tpr</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">fpr</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-8">def show_plane(ax, z, title, cmap="Greens", vmin=0, vmax=1, levels=LEVELS):
+<div class="clipboard-copy-txt" id="cell-7">def show_plane(ax, z, title, cmap="Greens", vmin=0, vmax=1, levels=LEVELS):
     im = ax.imshow(z, origin="lower", cmap=cmap, vmin=vmin, vmax=vmax,
                    extent=[-5, 105, -5, 105])
     ax.set_xticks([0, 50, 100])
@@ -2340,7 +2284,7 @@ so they are locked to each other, even though they are not linked.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-8">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2380,7 +2324,7 @@ so they are locked to each other, even though they are not linked.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s2">"off"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-9"># Nodes are numbered 1 to 8
+<div class="clipboard-copy-txt" id="cell-8"># Nodes are numbered 1 to 8
 phase_links = [(1, 2), (2, 3), (5, 6)]
 amplitude_links = [(3, 4), (4, 5), (6, 7)]
 both_links = [(7, 8)]
@@ -2435,7 +2379,7 @@ plt.show()</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-9">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2452,7 +2396,7 @@ plt.show()</div>
 <span class="n">table</span> <span class="o">=</span> <span class="n">relations_table</span><span class="p">(</span><span class="n">data_net</span><span class="p">,</span> <span class="n">A_net</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
 <span class="n">table</span><span class="p">[(</span><span class="n">table</span><span class="p">[</span><span class="s2">"PLV"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s2">"amplitude corr."</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">)]</span>  <span class="c1"># the pairs with a clear relation</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-10">w_net = 1 + 0.05 * np.arange(n_nodes)  # frequencies 1.00, 1.05, ..., 1.35
+<div class="clipboard-copy-txt" id="cell-9">w_net = 1 + 0.05 * np.arange(n_nodes)  # frequencies 1.00, 1.05, ..., 1.35
 data_net, a_net, theta_net = simulate_oscillators(w_net, C_phase_net, C_amp_net, rng=0)
 labels = [str(i + 1) for i in range(n_nodes)]
 
@@ -2581,7 +2525,7 @@ table[(table["PLV"] &gt; 0.1) | (table["amplitude corr."] &gt; 0.1)]  # the pair
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-10">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2593,7 +2537,7 @@ table[(table["PLV"] &gt; 0.1) | (table["amplitude corr."] &gt; 0.1)]  # the pair
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-11"></div>
+<div class="clipboard-copy-txt" id="cell-10"></div>
 </div>
 </div>
 </div>
@@ -2622,7 +2566,7 @@ appear: <strong>1–3</strong> is phase-locked through node 2 (its PLV is as hig
 <div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-12">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-11">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2651,7 +2595,7 @@ appear: <strong>1–3</strong> is phase-locked through node 2 (its PLV is as hig
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-12">start = time.time()
+<div class="clipboard-copy-txt" id="cell-11">start = time.time()
 found_net, tpr_net, fpr_net = apmsd_grid(data_net, A_net)
 print(f"121 cells in {time.time() - start:.0f} s")
 
@@ -2702,7 +2646,7 @@ plt.show()</div>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-13">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-12">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2724,7 +2668,7 @@ plt.show()</div>
 <span class="n">best</span> <span class="o">=</span> <span class="n">tpr_net</span> <span class="o">==</span> <span class="mi">1</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">"where TPR = 1, FPR ranges over"</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">fpr_net</span><span class="p">[</span><span class="n">best</span><span class="p">]),</span> <span class="mi">2</span><span class="p">))</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-13">fig, axes = plt.subplots(1, 2, figsize=(11, 4))
+<div class="clipboard-copy-txt" id="cell-12">fig, axes = plt.subplots(1, 2, figsize=(11, 4))
 im = show_plane(axes[0], tpr_net, "TPR", cmap="viridis")
 plt.colorbar(im, ax=axes[0])
 im = show_plane(axes[1], fpr_net, "FPR", cmap="viridis", vmax=0.2)
@@ -2804,7 +2748,7 @@ because the three nodes of a locked chain are all locked to each other.</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-14">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-13">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -2838,7 +2782,7 @@ because the three nodes of a locked chain are all locked to each other.</li>
         <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">kind</span><span class="p">]</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">"type"</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-14">def partial_correlation(X):
+<div class="clipboard-copy-txt" id="cell-13">def partial_correlation(X):
     P = np.linalg.inv(np.cov(X.T))
     d = np.sqrt(np.diag(P))
     return -P / np.outer(d, d)
@@ -3046,7 +2990,7 @@ when the amplitude changes faster?</li>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div><div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="CodeMirror cm-s-jupyter">
 <div class="zeroclipboard-container">
-<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-15">
+<clipboard-copy ,="" aria-label="Copy to Clipboard" for="cell-14">
 <div>
 <span class="notice" hidden="">Copied!</span>
 <svg aria-hidden="true" class="clipboard-copy-icon" data-view-component="true" height="20" version="1.1" viewbox="0 0 16 16" width="20">
@@ -3058,7 +3002,7 @@ when the amplitude changes faster?</li>
 </div>
 <div class="highlight-ipynb hl-python"><pre><span></span>
 </pre></div>
-<div class="clipboard-copy-txt" id="cell-15"></div>
+<div class="clipboard-copy-txt" id="cell-14"></div>
 </div>
 </div>
 </div>
